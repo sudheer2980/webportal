@@ -16,6 +16,7 @@ urlpatterns = patterns('',
     url(r'^contributor/profile/$','webapp.views.contributor_profile'), 
     # this takes us to reviewer profile
     url(r'^reviewer/profile/$','webapp.views.reviewer_profile'),
+    url(r'^reviewer/profile/comments/(?P<sub_id>\d+)/(?P<rev_id>\d+)/$','webapp.views.reviewer_comment'),
 
 
     url(r'^login/$','webapp.views.userlogin'),
