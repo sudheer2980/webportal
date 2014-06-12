@@ -12,26 +12,26 @@ class UserForm(forms.ModelForm):
 	first_name = forms.CharField(
         	widget= forms.TextInput(
            		 attrs={'class': 'form-control',
-                   		'placeholder': 'Contributor first name*.'}),
+                   		'placeholder': 'first name*.'}),
            				 help_text="", required=True,
        						 error_messages={'required':'First name is required.'})
 	last_name = forms.CharField(
         	widget= forms.TextInput(
             		attrs={'class': 'form-control',
-                   		'placeholder': 'Contributor last name*.'}),
+                   		'placeholder': 'Last name*.'}),
        					 help_text="", required=True,
         					error_messages={'required':'Last name is required.'})
 
 	email = forms.CharField(
         	widget= forms.TextInput(
             		attrs={'class': 'form-control',
-                   		'placeholder': 'Contributor valid email*.'}),
+                   		'placeholder': 'Valid email*.'}),
            				 help_text="", required=True,
         					error_messages={'required':'Valid Email address is required.'})
 	password = forms.CharField(
         	widget=forms.PasswordInput(
             		attrs={'class': 'form-control',
-                   		'placeholder': 'Contributor password*.'}),
+                   		'placeholder': 'Password*.'}),
        					 help_text="", required=True,
       						 error_messages={'required':'Password is missing.'})
 
@@ -83,6 +83,32 @@ class ContributorForm(forms.ModelForm):
                       		return picture
 			else:
 				raise forms.ValidationError("Not a valid profile picture!")	
+
+
+class ReviewerForm(forms.ModelForm):	
+	picture = forms.ImageField(label='Profile picture',
+        	widget = forms.FileInput(
+            		attrs={'placeholder': 'Reviewer picture.'}),
+        			required=False)
+	contact  = forms.CharField(
+        	widget= forms.TextInput(
+            		attrs={'class': 'form-control',
+                   		'placeholder': 'Reviewer contact number.'}),
+        				help_text="", required=False,
+       						 error_messages={'required':'Last name is required.'})
+
+	specialised_subject = forms.CharField(
+        	widget= forms.TextInput(
+            		attrs={'class': 'form-control',
+                   		'placeholder': 'Reviewer specialised subject.'}),
+        				help_text="", required=False,
+       						 error_messages={'required':'specialised subject is required.'})
+	
+	
+	class Meta:
+        		model =  Reviewer
+        		fields = ('picture', 'contact','specialised_subject')
+
 
 
 class ContributorUploadForm(forms.ModelForm):
