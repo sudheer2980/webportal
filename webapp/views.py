@@ -120,7 +120,7 @@ Waiting for your your approval"""
 		user_form = UserForm()	
            
         context_dict = {'user_form':user_form, 'contributor_form': contributor_form, 'registered': registered}
-        return render_to_response('webapp/contributor/signup.html', context_dict, context)
+        return render_to_response('webapp/contributor_signup.html', context_dict, context)
 
 def reviewer_signup(request):
 
@@ -165,7 +165,7 @@ Waiting for your your approval"""
 		user_form = UserForm()	
            
         context_dict = {'user_form':user_form, 'reviewer_form': reviewer_form, 'registered': registered}
-        return render_to_response('webapp/reviewer/signup.html', context_dict, context)
+        return render_to_response('webapp/reviewer_signup.html', context_dict, context)
 
 
 
