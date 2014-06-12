@@ -27,10 +27,10 @@ def index(request):
     return render_to_response("webapp/index.html")
 
 def userlogin(request):
-    """Login form.
+    """Login form, Enables the user to login after successful sign-up.
     
     Arguments:
-    - `request`:
+    	REQUEST
     """
     context = RequestContext(request)
     if request.method == 'POST':
