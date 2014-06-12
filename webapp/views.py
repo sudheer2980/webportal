@@ -94,7 +94,7 @@ def reviewer_comment(request,sub_id,rev_id):
 			comments.subject = subject
 			comments.user = reviewer
 			comments.save()
-			url = reverse('/reviewer/profile/comments/', kwargs={'sub_id': sub_id, 'rev_id' : rev_id})
+			url = reverse('webapp.views.reviewer_comment', kwargs={'sub_id': sub_id, 'rev_id' : rev_id})
 			return HttpResponseRedirect(url) 
 			# return HttpResponseRedirect(reverse('/reviewer/profile/comments/%s/%s/' % sub_id % rev_id))
 		else:
