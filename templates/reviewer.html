@@ -1,16 +1,15 @@
 <!DOCTYPE html>
 <html>
 <body>
-<h1><u>Welcome to the Review page</u></h1>
+<h1><u>Welcome to the Review page {{ user.username }}</u></h1>
 
 
 {% for i in uploads %}
 
-		{{i.name}}
+		<h1>{{i.name}}</h1>
 		<h2>{{i.topic}}</h2><a href="/media/{{i.pdf}}">FILE</a>
-		<h3>{{i.summary}}</h3>
-		
-		
+		<p>{{i.summary}}</p>
+	<a href=" comments/{{ i.id }}/{{ user.id }}">View comments </a>
 {% endfor %}
 
 

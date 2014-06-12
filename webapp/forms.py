@@ -1,5 +1,5 @@
 from django import forms
-from models import Contributor , Reviewer, Class, Subject
+from models import Contributor , Reviewer, Class, Subject ,Comment
 from django.contrib.auth.models import User
 from webapp.models import Contributor
 
@@ -190,4 +190,12 @@ class ContributorUploadForm(forms.ModelForm):
 		else:
 			raise forms.ValidationError("Not a valid file!")
 
+
+class CommentForm(forms.ModelForm):
+	comment = forms.CharField(label='Comment', widget = forms.Textarea, max_length= 1000)
+
+
+	class Meta:
+		model = Comment
+		fields = ['comment']	
 	

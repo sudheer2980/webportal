@@ -10,11 +10,11 @@ from django.core.urlresolvers import reverse
 
 # import the models here
 from django.contrib.auth.models import User
-from webapp.models import Contributor, Reviewer, Subject
+from webapp.models import Contributor, Reviewer, Subject ,Comment
 
 
 # import the forms here
-from webapp.forms import ContributorForm , ReviewerForm, UserForm, ContributorUploadForm
+from webapp.forms import ContributorForm , ReviewerForm, UserForm, ContributorUploadForm, CommentForm
 
 def index(request):
     """
@@ -73,10 +73,37 @@ def contributor_profile(request):
 @login_required
 def reviewer_profile(request):
 	context = RequestContext(request)
-	rev = Reviewer.objects.filter(user=request.user)
-	uploads = Subject.objects.all()
-	context_dict={ 'uploads' : uploads}
+	rev = Reviewer.objects.get(user = request.user)
+	user = rev.user
+	uploads = Subject.objects.filter(name = rev.specialised_subject).filter(review__lt = 3)
+        context_dict = {'uploads' : uploads , 'user':user}
 	return render_to_response("reviewer.html",context_dict,context)
+
+def reviewer_comment(request,sub_id,rev_id):
+	context = RequestContext(request)
+	print "sub_id = " + sub_id
+	print "rev_id = " + rev_id
+	comment = Comment.objects.filter(subject_id = sub_id)
+	reviewer = Reviewer.objects.get(user_id = rev_id)
+	if request.method == 'POST':
+		print  "we have a new comment"
+		comment_form = CommentForm(data = request.POST)
+		if comment_form.is_valid():
+			comments = comment_form.save(commit=False)
+			subject = Subject.objects.get(pk = sub_id)
+			comments.subject = subject
+			comments.user = reviewer
+			comments.save()
+			url = reverse('/reviewer/profile/comments/', kwargs={'sub_id': sub_id, 'rev_id' : rev_id})
+			return HttpResponseRedirect(url) 
+			# return HttpResponseRedirect(reverse('/reviewer/profile/comments/%s/%s/' % sub_id % rev_id))
+		else:
+			if comment_form.errors:
+				print comment_form.errors
+	else:	
+		comment_form = CommentForm()
+        context_dict = {'comment_form': comment_form, 'comment' : comment}
+	return render_to_response("comments.html",context_dict,context)
 
 
 
