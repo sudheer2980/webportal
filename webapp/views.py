@@ -14,7 +14,7 @@ from webapp.models import Contributor, Reviewer, Subject
 
 
 # import the forms here
-from webapp.forms import ContributorForm , UserForm, ContributorUploadForm
+from webapp.forms import ContributorForm , ReviewerForm, UserForm, ContributorUploadForm
 
 
 def index(request):
@@ -47,10 +47,10 @@ def userlogin(request):
 		u=User.objects.get(username=user1.username)
 		if Contributor.objects.filter(user=u):		
 			login(request,user1)
-			return HttpResponseRedirect('/cprofile')
+			return HttpResponseRedirect('/contibutor/profile')
             	else:
 			login(request,user1)
-			return HttpResponseRedirect('/rprofile')
+			return HttpResponseRedirect('/reviewer/profile')
 	    else:
                 # An inactive account was used - no logging in!
                 messages.info(request, "Your account is disabled.")
@@ -126,7 +126,55 @@ Waiting for your your approval"""
 		user_form = UserForm()	
            
         context_dict = {'user_form':user_form, 'contributor_form': contributor_form, 'registered': registered}
-        return render_to_response('webapp/signup.html', context_dict, context)
+        return render_to_response('webapp/contributor_signup.html', context_dict, context)
+
+
+
+def reviewer_signup(request):
+
+	"""Request for new contributor to signup"""
+	context = RequestContext(request)
+	registered = False
+	if request.method == 'POST':
+	        print "we have a request to register"    
+		user_form = UserForm(data=request.POST)
+	        reviewer_form = ReviewerForm(data=request.POST)
+	        if user_form.is_valid() and reviewer_form.is_valid():
+			user = user_form.save()
+                	print "Forms are Valid"
+            		print user.username
+            		print user.first_name
+            		user.set_password(user.password)
+           		user.save()
+
+                        reviewer = reviewer_form.save(commit=False)
+			reviewer.user = user
+
+                        if 'picture' in request.FILES:
+                		reviewer.picture = request.FILES['picture']
+			reviewer.save()                       
+			registered = True
+                        email_subject="New reviewer has registered"
+	                email_message="""
+New reviewer has registered.
+	    	
+Details:
+Name:""" + user.first_name + """  """ + user.last_name + """"
+Email:""" + user.email + """
+Waiting for your your approval"""
+			#send_mail(email_subject, email_message, 'khushbu.ag23@gmail.com', ['pri.chundawat@gmail.com'],fail_silently=False)
+			#messages.success(request,"form successfully submitted. Waiting for activation  from admin.")
+			return HttpResponseRedirect(reverse('webapp.views.index'))
+	        else:
+			if reviewer_form.errors or user_form.errors:
+				print user_form.errors, reviewer_form.errors
+	else:
+		reviewer_form = ReviewerForm()
+		user_form = UserForm()	
+           
+        context_dict = {'user_form':user_form, 'reviewer_form': reviewer_form, 'registered': registered}
+        return render_to_response('webapp/reviewer_signup.html', context_dict, context)
+
 
 
 def user_logout(request):
