@@ -1,7 +1,7 @@
 from django import forms
 from models import Contributor , Reviewer, Class, Subject
 from django.contrib.auth.models import User
-from panda.models import Contributor
+from webapp.models import Contributor
 
 class UserForm(forms.ModelForm):
 	username = forms.CharField(label='Username',
@@ -83,6 +83,32 @@ class ContributorForm(forms.ModelForm):
                       		return picture
 			else:
 				raise forms.ValidationError("Not a valid profile picture!")	
+
+
+class ReviewerForm(forms.ModelForm):	
+	picture = forms.ImageField(label='Profile picture',
+        	widget = forms.FileInput(
+            		attrs={'placeholder': 'Reviewer picture.'}),
+        			required=False)
+	contact  = forms.CharField(
+        	widget= forms.TextInput(
+            		attrs={'class': 'form-control',
+                   		'placeholder': 'Reviewer contact number.'}),
+        				help_text="", required=False,
+       						 error_messages={'required':'Last name is required.'})
+
+	specialised_subject = forms.CharField(
+        	widget= forms.TextInput(
+            		attrs={'class': 'form-control',
+                   		'placeholder': 'Reviewer specialised subject.'}),
+        				help_text="", required=False,
+       						 error_messages={'required':'specialised subject is required.'})
+	
+	
+	class Meta:
+        		model =  Reviewer
+        		fields = ('picture', 'contact','specialised_subject')
+
 
 
 class ContributorUploadForm(forms.ModelForm):
