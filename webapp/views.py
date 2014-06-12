@@ -18,7 +18,13 @@ from webapp.forms import ContributorForm , UserForm, ContributorUploadForm
 
 
 def index(request):
-	return render_to_response("webapp/index.html")
+    """
+    Argument:
+    -`REQUEST`:request from user
+
+    This function takes the request of user and direct it to home page.
+    """
+    return render_to_response("webapp/index.html")
 
 def userlogin(request):
     """Login form.
