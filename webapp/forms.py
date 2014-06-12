@@ -12,7 +12,7 @@ class UserForm(forms.ModelForm):
 	first_name = forms.CharField(
         	widget= forms.TextInput(
            		 attrs={'class': 'form-control',
-                   		'placeholder': 'first name*.'}),
+                   		'placeholder': 'First name*.'}),
            				 help_text="", required=True,
        						 error_messages={'required':'First name is required.'})
 	last_name = forms.CharField(
@@ -104,11 +104,17 @@ class ReviewerForm(forms.ModelForm):
         				help_text="", required=False,
        						 error_messages={'required':'specialised subject is required.'})
 	
-	
 	class Meta:
         		model =  Reviewer
         		fields = ('picture', 'contact','specialised_subject')
 
+	def clean_picture_file(self):
+        		"""Limit doc_file upload size."""
+        		if self.cleaned_data['picture']:
+            			picture= self.cleaned_data['picture']
+                      		return picture
+			else:
+				raise forms.ValidationError("Not a valid profile picture!")	
 
 
 class ContributorUploadForm(forms.ModelForm):

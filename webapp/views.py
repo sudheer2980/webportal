@@ -16,7 +16,6 @@ from webapp.models import Contributor, Reviewer, Subject
 # import the forms here
 from webapp.forms import ContributorForm , ReviewerForm, UserForm, ContributorUploadForm
 
-
 def index(request):
     """
     Argument:
@@ -47,7 +46,7 @@ def userlogin(request):
 		u=User.objects.get(username=user1.username)
 		if Contributor.objects.filter(user=u):		
 			login(request,user1)
-			return HttpResponseRedirect('/contibutor/profile')
+			return HttpResponseRedirect('/contributor/profile')
             	else:
 			login(request,user1)
 			return HttpResponseRedirect('/reviewer/profile')
@@ -129,9 +128,7 @@ Waiting for your your approval"""
         return render_to_response('webapp/contributor_signup.html', context_dict, context)
 
 
-
 def reviewer_signup(request):
-
 	"""Request for new contributor to signup"""
 	context = RequestContext(request)
 	registered = False
@@ -176,11 +173,11 @@ Waiting for your your approval"""
         return render_to_response('webapp/reviewer_signup.html', context_dict, context)
 
 
-
 def user_logout(request):
 	context=RequestContext(request)
 	logout(request)
 	return HttpResponseRedirect('/')
+
 		
 def commentpost(request):
 	return render_to_response('templates/comments/post.html')
