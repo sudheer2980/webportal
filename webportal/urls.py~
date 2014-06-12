@@ -2,6 +2,8 @@ from django.conf.urls import patterns, include, url
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
+from django.conf import settings
+
 admin.autodiscover()
 
 urlpatterns = patterns('',
@@ -12,15 +14,30 @@ urlpatterns = patterns('',
     url(r'^$','webapp.views.index'),
     url(r'^login/$','webapp.views.userlogin'),
     url(r'^user/', include('django.contrib.auth.urls')),
-    url(r'^cprofile/$','webapp.views.contributor_profile'),
-    url(r'^rprofile/$','webapp.views.reviewer_profile'),
+    # this takes us to contributor profile
+    url(r'^contributor/profile/$','webapp.views.contributor_profile'), 
+    # this takes us to reviewer profile
+    url(r'^reviewer/profile/$','webapp.views.reviewer_profile'),    
+    # this is used for logging out the respective user
     url(r'^logout/$','webapp.views.user_logout'),
+    # this is for changing password, and for confirmation of that change
     url(r'^user/password/change/$','django.contrib.auth.views.password_change'),
     url(r'^user/password/change/done/$','django.contrib.auth.views.password_change_done'),
+    # this is used for the contributor to sign up
     url(r'^signup/$','webapp.views.contributor_signup'),
+    url(r'^signup/$','webapp.views.reviewer_signup'),
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
 )
+
+
+
+
+if settings.DEBUG:
+    # static files (images, css, javascript, etc.)
+    urlpatterns += patterns('',
+        (r'^media/(?P<path>.*)$', 'django.views.static.serve', {
+        'document_root': settings.MEDIA_ROOT}))
