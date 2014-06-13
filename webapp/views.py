@@ -53,6 +53,7 @@ def userlogin(request):
 	    else:
                 # An inactive account was used - no logging in!
                 messages.info(request, "Your account is disabled.")
+		return render_to_response('webapp/login.html', context)
         else:
             # Bad login details were provided. So we can't log the user in.
             messages.error(request, "Bad login!")
@@ -122,6 +123,7 @@ def contributor_signup(request):
             		print user.username
             		print user.first_name
             		user.set_password(user.password)
+			user.is_active = False
            		user.save()
 
                         contributor = contributor_form.save(commit=False)
@@ -169,6 +171,7 @@ def reviewer_signup(request):
             		print user.username
             		print user.first_name
             		user.set_password(user.password)
+			user.is_active = False
            		user.save()
 
                         reviewer = reviewer_form.save(commit=False)

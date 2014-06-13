@@ -16,7 +16,7 @@
 	<!-- error msg -->
 	{% if messages %}
 	{% for message in messages %}
-	{% if message.tags == "error" %}
+	{% if message.tags == "error" or message.tags == "info" %}
 	<p class="text-danger" align="center"><strong>{{ message }}</strong></p>
 	{% endif %}
 	{% endfor %}
