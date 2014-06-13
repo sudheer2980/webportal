@@ -8,50 +8,55 @@
 {% endblock title %}
 
 {% block content %} 
-<html>
-    <head>
-        <title>Register</title>
-    </head>
 
 <div class="container footer_padding" style="padding-top:1.5cm;">
   <div class="page-header" align="center">
-      <h1><i class="fa fa-pencil"></i> Register <small> with Aakash
-      Webportal.</small>
+      <br>
+      
+
       </h1>
   </div>
 
     
-        <h1>Register with Aakash Webportal</h1>
-        {% if registered %}
-        <strong>thank you for registering!</strong>
-        <a href="webapp/home.html">Return to the homepage.</a><br />
-        {% else %}
-        <strong>register here!</strong><br />
+       <div class="row">
+                <div class="col-lg-24 col-lg-offset-2">
+                        <div class="row">
+                          <div class="form-group col-xs-12 floating-label-form-group" align="center"> 
+                        
+                    <h2>Register as Contributor</h2>
+                    <hr class="star-primary">
+                </div>
+            </div>
 
-           
-                      
-         <div class="row">
-                <div class="col-lg-8 col-lg-offset-2">
-                 
-        	    <form id="user_form" method="post"
-                	enctype="multipart/form-data">
-            		<div class="row">
-                            <div class="form-group col-xs-12 floating-label-form-group">
+            <div class="row">
+                <div class="col-lg-4 col-lg-offset-2">
+     	     <form id="user_form" method="post" enctype="multipart/form-data"> 	
                           
             			{% csrf_token %}
-
+                                {% if messages %}
+				{% for message in messages %}
+				{% if message.tags == "success" %}
+				<p class="text-info" align="center"><strong>{{ message }}</strong></p>
+				{% else %}
+				<p class="text-danger" align="center"><strong>{{ message }}</strong></p>
+				{% endif %}
+				{% endfor %}
+				{% endif %} 
 	     			
                                 <hr>
             			{{ user_form.as_p }}
+                                <hr>
             			{{ contributor_form.as_p }}
 
 		            <input type="submit" name="submit" value="Register" />
+                            <br>
+                            <br>
 		            </div>
                         </div>                 
                     </form>
                 </div>
          </div>
-        {% endif %}
+    
     
 {% endblock content %}
 
