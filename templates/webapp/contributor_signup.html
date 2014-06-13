@@ -1,10 +1,26 @@
 <!DOCTYPE html>
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+- Register
+{% endblock title %}
+
+{% block content %} 
 <html>
     <head>
-        <title>Sign up</title>
+        <title>Register</title>
     </head>
 
-    <body>
+<div class="container footer_padding" style="padding-top:1.5cm;">
+  <div class="page-header" align="center">
+      <h1><i class="fa fa-pencil"></i> Register <small> with Aakash
+      Webportal.</small>
+      </h1>
+  </div>
+
+    
         <h1>Register with Aakash Webportal</h1>
         {% if registered %}
         <strong>thank you for registering!</strong>
@@ -12,21 +28,31 @@
         {% else %}
         <strong>register here!</strong><br />
 
+           
+                      
+         <div class="row">
+                <div class="col-lg-8 col-lg-offset-2">
+                 
+        	    <form id="user_form" method="post"
+                	enctype="multipart/form-data">
+            		<div class="row">
+                            <div class="form-group col-xs-12 floating-label-form-group">
+                          
+            			{% csrf_token %}
 
-        
-        <form id="user_form" method="post"
-                enctype="multipart/form-data">
-            
-            {% csrf_token %}
+	     			
+                                <hr>
+            			{{ user_form.as_p }}
+            			{{ contributor_form.as_p }}
 
-            {{ user_form.as_p }}
-            {{ contributor_form.as_p }}
-
-            <input type="submit" name="submit" value="Register" />
-
-    
-
-        </form>
+		            <input type="submit" name="submit" value="Register" />
+		            </div>
+                        </div>                 
+                    </form>
+                </div>
+         </div>
         {% endif %}
-    </body>
+    
+{% endblock content %}
+
 </html>
