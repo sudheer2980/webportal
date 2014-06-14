@@ -131,7 +131,12 @@ class ContributorUploadForm(forms.ModelForm):
 		       empty_label=None,
 		       help_text="",required=True,
                        error_messages={'required':'Class is required'})	
-				
+	name = forms.CharField(
+        	widget= forms.TextInput(
+            		attrs={'class': 'form-control',
+                   		'placeholder': 'Subject name*.'}),
+            		help_text="", required=True,
+        	error_messages={'required':'Subject name is required.'})			
 
 
 	topic = forms.CharField(
@@ -166,7 +171,7 @@ class ContributorUploadForm(forms.ModelForm):
 	
 	class Meta:
         	model = Subject
-        	fields = ['class_number', 'topic', 'pdf', 'video', 'animation', 'summary']
+        	fields = ['class_number', 'name','topic', 'pdf', 'video', 'animation', 'summary']
 
 
 
