@@ -1,4 +1,4 @@
-from django.shortcuts import HttpResponse, render_to_response
+from django.shortcuts import HttpResponse, render_to_response,  get_object_or_404
 from django.template import RequestContext
 from django.http import HttpResponse , HttpResponseRedirect
 from django.contrib.auth import authenticate , login, logout
@@ -246,3 +246,121 @@ def contributor_upload(request):
         context_dict = {'contributor_upload_form': contributor_upload_form, 'uploaded':uploaded}
         return render_to_response("webapp/upload.html", context_dict, context)
 
+@login_required
+def contributor_profile_edit(request):
+    """Edit user's/Coordinators profile.
+
+Arguments:
+- `request`:
+"""
+    context = RequestContext(request)
+    print request.user
+    user = get_object_or_404(User, username=request.user)
+    old_username = user.username
+    print user.first_name
+    print user.last_name
+
+    contributor = get_object_or_404(Contributor, user=request.user)
+    
+    
+    if request.method == 'POST':
+        print "We've a request to register"
+        contributorform = ContributorForm(data=request.POST, instance=contributor)
+        userform = UserForm(data=request.POST, instance=user)
+
+        if contributorform.is_valid() and userform.is_valid():
+            print "Forms are Valid"
+            user = userform.save(commit=False)
+            if old_username == user.username:
+                print "Username unchanged"
+            else:
+                print "Username changed!. Deactivating old user."
+                old_username = get_object_or_404(User, username=old_username)
+                old_username.is_active = False
+                old_username.save()
+            # print user.username
+            # print user.first_name
+            # print user.last_name
+            user.set_password(user.password)
+            user.save()
+
+            contributor = contributorform.save(commit=False)
+            # print coordinator.contact
+            if 'picture' in request.FILES:
+                contributor.picture = request.FILES['picture']
+            contributor.user = User.objects.get(username=user.username)
+            contributor.save()
+
+            
+            messages.success(request, "Profile updated successfully.")
+            return HttpResponseRedirect('/contributor/profile/edit_success')
+        else:
+            if contributorform.errors or userform.errors:
+                print contributorform.errors, userform.errors
+    else:
+        # aakashcentreform = AakashCentreForm(instance=aakashcentre)
+        contributorform = ContributorForm(instance=contributor)
+        userform = UserForm(instance=user)
+
+    context_dict = {'contributorform': contributorform,
+                    'userform': userform}
+    return render_to_response('contributor_profile_edit.html', context_dict, context)
+
+@login_required
+def reviewer_profile_edit(request):
+    """Edit user's/Coordinators profile.
+
+Arguments:
+- `request`:
+"""
+    context = RequestContext(request)
+    print request.user
+    user = get_object_or_404(User, username=request.user)
+    old_username = user.username
+    print user.first_name
+    print user.last_name
+
+    reviewer = get_object_or_404(Reviewer, user=request.user)
+    
+    
+    if request.method == 'POST':
+        print "We've a request to register"
+        reviewerform = ReviewerForm(data=request.POST, instance=reviewer)
+        userform = UserForm(data=request.POST, instance=user)
+
+        if reviewerform.is_valid() and userform.is_valid():
+            print "Forms are Valid"
+            user = userform.save(commit=False)
+            if old_username == user.username:
+                print "Username unchanged"
+            else:
+                print "Username changed!. Deactivating old user."
+                old_username = get_object_or_404(User, username=old_username)
+                old_username.is_active = False
+                old_username.save()
+            user.set_password(user.password)
+            user.save()
+
+            reviewer = reviewerform.save(commit=False)
+            if 'picture' in request.FILES:
+                reviewer.picture = request.FILES['picture']
+            reviewer.user = User.objects.get(username=user.username)
+            reviewer.save()
+
+            
+            messages.success(request, "Profile updated successfully.")
+            return HttpResponseRedirect('/reviewer/profile/edit_success')
+        else:
+            if reviewerform.errors or userform.errors:
+                print reviewerform.errors, userform.errors
+    else:
+        reviewerform = ReviewerForm(instance=reviewer)
+        userform = UserForm(instance=user)
+
+    context_dict = {'reviewerform': reviewerform,
+                    'userform': userform}
+    return render_to_response('reviewer_profile_edit.html', context_dict, context)
+
+
+def edit_success(request):
+	return render_to_response('edit_success.html')
