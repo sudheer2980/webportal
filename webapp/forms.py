@@ -42,10 +42,7 @@ class UserForm(forms.ModelForm):
 
 
 class ContributorForm(forms.ModelForm):	
-	picture = forms.ImageField(label='Profile picture',
-        	widget = forms.FileInput(
-            		attrs={'placeholder': 'Contributor picture.'}),
-        			required=False)
+	
 	contact  = forms.CharField(
         	widget= forms.TextInput(
             		attrs={'class': 'form-control',
@@ -63,8 +60,13 @@ class ContributorForm(forms.ModelForm):
 	validation_docs = forms.FileField(
         	label = 'Validation file.',
         		widget = forms.FileInput(),
-        			help_text = 'Upload validation file.',
+        		#	help_text = 'Upload validation file.',
         				required=False)
+
+	picture = forms.ImageField(label='Profile picture',
+        	widget = forms.FileInput(
+            		attrs={'placeholder': 'Contributor picture.'}),
+        			required=False)
 	class Meta:
         		model =  Contributor
         		fields = ('picture', 'contact','specialised_subject', 'validation_docs')
