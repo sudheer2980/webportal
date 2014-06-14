@@ -1,61 +1,108 @@
-# Webportal
-  Webportal for providing education related study material to the students.
+Webportal
+=========
 
-## Usage
+|	Webportal for providing education related study material to the students.
 
-#. Make sure you are connected to internet.
+Usage
+=====
 
-#. Install pip::
-    Use the following command to install pip
-        sudo apt-get install pip
+- Make sure you are connected to internet.
 
-#. Install Virtual Environment::
-    Use the following command to install virtualenv
-        pip install virtualenv
-        
-#. Create a virtual environment::
+- Install pip Using the following command:
 
-    * virtualenv virtualenv_name
-    * cd virtualenv_name
+			+-------------------------------+
+			|				|
+			|  sudo apt-get install pip	|
+			|				|
+			+-------------------------------+
 
-#. Check if python is installed in the system::
+- Install Virtual Environment Using the following command:
 
-    * Open terminal and type python. It shows if the python version installed.
-    * Otherwise use command 
-          sudo apt-get install python-pip
+			+-------------------------------+
+			|				|
+			|  pip install virtualenv	|
+			|				|
+			+-------------------------------+
 
-#. Install pre-requisites::
-    Use command 
-        pip install -r requirements.txt
+- Create a Virtual Environment:
+			
+			+-------------------------------+
+			|				|
+			|virtualenv virtualenv_name	|
+			|				|
+			|cd virtualenv_name		|
+			|				|
+			+-------------------------------+
 
-## Clone
 
-#. Clone this repository::
-        git clone https://github.com/khushbu14/webportal
+- Check if python is installed in the system , open terminal and type python It shows which version of python is installed.
+  Otherwise use command
 
-## Install database for server
+			+---------------------------------------------------------------------------------------+
+			|											|
+			| 											|
+			|											|
+			|											|
+			|											|													
+			|	sudo apt-get install python-pip							|			    
+			|											|
+			+---------------------------------------------------------------------------------------+
 
-### Use the following command
+- Install pre-requisites Using the command:
 
-    * apt-get install mysql-server 
-    * apt-get install python-mysqldb
+		
+	
+			+---------------------------------------+
+			|					|
+			|  pip install -r requirements.txt	|
+			|					|
+			+---------------------------------------+
 
-   Or use pip to install mysql
 
-    * pip install mysql-python
+Clone
+=====
 
-### To use Sqlite(For local server)
-    
-    * gedit webportal/webportal/settings.py
-    * Do the following changes
-     
-         * 'ENGINE': 'django.db.backend.sqlite3',
-	 * 'NAME' : 'webapp.db',
-	 * remove user and password.
+- Clone this repository:
 
-## Run Server
+	- git clone https://github.com/khushbu14/webportal/
 
-### python manage.py runserver
+- Install database for server using the command:
 
-    
+			+---------------------------------------+
+			|					|
+			|apt-get install mysql-server		|
+			|					|
+			|apt-get install python-mysqldb		|
+			|					|
+			+---------------------------------------+
+
+	Or use pip to install mysql
+
+			+-------------------------------+
+			|				|
+			|				|
+			|pip install mysql-python	|
+			|				|
+			|				|
+			+-------------------------------+
+			
+- To use Sqlite (For local server)
+
+	- Open webportal/webportal/settings.py
+
+	- Do the following changes
+
+		* 'ENGINE': 'django.db.backend.sqlite3',
+		* 'NAME'  : 'webapp.db',
+		*  remove user and password.
+
+- Start the server using the command
+
+			+-------------------------------+
+			|				|
+			|				|
+			|python manage.py runserver	|
+			|				|
+			|				|
+			+-------------------------------+
 
