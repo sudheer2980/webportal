@@ -20,11 +20,19 @@ urlpatterns = patterns(
     url(r'^reviewer/profile/comments/(?P<sub_id>\d+)/(?P<rev_id>\d+)/$',
         'webapp.views.reviewer_comment', name="comments"),
 
+    # this enables us to edit our profile
+    url(r'^contributor/profile/edit/$', 'webapp.views.contributor_profile_edit',
+        name='profile_edit'),
+    url(r'^reviewer/profile/edit/$', 'webapp.views.reviewer_profile_edit',
+        name='profile_edit'),
 
     url(r'^login/$','webapp.views.userlogin'),
     # this is used for logging out the respective user    
     url(r'^logout/$','webapp.views.user_logout'),
-
+    
+   
+    url(r'^reviewer/profile/edit_success/$','webapp.views.edit_success'),  
+    url(r'^contributor/profile/edit_success/$','webapp.views.edit_success'),
 
     # this is for changing password, and for confirmation of that change
     url(r'^user/password/change/$','django.contrib.auth.views.password_change'),
