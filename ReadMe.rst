@@ -3,13 +3,14 @@ Webportal
 =========
 
 A **Webportal** to provide education material to the students.
+
 (Summer Internship 2014, Indian Institute of Technology, Bombay)
 
 Clone
 -----
 
 - Make sure your Internet is working.
-- User's can clone this repo by typing ::
+- Clone this repo by typing ::
 
     git clone https://github.com/khushbu14/webportal.git
 
@@ -17,7 +18,7 @@ Clone
 Installation
 ------------
 
-- Install Virtual Environment Using the following command ::
+- Install Virtual Environment using the following command ::
 
     sudo apt-get install python-virtualenv
 
@@ -51,14 +52,14 @@ Usage
   Open `webportal/webportal/settings.py` file and do the following changes ::
 
     DATABASES = {
-    'default': {
-    'ENGINE': 'django.db.backend.sqlite3',
-    'NAME'  : 'webportal.db',
-    'USER': '',
-    'PASSWORD': '',
-    'HOST': '',
-    'PORT': '',
-    }
+        'default': {
+        'ENGINE': 'django.db.backend.sqlite3',
+        'NAME'  : 'webportal.db',
+        'USER': '',
+        'PASSWORD': '',
+        'HOST': '',
+        'PORT': '',
+        }
     }
 
 
@@ -70,6 +71,16 @@ Usage
 - Start the server using the command ::
 
     python manage.py runserver
+
+
+Contributing
+------------
+
+- Never edit the master branch.
+- Make a branch specific to the feature you wish to contribute on.
+- Send us a pull request.
+- Please follow `PEP8 <http://legacy.python.org/dev/peps/pep-0008/>`_
+  style guide when coding in Python.
 
 License
 -------
