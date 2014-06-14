@@ -108,7 +108,7 @@ def reviewer_comment(request,sub_id,rev_id):
 
 
 def contributor_signup(request):
-
+        
 	"""Request for new contributor to signup"""
 	context = RequestContext(request)
 	registered = False
@@ -142,8 +142,8 @@ Name:""" + user.first_name + """  """ + user.last_name + """"
 Email:""" + user.email + """
 Waiting for your your approval"""
 			#send_mail(email_subject, email_message, 'khushbu.ag23@gmail.com', ['pri.chundawat@gmail.com'],fail_silently=False)
-			#messages.success(request,"form successfully submitted. Waiting for activation  from admin.")
-			return HttpResponseRedirect(reverse('webapp.views.index'))
+			messages.success(request,"Form successfully submitted. Waiting for activation  from admin.")
+			return HttpResponseRedirect(reverse('webapp.views.contributor_signup'))
 	        else:
 			if contributor_form.errors or user_form.errors:
 				print user_form.errors, contributor_form.errors
@@ -188,7 +188,7 @@ Email:""" + user.email + """
 Waiting for your your approval"""
 			#send_mail(email_subject, email_message, 'khushbu.ag23@gmail.com', ['pri.chundawat@gmail.com'],fail_silently=False)
 			#messages.success(request,"form successfully submitted. Waiting for activation  from admin.")
-			return HttpResponseRedirect(reverse('webapp.views.index'))
+			return HttpResponseRedirect(reverse('webapp.views.contributor_upload'))
 	        else:
 			if reviewer_form.errors or user_form.errors:
 				print user_form.errors, reviewer_form.errors
