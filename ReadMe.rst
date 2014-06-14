@@ -1,61 +1,83 @@
-# Webportal
-  Webportal for providing education related study material to the students.
+=========
+Webportal
+=========
 
-## Usage
+A **Webportal** to provide education material to the students.
 
-#. Make sure you are connected to internet.
 
-#. Install pip::
-    Use the following command to install pip
-        sudo apt-get install pip
 
-#. Install Virtual Environment::
-    Use the following command to install virtualenv
-        pip install virtualenv
-        
-#. Create a virtual environment::
+			
 
-    * virtualenv virtualenv_name
-    * cd virtualenv_name
+Clone
+-----
 
-#. Check if python is installed in the system::
+- Make sure your internet is working.
 
-    * Open terminal and type python. It shows if the python version installed.
-    * Otherwise use command 
-          sudo apt-get install python-pip
+- User's can clone this repo by typing ::
 
-#. Install pre-requisites::
-    Use command 
-        pip install -r requirements.txt
+		git clone https://github.com/khushbu14/webportal.git
 
-## Clone
 
-#. Clone this repository::
-        git clone https://github.com/khushbu14/webportal
+Installation
+------------
 
-## Install database for server
+- Install Virtual Environment Using the following command ::
 
-### Use the following command
+		sudo apt-get install python-virtualenv    
+								    
+- Create a Virtual Environment ::
+			
+		virtualenv /path/to/virtualenv
 
-    * apt-get install mysql-server 
-    * apt-get install python-mysqldb
 
-   Or use pip to install mysql
+- Activate the virtualenv using the command ::
 
-    * pip install mysql-python
+		source bin/activate
 
-### To use Sqlite(For local server)
-    
-    * gedit webportal/webportal/settings.py
-    * Do the following changes
-     
-         * 'ENGINE': 'django.db.backend.sqlite3',
-	 * 'NAME' : 'webapp.db',
-	 * remove user and password.
+- Change the directory to the **webportal** project using the command ::
 
-## Run Server
+		cd /path/to/webportal
 
-### python manage.py runserver
+- Install pre-requisites Using the command ::
 
-    
+		pip install -r requirements.txt
+
+
+Usage
+-----
+
+- Use sqlite3 (For local server)
+
+	- Open webportal/webportal/settings.py and do the following changes ::
+
+		DATABASES = {
+	    		'default': {
+			 'ENGINE': 'django.db.backend.sqlite3',
+			 'NAME'  : 'webapp.db',
+			 'USER': '',
+			 'PASSWORD': '',
+			 'HOST': '',                      
+			 'PORT': '',
+			 }
+		}
+
+
+- Initialize the database using the command ::
+
+			
+		python manage.py syncdb
+
+
+- Start the server using the command ::
+
+			
+		python manage.py runserver
+
+License
+-------
+
+GNU GPL Version 3, 29 June 2007.
+
+Please refer this `link <http://www.gnu.org/licenses/gpl-3.0.txt>`_
+for detailed description.
 
