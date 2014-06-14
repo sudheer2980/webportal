@@ -42,7 +42,8 @@ class UserForm(forms.ModelForm):
 
 
 class ContributorForm(forms.ModelForm):	
-	
+
+
 	contact  = forms.CharField(
         	widget= forms.TextInput(
             		attrs={'class': 'form-control',
@@ -103,7 +104,7 @@ class ReviewerForm(forms.ModelForm):
         	widget= forms.TextInput(
             		attrs={'class': 'form-control',
                    		'placeholder': 'Reviewer specialised subject.'}),
-        				help_text="", required=False,
+        				help_text="", required=True,
        						 error_messages={'required':'specialised subject is required.'})
 	
 	class Meta:

@@ -53,6 +53,7 @@ def userlogin(request):
 	    else:
                 # An inactive account was used - no logging in!
                 messages.info(request, "Your account is disabled.")
+		return render_to_response('webapp/login.html', context)
         else:
             # Bad login details were provided. So we can't log the user in.
             messages.error(request, "Bad login!")
@@ -122,6 +123,7 @@ def contributor_signup(request):
             		print user.username
             		print user.first_name
             		user.set_password(user.password)
+			user.is_active = False
            		user.save()
 
                         contributor = contributor_form.save(commit=False)
@@ -169,6 +171,7 @@ def reviewer_signup(request):
             		print user.username
             		print user.first_name
             		user.set_password(user.password)
+			user.is_active = False
            		user.save()
 
                         reviewer = reviewer_form.save(commit=False)
@@ -180,15 +183,17 @@ def reviewer_signup(request):
 			registered = True
                         email_subject="New reviewer has registered"
 	                email_message="""
-New reviewer has registered.
+   			New reviewer has registered.
 	    	
-Details:
-Name:""" + user.first_name + """  """ + user.last_name + """"
-Email:""" + user.email + """
-Waiting for your your approval"""
+			Details:
+			Name:""" + user.first_name + """  """ + user.last_name + """"
+			Email:""" + user.email + """
+			Waiting for your your approval"""
 			#send_mail(email_subject, email_message, 'khushbu.ag23@gmail.com', ['pri.chundawat@gmail.com'],fail_silently=False)
-			#messages.success(request,"form successfully submitted. Waiting for activation  from admin.")
-			return HttpResponseRedirect(reverse('webapp.views.contributor_upload'))
+
+			messages.success(request,"form successfully submitted. Waiting for activation  from admin.")
+			return HttpResponseRedirect(reverse('webapp.views.reviewer_signup'))
+
 	        else:
 			if reviewer_form.errors or user_form.errors:
 				print user_form.errors, reviewer_form.errors
