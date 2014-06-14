@@ -48,13 +48,18 @@ Usage
 
 - Use sqlite3 (For local server)
 
-	- Open webportal/webportal/settings.py
+	- Open webportal/webportal/settings.py and do the following changes ::
 
-	- Do the following changes
-
-		* 'ENGINE': 'django.db.backend.sqlite3',
-		* 'NAME'  : 'webapp.db',
-		*  Keep the 'USER' and 'PASSWORD' fields blank
+		DATABASES = {
+	    		'default': {
+			 'ENGINE': 'django.db.backend.sqlite3',
+			 'NAME'  : 'webapp.db',
+			 'USER': '',
+			 'PASSWORD': '',
+			 'HOST': '',                      
+			 'PORT': '',
+			 }
+		}
 
 
 - Initialize the database using the command ::
