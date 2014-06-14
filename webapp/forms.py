@@ -42,6 +42,8 @@ class UserForm(forms.ModelForm):
 
 
 class ContributorForm(forms.ModelForm):	
+	error_css_class = 'error'
+	required_css_class= 'required_error'
 	picture = forms.ImageField(label='Profile picture',
         	widget = forms.FileInput(
             		attrs={'placeholder': 'Contributor picture.'}),
@@ -101,7 +103,7 @@ class ReviewerForm(forms.ModelForm):
         	widget= forms.TextInput(
             		attrs={'class': 'form-control',
                    		'placeholder': 'Reviewer specialised subject.'}),
-        				help_text="", required=False,
+        				help_text="", required=True,
        						 error_messages={'required':'specialised subject is required.'})
 	
 	class Meta:

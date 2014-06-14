@@ -183,15 +183,15 @@ def reviewer_signup(request):
 			registered = True
                         email_subject="New reviewer has registered"
 	                email_message="""
-New reviewer has registered.
+   			New reviewer has registered.
 	    	
-Details:
-Name:""" + user.first_name + """  """ + user.last_name + """"
-Email:""" + user.email + """
-Waiting for your your approval"""
+			Details:
+			Name:""" + user.first_name + """  """ + user.last_name + """"
+			Email:""" + user.email + """
+			Waiting for your your approval"""
 			#send_mail(email_subject, email_message, 'khushbu.ag23@gmail.com', ['pri.chundawat@gmail.com'],fail_silently=False)
-			#messages.success(request,"form successfully submitted. Waiting for activation  from admin.")
-			return HttpResponseRedirect(reverse('webapp.views.index'))
+			messages.success(request,"form successfully submitted. Waiting for activation  from admin.")
+			return HttpResponseRedirect(reverse('webapp.views.reviewer_signup'))
 	        else:
 			if reviewer_form.errors or user_form.errors:
 				print user_form.errors, reviewer_form.errors
