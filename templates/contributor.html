@@ -1,7 +1,6 @@
 
-<!DOCTYPE html>
-<html>
-<body>
+{% extends 'base.html' %}
+{% block content %}
 <h1>Welcome to the Uploading page {{contri_username}}</h1>
 {% for i in uploads %}
 	
@@ -37,5 +36,4 @@
 <a href="/user/password/change">
 <button id='Password-reset-button' type='submit' ><span>Change Password</span></button></a>
 
-</body>
-</html>
+{% endblock content %}

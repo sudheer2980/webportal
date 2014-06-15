@@ -342,6 +342,7 @@ def contributor_upload(request):
         context_dict = {'contributor_upload_form': contributor_upload_form, 'uploaded':uploaded}
         return render_to_response("upload.html", context_dict, context)
 
+
 @login_required
 def contributor_profile_edit(request):
     """Edit user's/Coordinators profile.
@@ -460,3 +461,4 @@ Arguments:
 
 def edit_success(request):
 	return render_to_response('edit_success.html')
+
