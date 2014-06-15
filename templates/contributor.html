@@ -2,14 +2,12 @@
 <!DOCTYPE html>
 <html>
 <body>
-<h1>Welcome to the Uploading page {{ user.username }}</h1>
-
-
-
+<h1>Welcome to the Uploading page {{contri_username}}</h1>
 {% for i in uploads %}
-	{{i.name}}
 	
-	<h2>{{i.topic}}</h2><a href="/media/{{i.pdf}}">FILE</a>
+        <a href="/contributor/profile/{{contri_username}}/{{i}}">{{i}}</a>
+	
+<!--	<h2>{{i.topic}}</h2><a href="/media/{{i.pdf}}">FILE</a>
 	<h3>{{i.summary}}</h3>
 	
 	{{i.id}}
@@ -17,12 +15,12 @@
 		<h3>{{i.summary}}</h3>
 	
 	{{i.rating}}<br>
-	{{i.approve}}	<br><br><br>
+	{{i.approve}}	<br><br><br> -->
 	<hr>	
 {% endfor %}
 
 <p> For more uploads </p>
-<a href= "http://127.0.0.1:8000/webapp/upload/">Upload more </a><br><br>
+<a href= "/webapp/upload/">Upload more </a><br><br>
 
 
 <a href="/logout">
