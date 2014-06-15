@@ -1,25 +1,13 @@
-
 <!DOCTYPE html>
 <html>
 <body>
-<h1>Welcome to the Uploading page {{contri_username}}</h1>
+<h1>Welcome to the Subject page {{contri_username}}</h1>
+
 
 
 
 {% for i in uploads %}
-	
-        <a href="/contributor/profile/{{contri_username}}/{{i}}">{{i}}</a>
-	
-<!--	<h2>{{i.topic}}</h2><a href="/media/{{i.pdf}}">FILE</a>
-	<h3>{{i.summary}}</h3>
-	
-	{{i.id}}
-		<a href="/media/{{i.video}}"> Video </a>
-		<h3>{{i.summary}}</h3>
-	
-	{{i.rating}}<br>
-	{{i.approve}}	<br><br><br> -->
-	<hr>	
+	<a href="/contributor/profile/{{contri_username}}/{{class_num}}/{{i}}">{{i}}</a> 
 {% endfor %}
 
 <p> For more uploads </p>
