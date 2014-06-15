@@ -89,6 +89,8 @@ class ContributorForm(forms.ModelForm):
 
 
 class ReviewerForm(forms.ModelForm):	
+	error_css_class = 'error'
+        required_css_class = 'required'
 	picture = forms.ImageField(label='Profile picture',
         	widget = forms.FileInput(
             		attrs={'placeholder': 'Reviewer picture.'}),
