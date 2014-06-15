@@ -54,10 +54,10 @@
                     <li class="page-scroll">
                         <a href="/about/">About</a>
                     </li>
-		    {% if user.is_contributor %}
+		    {% if user in contributor %}
 		    <li class="page-scroll">
 			<a href="/contributor/profile/(?P<contri_username>\w+)/">upload</li>
-		    {% elif user.is_reviewer %}
+		    {% elif user in reviewer %}
 		      <li class="page-scroll">
 			<a href="/reviewer/profile/">review</li>
 		    {% else %}
