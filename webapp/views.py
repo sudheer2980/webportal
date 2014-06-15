@@ -26,10 +26,11 @@ def index(request):
     return render_to_response("webapp/index.html")
 
 def userlogin(request):
-    """Login form, Enables the user to login after successful sign-up.
-    
+    """
     Arguments:
-    	REQUEST
+    -`REQUEST`: request from user
+
+    Login form, Enables the user to login after successful sign-up.
     """
     context = RequestContext(request)
     if request.method == 'POST':
@@ -53,7 +54,10 @@ def userlogin(request):
                        
             	else:
 			login(request,user1)
-			return HttpResponseRedirect('/reviewer/profile')
+			rev_username=user1.username
+			url=reverse('webapp.views.reviewer_profile',kwargs={'rev_username':rev_username})
+                        return HttpResponseRedirect(url)
+			# return HttpResponseRedirect('/reviewer/profile')
 	    else:
                 # An inactive account was used - no logging in!
                 messages.info(request, "Your account is disabled.")
@@ -76,10 +80,7 @@ def contributor_profile(request,contri_username):
 	This function takes the request of user and direct it to profile page.
 	"""
            
-	context = RequestContext(request)
-	sub=Subject.objects.get(pk=1)
-	contri = sub.contributor
-	print contri.user.username
+	context = RequestContext(request)	
         uploads = Subject.objects.values_list('class_number__class_number',flat=True).filter(contributor__user=request.user).distinct()
 	context_dict = {'uploads': uploads,'contri_username':contri_username}
     	return render_to_response('contributor.html', context_dict, context)
@@ -90,7 +91,7 @@ def contributor_profile_subject(request,contri_username,class_num):
 	Argument:
 	-`REQUEST`:request from user
 	-`contri_username` : username of the contributor logged in
-	class_num: class in which the logged in contributor has contributed
+	-`class_num` : class in which the logged in contributor has contributed
 	This function takes the request of user and direct it to profile page which consists of his contributions in a specific class.
 	"""
 	context = RequestContext(request)
@@ -131,30 +132,62 @@ def contributor_profile_comment(request,contri_username,class_num,sub,topics,id)
 
 
 @login_required
-def reviewer_profile(request):
+def reviewer_profile(request,rev_username):
+	"""
+	Argument:
+	-`REQUEST`:request from user
+	-`rev_username` : username of the reviewer logged in
+	This function takes the request of user and directs it to the profile page.
+	"""
 	context = RequestContext(request)
-	rev = Reviewer.objects.get(user = request.user)
-	user = rev.user
-	uploads = Subject.objects.filter(name = rev.specialised_subject).filter(review__lt = 3)
-        context_dict = {'uploads' : uploads , 'user':user}
+	uploads = Subject.objects.values_list('class_number__class_number',flat=True).filter(review__lt = 3).distinct()
+        context_dict = {'uploads' : uploads , 'rev_username':rev_username}
 	return render_to_response("reviewer.html",context_dict,context)
 
-def reviewer_comment(request,sub_id,rev_id):
+
+def reviewer_profile_subject(request,rev_username,class_num):
+	"""
+	Argument:
+	-`REQUEST`:request from user
+	-`rev_username` : username of the contributor logged in
+	-`class_num` : class in which the contributor has contributed.
+	This function takes the request of user and direct it to the profile page which consists of the contributor's contributions in a specific class.
+	"""
 	context = RequestContext(request)
-	print "sub_id = " + sub_id
-	print "rev_id = " + rev_id
-	comment = Comment.objects.filter(subject_id = sub_id)
-	reviewer = Reviewer.objects.get(user_id = rev_id)
+	uploads = Subject.objects.values_list('name',flat=True).filter(class_number__class_number=class_num).filter(review__lt = 3).distinct()
+	
+	context_dict = {'uploads': uploads, 'class_num':class_num,'rev_username':rev_username}
+	return render_to_response('reviewer_subject.html', context_dict, context)
+
+
+def reviewer_profile_topic(request,rev_username,class_num,sub):
+	"""
+	Argument:
+	-`REQUEST`:request from user
+	-`rev_username` : username of the reviewer logged in
+	-`class_num` : class in which the contributor has contributed
+	-`sub` : subject in which the contributor has contributed
+	This function takes the request of user and directs it to the profile page which consists of the contributor's contributions in a specific subject of a specific class.
+	"""
+	context = RequestContext(request)
+	uploads = Subject.objects.filter(class_number__class_number=class_num).filter(name=sub).filter(review__lt = 3)
+	context_dict = {'uploads': uploads, 'class_num':class_num, 'sub':sub,'rev_username': rev_username}
+	return render_to_response('reviewer_topic.html', context_dict, context)
+
+def reviewer_profile_comment(request,rev_username,class_num,sub,topics,id):
+	context = RequestContext(request)
+	comment = Comment.objects.filter(subject_id = id)
+	reviewer = Reviewer.objects.get(user = request.user)
 	if request.method == 'POST':
 		print  "we have a new comment"
 		comment_form = CommentForm(data = request.POST)
 		if comment_form.is_valid():
 			comments = comment_form.save(commit=False)
-			subject = Subject.objects.get(pk = sub_id)
+			subject = Subject.objects.get(pk = id)
 			comments.subject = subject
 			comments.user = reviewer
 			comments.save()
-			url = reverse('webapp.views.reviewer_comment', kwargs={'sub_id': sub_id, 'rev_id' : rev_id})
+			url = reverse('webapp.views.reviewer_profile_comment', kwargs={'rev_username':rev_username,'class_num' : class_num ,'sub':sub,'topics':topics,'id':id})
 			return HttpResponseRedirect(url) 
 			# return HttpResponseRedirect(reverse('/reviewer/profile/comments/%s/%s/' % sub_id % rev_id))
 		else:
@@ -296,6 +329,9 @@ def contributor_upload(request):
 			                     
                         subject.save()
 			uploaded = True
+			contri_username = request.user.username
+			url=reverse('webapp.views.contributor_profile',kwargs={'contri_username':contri_username})
+                        return HttpResponseRedirect(url)
 			return HttpResponseRedirect(reverse('webapp.views.contributor_profile'))
 	        else:
 			if contributor_upload_form.errors:
@@ -304,7 +340,7 @@ def contributor_upload(request):
 		contributor_upload_form = ContributorUploadForm()	
            
         context_dict = {'contributor_upload_form': contributor_upload_form, 'uploaded':uploaded}
-        return render_to_response("webapp/upload.html", context_dict, context)
+        return render_to_response("upload.html", context_dict, context)
 
 @login_required
 def contributor_profile_edit(request):

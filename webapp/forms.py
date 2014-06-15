@@ -51,13 +51,6 @@ class ContributorForm(forms.ModelForm):
         				help_text="", required=False,
        						 error_messages={'required':'Last name is required.'})
 
-	specialised_subject = forms.CharField(
-        	widget= forms.TextInput(
-            		attrs={'class': 'form-control',
-                   		'placeholder': 'Contribtor specialised subject.'}),
-        				help_text="", required=False,
-       						 error_messages={'required':'specialised subject is required.'})
-	
 	validation_docs = forms.FileField(
         	label = 'Validation file.',
         		widget = forms.FileInput(),
@@ -70,7 +63,7 @@ class ContributorForm(forms.ModelForm):
         			required=False)
 	class Meta:
         		model =  Contributor
-        		fields = ('picture', 'contact','specialised_subject', 'validation_docs')
+        		fields = ('picture', 'contact', 'validation_docs')
 
 	def clean_validtion_docs_file(self):
         		"""Limit doc_file upload size."""
@@ -79,14 +72,6 @@ class ContributorForm(forms.ModelForm):
                       		return validation_docs
 			else:
 				raise forms.ValidationError("Not a valid file!")
-	def clean_picture_file(self):
-        		"""Limit doc_file upload size."""
-        		if self.cleaned_data['picture']:
-            			picture= self.cleaned_data['picture']
-                      		return picture
-			else:
-				raise forms.ValidationError("Not a valid profile picture!")	
-
 
 class ReviewerForm(forms.ModelForm):	
 	picture = forms.ImageField(label='Profile picture',
@@ -99,25 +84,10 @@ class ReviewerForm(forms.ModelForm):
                    		'placeholder': 'Reviewer contact number.'}),
         				help_text="", required=False,
        						 error_messages={'required':'Last name is required.'})
-
-	specialised_subject = forms.CharField(
-        	widget= forms.TextInput(
-            		attrs={'class': 'form-control',
-                   		'placeholder': 'Reviewer specialised subject.'}),
-        				help_text="", required=True,
-       						 error_messages={'required':'specialised subject is required.'})
 	
 	class Meta:
         		model =  Reviewer
-        		fields = ('picture', 'contact','specialised_subject')
-
-	def clean_picture_file(self):
-        		"""Limit doc_file upload size."""
-        		if self.cleaned_data['picture']:
-            			picture= self.cleaned_data['picture']
-                      		return picture
-			else:
-				raise forms.ValidationError("Not a valid profile picture!")	
+        		fields = ('picture', 'contact')
 
 
 class ContributorUploadForm(forms.ModelForm):
