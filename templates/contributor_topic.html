@@ -1,21 +1,6 @@
 {% extends 'base.html' %}
-<<<<<<< HEAD
 <h1>Welcome to the Topic page {{contri_username}}</h1>
-{% block content %}
-<br/><br/><br/><br/><br/>
 
-<div class="row">
-  	<div class="col-md-12">
-   		 
-    			<div class="row">
-      				<div class="col-md-8 col-md-offset-1"><br/>
-				{{uploads.class}}
-				<h3>Subjects</h3><br/><br/>TOPIC<br>
-				{% for i in uploads %}
-			       <a href="/contributor/profile/{{contri_username}}/{{class_num}}/{{sub}}/{{i.topic}}/{{i.id}}">{{i}}<br>{{i.topic}}</a>
-				{% endfor %}
-            			</div>
-=======
 {% block content %}
 <br/><br/><br/><br/><br/><br/><br/>
    			<div class="row">
@@ -43,7 +28,7 @@
 				      </p>
 				    </td>
 				    
-				    <td><a href="/contributor/profile/{{contri_username}}/{{class_num}}/{{sub}}/{{i.topic}}/{{i.id}}"></        a><strong>{{i.topic}}</strong></a>
+				    <td><a href="/contributor/profile/{{contri_username}}/{{class_num}}/{{sub}}/{{i.topic}}/{{i.id}}"></    a><strong>{{i.topic}}</strong></a>
 				    </td>
 				    
 				    <td align="center">{{i.summary}}
@@ -62,7 +47,7 @@
 				  </tr>
 				{% endfor %}</table></div>
 			        </div>
->>>>>>> 6eddd9cb4e74a2b00af4db9a4db47cc97d6b21d3
+
       				<div class="col-md-3"><br/></br/>
 				<strong>Welcome {{contri_username}}</strong><br/></br>
 				{{contri.first_name}}
@@ -72,23 +57,9 @@
 				<button id='Edit-Profile-button' type='submit' ><span>Edit Profile</span></button></a><br/><br/><br/>
 				<a href="/user/password/change">
 				<button id='Password-reset-button' type='submit' ><span>Change Password</span></button></a>
-<<<<<<< HEAD
-				<br><br>
+
 				</div>
     			</div>
-  	</div>
-</div>
-{% endblock content %}
-
-
-
-
-=======
-		
-				</div>
-    			</div>
-  	
-
 
 {% endblock content %}
->>>>>>> 6eddd9cb4e74a2b00af4db9a4db47cc97d6b21d3
+
