@@ -57,6 +57,7 @@ def populate_users():
         print "Following user(s) created successfully."
         for i in user_list:
             print i.username
+	    
 
 
 
@@ -146,7 +147,7 @@ def add_user(username, first_name, last_name, email, password):
     u = User.objects.create_user(username=username, first_name=first_name,
                                  last_name=last_name,
                                  email=email, password=password)
-    u.is_active=False
+    u.is_active=True
     u.save()
     return u
 
