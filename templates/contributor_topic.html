@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+
 <br/><br/><br/><br/><br/><br/><br/>
    			<div class="row">
       				<div class="col-md-8 col-md-offset-1"><br/>
@@ -30,17 +31,16 @@
 				    
 				    <td>
 				    {% if i.pdf %}
-				      <a href="/media/{{i.pdf}}"><img src="{% static 'doc.jpg' %}" height="50" width="50"
-	   				class="img-rounded img-responsive"></a>
+				    
+				      <a href="/media/{{i.pdf}}"><i class="fa fa-file-pdf-o fa-2x"></i></a>
 			            {% else %}
 				    {% endif %}	</td><td>
 				    {% if i.video %}
-					<a href="/media/{{i.video}}"><img src="{% static 'video.jpg' %}" height="50" width="50"
-	   				class="img-rounded img-responsive"></a>
+					<a href="/media/{{i.video}}"><i class="fa fa-file-video-o fa-2x"></i></a>
 					{% else %}
 				    {% endif %}	</td><td>
 				    {% if i.animation %}
-					<a href="/media/animation/{{i.animation}}">ani</a>
+					<a href="/media/animation/{{i.animation}}"><i class="fa fa-file-image-o fa-2x"></i></a>
 				    {% else %}
 				    {% endif %}	
 				    </td>         
