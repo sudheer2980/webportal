@@ -19,7 +19,7 @@ from webapp.forms import ContributorForm , ReviewerForm, UserForm, ContributorUp
 def index(request):
     """
     Argument:
-    -`REQUEST`:request from user
+    -`REQUEST` : Request from user
 
     This function takes the request of user and direct it to home page.
     """
@@ -28,8 +28,8 @@ def index(request):
 def userlogin(request):
     """Login form, Enables the user to login after successful sign-up.
     
-    Arguments:
-    	REQUEST
+    Argument:
+    -`REQUEST` : Request from the user to login
     """
     context = RequestContext(request)
     if request.method == 'POST':
@@ -65,6 +65,10 @@ def userlogin(request):
 
 @login_required
 def contributor_profile(request):
+	"""This displays the contributor's profile page.
+	   Argument:
+	   -`REQUEST` : When the contributor signs up the profile page of contributor will be displayed.
+	"""
 	context = RequestContext(request)
         uploads = Subject.objects.filter(contributor__user__username=request.user)
 	context_dict = {'uploads': uploads}
@@ -73,6 +77,10 @@ def contributor_profile(request):
 
 @login_required
 def reviewer_profile(request):
+	"""This displays the reviewer's profile page.
+	   Argument:
+	   -`REQUEST` : When the reviewer logs in the profile page of reviewer will be displayed.
+	"""
 	context = RequestContext(request)
 	rev = Reviewer.objects.get(user = request.user)
 	user = rev.user
@@ -81,6 +89,12 @@ def reviewer_profile(request):
 	return render_to_response("reviewer.html",context_dict,context)
 
 def reviewer_comment(request,sub_id,rev_id):
+	"""Comment corresponding to the request
+	   Arguments:
+	   -`REQUEST` : Request from the contibutor
+	   -`SUB_ID` : This is the subject id to which the reviewer has to comment
+	   -`REV_ID` : This is the id of the reviewer.
+	"""
 	context = RequestContext(request)
 	print "sub_id = " + sub_id
 	print "rev_id = " + rev_id
@@ -109,8 +123,10 @@ def reviewer_comment(request,sub_id,rev_id):
 
 
 def contributor_signup(request):
-
-	"""Request for new contributor to signup"""
+	"""Request for new contributor to signup
+	   Argument:
+	   -`REQUEST` : Request from the contributor to sign up
+	"""
 	context = RequestContext(request)
 	registered = False
 	if request.method == 'POST':
@@ -137,12 +153,12 @@ def contributor_signup(request):
 			registered = True
                         email_subject="New Contributor has registered"
 	                email_message="""
-New Contributor has registered.
+			New Contributor has registered.
 	    	
-Details:
-Name:""" + user.first_name + """  """ + user.last_name + """"
-Email:""" + user.email + """
-Waiting for your your approval"""
+			Details:
+			Name:""" + user.first_name + """  """ + user.last_name + """"
+			Email:""" + user.email + """
+			Waiting for your your approval"""
 			#send_mail(email_subject, email_message, 'khushbu.ag23@gmail.com', ['pri.chundawat@gmail.com'],fail_silently=False)
 			#messages.success(request,"form successfully submitted. Waiting for activation  from admin.")
 			return HttpResponseRedirect(reverse('webapp.views.index'))
@@ -158,7 +174,10 @@ Waiting for your your approval"""
 
 
 def reviewer_signup(request):
-	"""Request for new contributor to signup"""
+	"""Request for new contributor to signup
+	   Argument:
+	   -`REQUEST` : Request from the contributor to sign up
+	"""
 	context = RequestContext(request)
 	registered = False
 	if request.method == 'POST':
@@ -204,17 +223,20 @@ def reviewer_signup(request):
 
 
 def user_logout(request):
+	"""Request from the user
+	   Argument: 
+	   -`REQUEST` : Request from the user to log out
+	"""
 	context=RequestContext(request)
 	logout(request)
 	return HttpResponseRedirect('/')
 
 		
-def commentpost(request):
-	return render_to_response('templates/comments/post.html')
-
-
 def contributor_upload(request):
-	"""Request for new upload by the contributor"""
+	"""Request for new upload by the contributor
+	   Argument:
+	   -`REQUEST` : Request from the contributor for a new upload
+	"""
 	context = RequestContext(request)
 	uploaded= False
 	if request.method == 'POST':
