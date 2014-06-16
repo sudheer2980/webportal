@@ -194,8 +194,8 @@ def reviewer_profile_comment(request,rev_username,class_num,sub,topics,id):
 				print comment_form.errors
 	else:	
 		comment_form = CommentForm()
-        context_dict = {'comment_form': comment_form, 'comment' : comment}
-	return render_to_response("comments.html",context_dict,context)
+        context_dict = {'rev_username': rev_username,'comment_form': comment_form, 'comment' : comment}
+	return render_to_response("reviewer_comment.html",context_dict,context)
 
 
 
@@ -394,8 +394,8 @@ Arguments:
                 print contributorform.errors, userform.errors
     else:
         # aakashcentreform = AakashCentreForm(instance=aakashcentre)
-        contributorform = ContributorForm(instance=contributor)
-        userform = UserForm(instance=user)
+        contributorform = ContributorForm()
+        userform = UserForm()
 
     context_dict = {'contributorform': contributorform,
                     'userform': userform}
@@ -408,6 +408,7 @@ def reviewer_profile_edit(request):
 Arguments:
 - `request`:
 """
+    print "hi"
     context = RequestContext(request)
     print request.user
     user = get_object_or_404(User, username=request.user)
@@ -449,8 +450,9 @@ Arguments:
             if reviewerform.errors or userform.errors:
                 print reviewerform.errors, userform.errors
     else:
-        reviewerform = ReviewerForm(instance=reviewer)
-        userform = UserForm(instance=user)
+	print "ELSE"
+        reviewerform = ReviewerForm()
+        userform = UserForm()
 
     context_dict = {'reviewerform': reviewerform,
                     'userform': userform}
