@@ -1,30 +1,77 @@
-<!DOCTYPE html>
-<html>
-<body>
-<h1><u>Welcome to the Topic page {{ rev_username }}</u></h1>
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
 
+<br/><br/><br/><br/><br/><br/><br/>
+   			<div class="row">
+      				<div class="col-md-8 col-sm-8 col-md-offset-1"><br/>
+				<h3>Review in class {{class_num}}</h3>
+				<div class="table-responsive">
+				<table class="table table-hover">
+				 <tr class="success">
+    				    <td><strong>subject</strong></td>
+    				    <td><strong>Topic</strong></td>
+			            <td><strong>Summary</strong></td>
+			            <td><strong>PDF</strong></td>
+				    <td><strong>Video</strong></td>
+				    <td><strong>animation</strong></td>
+					
+  				 </tr>
+  				{% for i in uploads %}
+				 <tr class="active">
+   				 <td><strong>{{i.name}}</strong></a>
+				      </p>
+				    </td>
+				    
+				    <td><a href="/reviewer/profile/{{rev_username}}/{{class_num}}/{{sub}}/{{i.topic}}/{{i.id}}"></    a><strong>{{ i.topic }}</strong></a>
+				    </td>
+				    
+				    <td>{{i.summary}}
+				    </td>
+				    
+				    <td>
+				    {% if i.pdf %}
+				    
+				      <a href="/media/{{i.pdf}}"><i class="fa fa-file-pdf-o fa-2x"></i></a>
+			            {% else %}
+				    {% endif %}	</td><td>
+				    {% if i.video %}
+					<a href="/media/{{i.video}}"><i class="fa fa-file-video-o fa-2x"></i></a>
+					{% else %}
+				    {% endif %}	</td><td>
+				    {% if i.animation %}
+					<a href="/media/animation/{{i.animation}}"><i class="fa fa-file-image-o fa-2x"></i></a>
+				    {% else %}
+				    {% endif %}	
+				    </td>         
+				  </tr>
+				{% endfor %}</table></div>
+			        </div>
 
-{% for i in uploads %}
+      				<div class="col-md-2 col-sm-2"><br/>
+				
+				
+				<strong>Welcome {{rev_username}}</strong><br>
+				<strong>Name:</strong> {{reviewer.user.first_name}}
+				{{reviewer.user.last_name}}<br>
+				<strong>Contact:</strong> {{reviewer.contact}}<br>
+				<strong>Email:</strong> {{reviewer.user.email}}<br><br>
+				
+				
+				<a href= "/webapp/upload/">Upload more </a><br><br>
+				<a href="/contributor/profile/edit/">
+				<button id='Edit-Profile-button' type='submit' ><span>Edit Profile</span></button></a><br/>
+				<a href="/user/password/change">
+				<button id='Password-reset-button' type='submit' ><span>Change Password</span></button></a>
+		  		
+				</div>
+			        <div class="col-md-1 col-sm-1"><br>
+                                <img src="/media/{{reviewer.picture}}" width=100px height=100px align=right>
+				<br><br>
+                          	</div>
 
-		<!-- <a href="/reviewer/profile/{{rev_username}}/{{class_num}}/{{sub}}/{{i.topic}}/{{i.id}}">{{i.topic}}</a> --> 
-		<h1>{{i.name}}</h1>
-		<h2>{{i.topic}}</h2><a href="/media/{{i.pdf}}">FILE</a>
-		<p>{{i.summary}}</p>
-	<a href="/reviewer/profile/{{rev_username}}/{{class_num}}/{{sub}}/{{i.topic}}/{{i.id}}">View comments </a>
-{% endfor %}
+				
+    			</div>
 
+{% endblock content %}
 
-<a href="/logout">
-<button id='Logout-button' type='submit' ><span>Log out</span></button></a><br><br>
-
-
-
-<a href="/reviewer/profile/edit/">
-<button id='Edit-Profile-button' type='submit' ><span>Edit Profile</span></button></a>
-
-
-<a href="/user/password/change">
-<button id='Password-reset-button' type='submit' ><span>Change Password</span></button></a>
-
-</body>
-</html>

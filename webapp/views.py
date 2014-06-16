@@ -141,8 +141,9 @@ def reviewer_profile(request,rev_username):
 	This function takes the request of user and directs it to the profile page.
 	"""
 	context = RequestContext(request)
+        reviewer= Reviewer.objects.get(user=request.user)
 	uploads = Subject.objects.values_list('class_number__class_number',flat=True).filter(review__lt = 3).distinct()
-        context_dict = {'uploads' : uploads , 'rev_username':rev_username}
+        context_dict = {'uploads' : uploads , 'rev_username':rev_username,'reviewer':reviewer}
 	return render_to_response("reviewer.html",context_dict,context)
 
 
@@ -155,9 +156,10 @@ def reviewer_profile_subject(request,rev_username,class_num):
 	This function takes the request of user and direct it to the profile page which consists of the contributor's contributions in a specific class.
 	"""
 	context = RequestContext(request)
+	reviewer= Reviewer.objects.get(user=request.user)
 	uploads = Subject.objects.values_list('name',flat=True).filter(class_number__class_number=class_num).filter(review__lt = 3).distinct()
 	
-	context_dict = {'uploads': uploads, 'class_num':class_num,'rev_username':rev_username}
+	context_dict = {'uploads': uploads, 'class_num':class_num,'rev_username':rev_username,'reviewer':reviewer}
 	return render_to_response('reviewer_subject.html', context_dict, context)
 
 
@@ -171,8 +173,9 @@ def reviewer_profile_topic(request,rev_username,class_num,sub):
 	This function takes the request of user and directs it to the profile page which consists of the contributor's contributions in a specific subject of a specific class.
 	"""
 	context = RequestContext(request)
+	reviewer= Reviewer.objects.get(user=request.user)
 	uploads = Subject.objects.filter(class_number__class_number=class_num).filter(name=sub).filter(review__lt = 3)
-	context_dict = {'uploads': uploads, 'class_num':class_num, 'sub':sub,'rev_username': rev_username}
+	context_dict = {'uploads': uploads, 'class_num':class_num, 'sub':sub,'rev_username': rev_username, 'reviewer':reviewer}
 	return render_to_response('reviewer_topic.html', context_dict, context)
 
 def reviewer_profile_comment(request,rev_username,class_num,sub,topics,id):
