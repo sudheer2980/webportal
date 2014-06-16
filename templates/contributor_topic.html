@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
 <br/><br/><br/><br/><br/><br/><br/>
    			<div class="row">
@@ -7,38 +8,39 @@
 				<div class="table-responsive">
 				<table class="table table-hover">
 				 <tr class="success">
-                                    <td><strong>Icon</strong></td>
     				    <td><strong>subject</strong></td>
     				    <td><strong>Topic</strong></td>
 			            <td><strong>Summary</strong></td>
-			            <td><strong>Content</strong></td>
+			            <td><strong>PDF</strong></td>
+				    <td><strong>Video</strong></td>
+				    <td><strong>animation</strong></td>
+					
   				 </tr>
   				{% for i in uploads %}
 				 <tr class="active">
-    					<td>
-      
-      					<img src="media/project_logo/apl.png" height="60" width="60"
-	   				class="img-rounded img-responsive">
-      
-				    </td>
-				    
-				    <td><strong>{{i.name}}</strong></a>
+   				 <td><strong>{{i.name}}</strong></a>
 				      </p>
 				    </td>
 				    
 				    <td><a href="/contributor/profile/{{contri_username}}/{{class_num}}/{{sub}}/{{i.topic}}/{{i.id}}"></        a><strong>{{i.topic}}</strong></a>
 				    </td>
 				    
-				    <td align="center">{{i.summary}}
+				    <td>{{i.summary}}
 				    </td>
 				    
 				    <td>
 				    {% if i.pdf %}
-				      <a href="/media/{{i.pdf}}">PDF</a>
-				    {% elif i.video %}
-					<a href="media/{{i.video}}">video</a>
-				    {% elif i.animation %}
-					<a href="media/animation/{{i.animation}}">ani</a>
+				      <a href="/media/{{i.pdf}}"><img src="{% static 'doc.jpg' %}" height="50" width="50"
+	   				class="img-rounded img-responsive"></a>
+			            {% else %}
+				    {% endif %}	</td><td>
+				    {% if i.video %}
+					<a href="/media/{{i.video}}"><img src="{% static 'video.jpg' %}" height="50" width="50"
+	   				class="img-rounded img-responsive"></a>
+					{% else %}
+				    {% endif %}	</td><td>
+				    {% if i.animation %}
+					<a href="/media/animation/{{i.animation}}">ani</a>
 				    {% else %}
 				    {% endif %}	
 				    </td>         
