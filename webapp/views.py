@@ -46,11 +46,11 @@ def userlogin(request):
 		u=User.objects.get(username=user1.username)
 		if Contributor.objects.filter(user=u):		
 			login(request,user1)
-                        return HttpResponseRedirect('/contributor/profile')
+                        return HttpResponseRedirect('/contributor/profile/')
                        
             	else:
 			login(request,user1)
-			return HttpResponseRedirect('/reviewer/profile')
+			return HttpResponseRedirect('/reviewer/profile/')
 	    else:
                 # An inactive account was used - no logging in!
                 messages.info(request, "Your account is disabled.")
