@@ -1,0 +1,292 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Webapp &mdash; webportal 0.9 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.9',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="webportal 0.9 documentation" href="index.html" />
+    <link rel="prev" title="Welcome to webportal’s documentation!" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to webportal’s documentation!"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">webportal 0.9 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="webapp">
+<h1>Webapp<a class="headerlink" href="#webapp" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-webapp.views">
+<span id="views"></span><h2>Views<a class="headerlink" href="#module-webapp.views" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="webapp.views.contributor_profile">
+<tt class="descclassname">webapp.views.</tt><tt class="descname">contributor_profile</tt><big>(</big><em>request</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#webapp.views.contributor_profile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Arguments:</p>
+<p><cite>REQUEST</cite>: Request from user.</p>
+<p><cite>CONTRI_USERNAME</cite>: Username of the contributor logged in.</p>
+<p>This function takes the request of user and direct it to profile page.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="webapp.views.contributor_profile_comment">
+<tt class="descclassname">webapp.views.</tt><tt class="descname">contributor_profile_comment</tt><big>(</big><em>request</em>, <em>contri_username</em>, <em>class_num</em>, <em>sub</em>, <em>topics</em>, <em>id</em><big>)</big><a class="headerlink" href="#webapp.views.contributor_profile_comment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Arguments:</p>
+<p><cite>REQUEST</cite>: Request from user.</p>
+<p><cite>CONTRI_USERNAME</cite>: Username of the contributor logged in.</p>
+<p><cite>CLASS_NUM</cite>: Class in which the logged in contributor has contributed.</p>
+<p><cite>SUB</cite>: Subject in which the logged in contributor has contributed.</p>
+<p><cite>TOPIC</cite>: Subject topic in which the logged in contributor has contributed.</p>
+<p>This function takes the request of client and direct it to profile page which consists of his comments of reviewer on a specified topic of a subject of a specific class.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="webapp.views.contributor_profile_edit">
+<tt class="descclassname">webapp.views.</tt><tt class="descname">contributor_profile_edit</tt><big>(</big><em>request</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#webapp.views.contributor_profile_edit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Arguments:</p>
+<p><cite>REQUEST</cite>: Edit the profile of contributor.
+Edit user&#8217;s/Coordinators profile.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="webapp.views.contributor_profile_subject">
+<tt class="descclassname">webapp.views.</tt><tt class="descname">contributor_profile_subject</tt><big>(</big><em>request</em>, <em>contri_username</em>, <em>class_num</em><big>)</big><a class="headerlink" href="#webapp.views.contributor_profile_subject" title="Permalink to this definition">¶</a></dt>
+<dd><p>Arguments:</p>
+<p><cite>REQUEST</cite>: Request from user.</p>
+<p><cite>CONTRI_USERNAME</cite>: Username of the contributor logged in.</p>
+<p><cite>CLASS_NUM</cite>: Class in which the logged in contributor has contributed.</p>
+<p>This function takes the request of client and direct it to profile page which consists of his contributions in a specific class.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="webapp.views.contributor_profile_topic">
+<tt class="descclassname">webapp.views.</tt><tt class="descname">contributor_profile_topic</tt><big>(</big><em>request</em>, <em>contri_username</em>, <em>class_num</em>, <em>sub</em><big>)</big><a class="headerlink" href="#webapp.views.contributor_profile_topic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Arguments:</p>
+<p><cite>REQUEST</cite>:Request from user.</p>
+<p><cite>CONTRI_USERNAME</cite>: Username of the contributor logged in.</p>
+<p><cite>CLASS_NUM</cite>: Class in which the logged in contributor has contributed.</p>
+<p><cite>SUB</cite>: Subject in which the logged in contributor has contributed.</p>
+<p>This function takes the request of client and direct it to profile page which consists of his contributions in a specific subject of a specific class.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="webapp.views.contributor_signup">
+<tt class="descclassname">webapp.views.</tt><tt class="descname">contributor_signup</tt><big>(</big><em>request</em><big>)</big><a class="headerlink" href="#webapp.views.contributor_signup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Request for new contributor to signup</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="webapp.views.contributor_upload">
+<tt class="descclassname">webapp.views.</tt><tt class="descname">contributor_upload</tt><big>(</big><em>request</em><big>)</big><a class="headerlink" href="#webapp.views.contributor_upload" title="Permalink to this definition">¶</a></dt>
+<dd><p>Request for new upload by the contributor</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="webapp.views.index">
+<tt class="descclassname">webapp.views.</tt><tt class="descname">index</tt><big>(</big><em>request</em><big>)</big><a class="headerlink" href="#webapp.views.index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Argument:</p>
+<p><cite>REQUEST</cite>: Request from client.</p>
+<p>This function takes the request of client and direct it to home page.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="webapp.views.reviewer_profile">
+<tt class="descclassname">webapp.views.</tt><tt class="descname">reviewer_profile</tt><big>(</big><em>request</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#webapp.views.reviewer_profile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Arguments:</p>
+<p><cite>REQUEST</cite>: Request from user.</p>
+<p><cite>REV_USERNAME</cite>: Username of the reviewer logged in.</p>
+<p>This function takes the request of user and directs it to the profile page.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="webapp.views.reviewer_profile_edit">
+<tt class="descclassname">webapp.views.</tt><tt class="descname">reviewer_profile_edit</tt><big>(</big><em>request</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#webapp.views.reviewer_profile_edit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Argument:</p>
+<blockquote>
+<div><cite>REQUEST</cite>: Edit the profile of reviewer.</div></blockquote>
+<p>Edit user&#8217;s/Coordinators profile.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="webapp.views.reviewer_profile_subject">
+<tt class="descclassname">webapp.views.</tt><tt class="descname">reviewer_profile_subject</tt><big>(</big><em>request</em>, <em>rev_username</em>, <em>class_num</em><big>)</big><a class="headerlink" href="#webapp.views.reviewer_profile_subject" title="Permalink to this definition">¶</a></dt>
+<dd><p>Arguments:</p>
+<p><cite>REQUEST</cite>:Request from user.</p>
+<p><cite>REV_USERNAME</cite>: Username of the contributor logged in.</p>
+<p><cite>CLASS_NUM</cite> : Class in which the contributor has contributed.</p>
+<p>This function takes the request of user and direct it to the profile page which consists of the contributor&#8217;s contributions in a specific class.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="webapp.views.reviewer_profile_topic">
+<tt class="descclassname">webapp.views.</tt><tt class="descname">reviewer_profile_topic</tt><big>(</big><em>request</em>, <em>rev_username</em>, <em>class_num</em>, <em>sub</em><big>)</big><a class="headerlink" href="#webapp.views.reviewer_profile_topic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Arguments:</p>
+<p><cite>REQUEST</cite>: Request from user.</p>
+<p><cite>REV_USERNAME</cite> : Username of the reviewer logged in.</p>
+<p><cite>CLASS_NUM</cite> : Class in which the contributor has contributed.</p>
+<p><cite>SUB</cite> : Subject in which the contributor has contributed.</p>
+<p>This function takes the request of user and directs it to the profile page which consists of the contributor&#8217;s contributions in a specific subject of a specific class.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="webapp.views.reviewer_signup">
+<tt class="descclassname">webapp.views.</tt><tt class="descname">reviewer_signup</tt><big>(</big><em>request</em><big>)</big><a class="headerlink" href="#webapp.views.reviewer_signup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Request for new contributor to signup</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="webapp.views.userlogin">
+<tt class="descclassname">webapp.views.</tt><tt class="descname">userlogin</tt><big>(</big><em>request</em><big>)</big><a class="headerlink" href="#webapp.views.userlogin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Arguments:</p>
+<blockquote>
+<div><cite>REQUEST</cite>: Request from admin to login.
+Login form, Enables the client to login after successful sign-up.</div></blockquote>
+</dd></dl>
+
+</div>
+<div class="section" id="module-webapp.models">
+<span id="models"></span><h2>Models<a class="headerlink" href="#module-webapp.models" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="webapp.models.Class">
+<em class="property">class </em><tt class="descclassname">webapp.models.</tt><tt class="descname">Class</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#webapp.models.Class" title="Permalink to this definition">¶</a></dt>
+<dd><p>This will be class number like first, second .. eight .. tenth.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="webapp.models.Comment">
+<em class="property">class </em><tt class="descclassname">webapp.models.</tt><tt class="descname">Comment</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#webapp.models.Comment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Comment(id, subject_id, user_id, comment, submit_date)</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="webapp.models.Contact">
+<em class="property">class </em><tt class="descclassname">webapp.models.</tt><tt class="descname">Contact</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#webapp.models.Contact" title="Permalink to this definition">¶</a></dt>
+<dd><p>Contact us.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="webapp.models.Contributor">
+<em class="property">class </em><tt class="descclassname">webapp.models.</tt><tt class="descname">Contributor</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#webapp.models.Contributor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Contributor(id, user_id, contact, picture, validation_docs)</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="webapp.models.Faq">
+<em class="property">class </em><tt class="descclassname">webapp.models.</tt><tt class="descname">Faq</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#webapp.models.Faq" title="Permalink to this definition">¶</a></dt>
+<dd><p>FAQs</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="webapp.models.Reviewer">
+<em class="property">class </em><tt class="descclassname">webapp.models.</tt><tt class="descname">Reviewer</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#webapp.models.Reviewer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reviewer(id, user_id, contact, picture)</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="webapp.models.Subject">
+<em class="property">class </em><tt class="descclassname">webapp.models.</tt><tt class="descname">Subject</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#webapp.models.Subject" title="Permalink to this definition">¶</a></dt>
+<dd><p>Subjects.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-webapp.forms">
+<span id="forms"></span><h2>Forms<a class="headerlink" href="#module-webapp.forms" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Webapp</a><ul>
+<li><a class="reference internal" href="#module-webapp.views">Views</a></li>
+<li><a class="reference internal" href="#module-webapp.models">Models</a></li>
+<li><a class="reference internal" href="#module-webapp.forms">Forms</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Welcome to webportal&#8217;s documentation!</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/webapp.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to webportal’s documentation!"
+             >previous</a> |</li>
+        <li><a href="index.html">webportal 0.9 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, interns2014.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>
