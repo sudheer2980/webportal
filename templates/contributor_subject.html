@@ -6,13 +6,15 @@
   	<div class="col-md-12">
    		 
     			<div class="row">
-      				<div class="col-md-8 col-md-offset-1"><br/>
-				<h3>Subjects</h3><br/><br/>
+      				<div class="col-md-8 col-md-offset-1"><br/><br/>
+				<h4>Subjects corresponding to class {{class_num}}</h4>
+				<div class="col-md-8 col-md-offset-2"><br/>
 				{% for i in uploads %}
 
-			        <a href="/contributor/profile/{{contri_username}}/{{class_num}}/{{i}}">{{i}}</a> <br/>
-
+			        <h5><a href="/contributor/profile/{{contri_username}}/{{class_num}}/{{i}}">{{i}}</a> <br/>
+				</h5>
 				{% endfor %}
+				</div>
             			</div>
       				<div class="col-md-3"><br/></br/>
 				<strong>Welcome {{contri_username}}</strong><br/></br>
