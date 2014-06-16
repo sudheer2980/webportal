@@ -23,11 +23,22 @@ def index(request):
 
     This function takes the request of user and direct it to home page.
     """
-    return render_to_response("webapp/index.html")
+    context = RequestContext(request)
+    print request.user.username
+
+    try:
+        user = User.objects.get(username=request.user.username)
+    except:
+        user = None
+
+    context_dict = {
+        'user' : user,
+    }
+    return render_to_response("webapp/index.html", context_dict, context)
 
 def userlogin(request):
     """Login form, Enables the user to login after successful sign-up.
-    
+
     Arguments:
     	REQUEST
     """
@@ -36,20 +47,20 @@ def userlogin(request):
         username = request.POST['username']
         password = request.POST['password']
 
-        user1 = authenticate(username=username, password=password)
+        user = authenticate(username=username, password=password)
 
-        if user1 is not None:
+        if user is not None:
             # Is the account active? It could have been disabled.
-            if user1.is_active:
+            if user.is_active:
                 # If the account is valid and active, we can log the user in.
                 # We'll send the user back to the homepage.
-		u=User.objects.get(username=user1.username)
-		if Contributor.objects.filter(user=u):		
-			login(request,user1)
+		u=User.objects.get(username=user.username)
+		if Contributor.objects.filter(user=u):
+			login(request,user)
                         return HttpResponseRedirect('/contributor/profile/')
                        
             	else:
-			login(request,user1)
+			login(request,user)
 			return HttpResponseRedirect('/reviewer/profile/')
 	    else:
                 # An inactive account was used - no logging in!
