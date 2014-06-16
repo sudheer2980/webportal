@@ -36,10 +36,8 @@ urlpatterns = patterns(
     # url(r'^reviewer/profile/comments/(?P<sub_id>\d+)/(?P<rev_id>\d+)/$',
     #    'webapp.views.reviewer_comment', name="comments"),
     # this enables us to edit our profile
-    url(r'^contributor/profile/edit/$', 'webapp.views.contributor_profile_edit',
-        name='profile_edit'),
-    url(r'^reviewer/profile/edit/$', 'webapp.views.reviewer_profile_edit',
-        name='profile_edit'),
+    url(r'^contributor/profile/edit/$', 'webapp.views.contributor_profile_edit',),
+    url(r'^reviewer/profile/edit/$', 'webapp.views.reviewer_profile_edit'),
 
     url(r'^contributor/profile/(?P<contri_username>\w+)/(?P<class_num>\d+)/$','webapp.views.contributor_profile_subject'), 
     url(r'^contributor/profile/(?P<contri_username>\w+)/(?P<class_num>\d+)/(?P<sub>\w+)/$','webapp.views.contributor_profile_topic'),
