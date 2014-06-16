@@ -18,7 +18,7 @@ urlpatterns = patterns(
     # this takes us to reviewer profile
     url(r'^reviewer/profile/$','webapp.views.reviewer_profile'),
     url(r'^reviewer/profile/comments/(?P<sub_id>\d+)/(?P<rev_id>\d+)/$',
-        'webapp.views.reviewer_comment', name="comments"),
+        'webapp.views.reviewer_profile_comment', name="comments"),
     # this enables us to edit our profile
     url(r'^contributor/profile/edit/$', 'webapp.views.contributor_profile_edit',
         name='profile_edit'),
