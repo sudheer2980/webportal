@@ -9,11 +9,13 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>{% block title %}Freelancer - A Free Start Bootstrap Theme{% endblock title %}</title>
+    <title>{% block title %}Aakash scholl education{% endblock title %}</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" type="text/css">
-    <link href="{% static 'css/freelancer.css' %}" rel="stylesheet" type="text/css">
+   
+     <link href="{% static 'css/freelancer.css' %}" rel="stylesheet" type="text/css">
+     <link href="{% static 'css/mycss.css' %}" rel="stylesheet" type="text/css">
 
     <!-- Fonts -->
     <link href="{% static 'font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
@@ -40,7 +42,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#page-top">Start Bootstrap</a>
+                <a class="navbar-brand" href="#page-top"><h2><a href="/">Aakash school Education</a></h2>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -52,6 +54,13 @@
                     <li class="page-scroll">
                         <a href="/about/">About</a>
                     </li>
+		    {% if user in contributor %}
+		    <li class="page-scroll">
+			<a href="/contributor/profile/(?P<contri_username>\w+)/">upload</li>
+		    {% elif user in reviewer %}
+		      <li class="page-scroll">
+			<a href="/reviewer/profile/">review</li>
+		    {% else %}
 		     <li class="dropdown">
 		       <a href="#" class="dropdown-toggle"
 		          data-toggle="dropdown">Register<b class="caret"></b></a>
@@ -60,9 +69,15 @@
 			 <li><a href="/contributor/signup/">Contributor</a></li>
 		       </ul>
 		     </li>
-                    <li class="page-scroll">
-                        <a href="/login/">Login</a>
-                    </li>
+	             {% if user.is_authenticated %}
+                        <li class="page-scroll">
+                             <a href="/logout/">Logout</a>
+                        </li>
+		     {% else %}
+		        <!-- <li><a href="/ac/register/">Register</a></li> -->
+		        <li><a href="/login/">Login</a></li>
+		     {% endif %}
+			
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
