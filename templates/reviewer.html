@@ -1,18 +1,24 @@
+{% extends 'base.html' %}
 <!DOCTYPE html>
 <html>
+
 <body>
-<h1><u>Welcome to the Review page {{ user.username }}</u></h1>
+{% block title %}
+{% endblock title %}
+{% block content %}
+<br><br><br><br>
+<h1>Welcome to the Review page</h1><i> {{user.first_name|capfirst}}
+			{{user.last_name|capfirst}}  (<strong>{{user.username}}</strong>) </i>
 
+				{% for i in uploads %}
+			
+					<h1>{{i.name}}</h1>
+					<h2>{{i.topic}}</h2><a href="/media/{{i.pdf}}">FILE</a>
+					<p>{{i.summary}}</p>
+					<a href="comments/{{i.id}}/{{user.id}}">View comments </a>
+				{% endfor %}
 
-{% for i in uploads %}
-
-		<h1>{{i.name}}</h1>
-		<h2>{{i.topic}}</h2><a href="/media/{{i.pdf}}">FILE</a>
-		<p>{{i.summary}}</p>
-	<a href="comments/{{i.id}}/{{user.id}}">View comments </a>
-{% endfor %}
-
-
+				
 <a href="/logout">
 <button id='Logout-button' type='submit' ><span>Log out</span></button></a><br><br>
 
@@ -25,5 +31,8 @@
 <a href="/user/password/change">
 <button id='Password-reset-button' type='submit' ><span>Change Password</span></button></a>
 
+
+{% endblock content %}                     
 </body>
 </html>
+

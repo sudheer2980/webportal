@@ -38,7 +38,6 @@ urlpatterns = patterns(
     url(r'^user/password/change/$','django.contrib.auth.views.password_change'),
     url(r'^user/password/change/done/$','django.contrib.auth.views.password_change_done'),
 
-
     url(r'^contributor/signup/$','webapp.views.contributor_signup'),
     url(r'^reviewer/signup/$','webapp.views.reviewer_signup'),
     # Uncomment the admin/doc line below to enable admin documentation:

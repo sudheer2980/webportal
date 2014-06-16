@@ -364,3 +364,4 @@ Arguments:
 
 def edit_success(request):
 	return render_to_response('edit_success.html')
+

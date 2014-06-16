@@ -2,7 +2,8 @@
 <!DOCTYPE html>
 <html>
 <body>
-<h1>Welcome to the Uploading page {{ user.username }}</h1>
+<h1>Welcome to the Uploading page {{user.first_name|capfirst}}
+{{user.last_name|capfirst}}  (<strong>{{user.username}}</strong>)</h1>
 
 
 
