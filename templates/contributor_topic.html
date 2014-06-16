@@ -1,28 +1,35 @@
-<!DOCTYPE html>
-<html>
-<body>
+{% extends 'base.html' %}
 <h1>Welcome to the Topic page {{contri_username}}</h1>
+{% block content %}
+<br/><br/><br/><br/><br/>
+
+<div class="row">
+  	<div class="col-md-12">
+   		 
+    			<div class="row">
+      				<div class="col-md-8 col-md-offset-1"><br/>
+				{{uploads.class}}
+				<h3>Subjects</h3><br/><br/>TOPIC<br>
+				{% for i in uploads %}
+			       <a href="/contributor/profile/{{contri_username}}/{{class_num}}/{{sub}}/{{i.topic}}/{{i.id}}">{{i}}<br>{{i.topic}}</a>
+				{% endfor %}
+            			</div>
+      				<div class="col-md-3"><br/></br/>
+				<strong>Welcome {{contri_username}}</strong><br/></br>
+				{{contri.first_name}}
+                   
+				<a href= "/webapp/upload/">Upload more </a><br><br>
+				<a href="/contributor/profile/edit/">
+				<button id='Edit-Profile-button' type='submit' ><span>Edit Profile</span></button></a><br/><br/><br/>
+				<a href="/user/password/change">
+				<button id='Password-reset-button' type='submit' ><span>Change Password</span></button></a>
+				<br><br>
+				</div>
+    			</div>
+  	</div>
+</div>
+{% endblock content %}
 
 
 
 
-{% for i in uploads %}
-	<h1>{{i.name}}</h1>
-		<h2>{{i.topic}}</h2><a href="/media/{{i.pdf}}">FILE</a>
-		<p>{{i.summary}}</p>
-	<a href="/contributor/profile/{{contri_username}}/{{class_num}}/{{sub}}/{{i.topic}}/{{i.id}}">View comments </a>
-{% endfor %}
-
-<p> For more uploads </p>
-<a href= "/webapp/upload/">Upload more </a><br><br>
-
-
-<a href="/logout">
-<button id='Logout-button' type='submit' ><span>Log out</span></button></a><br><br>
-
-
-<a href="/user/password/change">
-<button id='Password-reset-button' type='submit' ><span>Change Password</span></button></a>
-
-</body>
-</html>
