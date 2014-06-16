@@ -54,7 +54,13 @@
                     <li class="page-scroll">
                         <a href="/about/">About</a>
                     </li>
-		    
+		    {% if user in contributor %}
+		    <li class="page-scroll">
+			<a href="/contributor/profile/(?P<contri_username>\w+)/">upload</li>
+		    {% elif user in reviewer %}
+		      <li class="page-scroll">
+			<a href="/reviewer/profile/">review</li>
+		    {% else %}
 		     <li class="dropdown">
 		       <a href="#" class="dropdown-toggle"
 		          data-toggle="dropdown">Register<b class="caret"></b></a>
@@ -63,7 +69,7 @@
 			 <li><a href="/contributor/signup/">Contributor</a></li>
 		       </ul>
 		     </li>
-		 
+		    {% endif %}
 	             {% if user.is_authenticated %}
                         <li class="page-scroll">
                              <a href="/logout/">Logout</a>

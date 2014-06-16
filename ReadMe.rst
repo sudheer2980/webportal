@@ -73,6 +73,36 @@ Usage
     python manage.py runserver
 
 
+Documentation
+-------------
+
+To generate docs:
+
+- Make sure you have Python `Sphinx` installed(See `requirements.txt`
+  file)
+
+- Change to `docs/` directory ::
+
+    cd docs
+
+- Export `DJANGO_SETTINGS_MODULE` ::
+
+    export DJANGO_SETTINGS_MODULE=webportal.settings
+
+- Generate HTML ::
+
+    make html
+
+  and browse `docs/_builds/html/index.html` file from Web Browser
+
+- Generate PDF(Optional)
+
+  Make sure you have `latex` installed. ::
+
+    make latexpdf
+
+  PDF file will be generated inside `docs/_builds/latex` directory.
+
 Contributing
 ------------
 
