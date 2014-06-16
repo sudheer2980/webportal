@@ -24,15 +24,18 @@ def index(request):
     This function takes the request of user and direct it to home page.
     """
     context = RequestContext(request)
-    print request.user.username
+    # print request.user.username
 
     try:
         user = User.objects.get(username=request.user.username)
+        contributor= Contributor.objects.filter(user=request.user)
     except:
         user = None
+        contributor = None
 
     context_dict = {
         'user' : user,
+        'contributor': contributor,
     }
     return render_to_response("webapp/index.html", context_dict, context)
 
@@ -82,11 +85,16 @@ def contributor_profile(request):
 	-`REQUEST`:request from user
 	This function takes the request of user and direct it to profile page.
 	"""
-           
 	context = RequestContext(request)
-	contributor= Contributor.objects.get(user=request.user)
+        contributor= Contributor.objects.filter(user=request.user)
+        print contributor
+
         uploads = Subject.objects.values_list('class_number__class_number',flat=True).filter(contributor__user=request.user).distinct()
-	context_dict = {'uploads': uploads,'contributor':contributor}
+
+        context_dict = {
+            'uploads': uploads,
+            'contributor': contributor
+        }
     	return render_to_response('contributor.html', context_dict, context)
 
 
@@ -312,39 +320,44 @@ def commentpost(request):
 
 
 def contributor_upload(request):
-	"""Request for new upload by the contributor"""
-	context = RequestContext(request)
-	uploaded= False
-	if request.method == 'POST':
-	        print "we have a request for upload by the contributor"    
-	        contributor_upload_form = ContributorUploadForm(request.POST,request.FILES)
-		if contributor_upload_form.is_valid():	
-			print "Forms are valid"
-			subject=contributor_upload_form.save(commit=False)
-			# contri=Contributor.objects.get(user_id=id)
-      			contri = Contributor.objects.get(user=request.user)
-			subject.contributor=contri
-			if 'pdf' in request.FILES:
-                		subject.pdf=request.FILES['pdf']
-			if 'video' in request.FILES:
-                		subject.video = request.FILES['video']
-			if 'animation' in request.FILES:
-                		subject.animation = request.FILES['animation']
-			                     
-                        subject.save()
-			uploaded = True
-			contri_username = request.user.username
-			url=reverse('webapp.views.contributor_profile',kwargs={'contri_username':contri_username})
-                        return HttpResponseRedirect(url)
-			return HttpResponseRedirect(reverse('webapp.views.contributor_profile'))
-	        else:
-			if contributor_upload_form.errors:
-				print contributor_upload_form.errors
-	else:
-		contributor_upload_form = ContributorUploadForm()	
-           
-        context_dict = {'contributor_upload_form': contributor_upload_form, 'uploaded':uploaded}
-        return render_to_response("upload.html", context_dict, context)
+    """Request for new upload by the contributor.
+    """
+    context = RequestContext(request)
+    uploaded= False
+    if request.POST:
+        print "we have a request for upload by the contributor"
+        contributor_upload_form = ContributorUploadForm(request.POST,
+                                                        request.FILES)
+        if contributor_upload_form.is_valid():
+            print "Forms is valid"
+            subject=contributor_upload_form.save(commit=False)
+            # contri=Contributor.objects.get(user_id=id)
+            contributor = Contributor.objects.get(user=request.user)
+            subject.contributor=contributor
+            if 'pdf' in request.FILES:
+                subject.pdf=request.FILES['pdf']
+            if 'video' in request.FILES:
+                subject.video = request.FILES['video']
+            if 'animation' in request.FILES:
+                subject.animation = request.FILES['animation']
+
+            subject.save()
+            uploaded = True
+            contributor_name = request.user.username
+            return HttpResponseRedirect('/contributor/profile/')
+        else:
+            if contributor_upload_form.errors:
+                print contributor_upload_form.errors
+    else:
+        # empty form
+        contributor_upload_form = ContributorUploadForm()
+
+    context_dict = {
+        'contributor_upload_form': contributor_upload_form,
+        'uploaded': uploaded
+    }
+
+    return render_to_response("upload.html", context_dict, context)
 
 @login_required
 def contributor_profile_edit(request):

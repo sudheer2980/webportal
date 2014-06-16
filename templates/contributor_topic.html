@@ -25,7 +25,8 @@
 				    <td><a href="/contributor/profile/{{class_num}}/{{sub}}/{{i.topic}}/{{i.id}}"></    a><strong>{{i.topic}}</strong></a>
 				    </td>
 				    
-				    <td>{{i.summary}}
+				    <td class="lead" text-align="justify">
+				      {{i.summary|safe|linebreaks}}
 				    </td>
 				    
 				    <td>

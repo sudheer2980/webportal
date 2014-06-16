@@ -4,11 +4,14 @@ from django.contrib.auth.models import User
 from webapp.models import Contributor
 
 class UserForm(forms.ModelForm):
-	username = forms.CharField(label='Username',
-       		widget = forms.TextInput(attrs={'class': 'form-control',
-			'placeholder': 'Username  to login*.'}), 
-				help_text="", required =True,
-					error_messages={'required':'Username is required.'})
+        username = forms.CharField(label='Username',
+        widget = forms.TextInput(
+                attrs={'class': 'form-control',
+                       'placeholder': 'Username*.'}),
+        help_text="", required =True,
+        error_messages={'required':'Username is required.'})
+
+        
 	first_name = forms.CharField(
         	widget= forms.TextInput(
            		 attrs={'class': 'form-control',
@@ -96,13 +99,13 @@ class ContributorUploadForm(forms.ModelForm):
 
 	
 	class_number = forms.ModelChoiceField(
-		       label='Class',
-		       cache_choices=True,
-		       widget=None,
-		       queryset=Class.objects.all(),
-		       empty_label=None,
-		       help_text="",required=True,
-                       error_messages={'required':'Class is required'})	
+                label='Class',
+                cache_choices=True,
+                widget=None,
+                queryset=Class.objects.all(),
+                empty_label=None,
+                help_text="",required=True,
+                error_messages={'required':'Class is required'})
 	name = forms.CharField(
         	widget= forms.TextInput(
             		attrs={'class': 'form-control',
@@ -132,19 +135,18 @@ class ContributorUploadForm(forms.ModelForm):
         	widget = forms.FileInput(),
         	help_text = 'Upload animations file.',
         	required=False)
-	summary = forms.CharField(label='Summary',
-	          widget= forms.TextInput(
-	          attrs={'class': 'form-control',
-	                   'placeholder': 'Summary for the uploaded documents.'}),
-	          help_text="", required=True,
-	          error_messages={'required':'Summary is required.'})
-        
-			
-	
+
+        summary = forms.CharField(
+                widget= forms.Textarea(
+                attrs={'class': 'form-control',
+                       'placeholder': 'Summary of the topic*.'}),
+                help_text="",
+                required=True,
+                error_messages={'required': 'Summary is required.'})
+
 	class Meta:
         	model = Subject
         	fields = ['class_number', 'name','topic', 'pdf', 'video', 'animation', 'summary']
-
 
 
 	def clean_pdf_doc_file(self):
