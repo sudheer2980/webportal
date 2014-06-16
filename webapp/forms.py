@@ -42,12 +42,8 @@ class UserForm(forms.ModelForm):
 
 
 class ContributorForm(forms.ModelForm):	
-	error_css_class = 'error'
-	required_css_class= 'required_error'
-	picture = forms.ImageField(label='Profile picture',
-        	widget = forms.FileInput(
-            		attrs={'placeholder': 'Contributor picture.'}),
-        			required=False)
+
+
 	contact  = forms.CharField(
         	widget= forms.TextInput(
             		attrs={'class': 'form-control',
@@ -65,8 +61,13 @@ class ContributorForm(forms.ModelForm):
 	validation_docs = forms.FileField(
         	label = 'Validation file.',
         		widget = forms.FileInput(),
-        			help_text = 'Upload validation file.',
+        		#	help_text = 'Upload validation file.',
         				required=False)
+
+	picture = forms.ImageField(label='Profile picture',
+        	widget = forms.FileInput(
+            		attrs={'placeholder': 'Contributor picture.'}),
+        			required=False)
 	class Meta:
         		model =  Contributor
         		fields = ('picture', 'contact','specialised_subject', 'validation_docs')
@@ -130,7 +131,12 @@ class ContributorUploadForm(forms.ModelForm):
 		       empty_label=None,
 		       help_text="",required=True,
                        error_messages={'required':'Class is required'})	
-				
+	name = forms.CharField(
+        	widget= forms.TextInput(
+            		attrs={'class': 'form-control',
+                   		'placeholder': 'Subject name*.'}),
+            		help_text="", required=True,
+        	error_messages={'required':'Subject name is required.'})			
 
 
 	topic = forms.CharField(
@@ -165,7 +171,7 @@ class ContributorUploadForm(forms.ModelForm):
 	
 	class Meta:
         	model = Subject
-        	fields = ['class_number', 'topic', 'pdf', 'video', 'animation', 'summary']
+        	fields = ['class_number', 'name','topic', 'pdf', 'video', 'animation', 'summary']
 
 
 

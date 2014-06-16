@@ -1,11 +1,15 @@
+{% extends 'base.html'%}
 {% load static %}
 
 {% block title %}
+login
 {% endblock title %}
 
-{% block body_block %}
+{% block content %}
 <div class="container" style="padding-top:1.5cm;" align="center">
     <div class="page-header">
+	<br/>
+	<br/>
       <h1><small>Login to </small><strong>Web Portal</strong></h1>
     </div>
   
@@ -14,6 +18,8 @@
 	{% csrf_token %}
 	<i class="fa fa-user fa-5x"></i>
 	<!-- error msg -->
+	<br/>
+	<br/>
 	{% if messages %}
 	{% for message in messages %}
 	{% if message.tags == "error" or message.tags == "info" %}
@@ -23,6 +29,7 @@
 	{% else %}
 	<h2 class="form-signin-heading">Please sign in</h2>
 	{% endif %}
+	
 
         <input name="username" id="id_username" type="text" class="form-control"
 	       placeholder="Username" required autofocus>
@@ -38,4 +45,4 @@
 </div>	   <!-- well -->
 </div> <!-- /container -->
 
-{% endblock body_block %}
+{% endblock content %}

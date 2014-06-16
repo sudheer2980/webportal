@@ -8,14 +8,18 @@ import class_list
 import comment
 
 def populate_users():
+
     """Populate Contributors."""
+
     # Admin
     os.system("python manage.py syncdb --noinput")
     # os.system("python manage.py schemamigration ac --initial")
     # os.system("python manage.py migrate ac")    
     os.system("python manage.py createsuperuser --username=admin --email=admin@example.com")
 
+
     for u in contributors_list.users:
+
         # Normal users
         print "Adding user: %s" % u['USERNAME']
         u['USERNAME'] = add_user(u['USERNAME'],
@@ -30,6 +34,7 @@ def populate_users():
                         picture=u['PHOTO'],
 			validation_docs=u['VALIDATION_DOC'])
 
+
     for u in reviewer_list.users:
         # Normal users
         print "Adding user: %s" % u['USERNAME']
@@ -43,7 +48,7 @@ def populate_users():
         add_reviewer(user=u['USERNAME'],
                         contact=u['CONTACT'],
                         picture=u['PHOTO'],
-			
+
         
         
     user_list = User.objects.all()
@@ -58,12 +63,14 @@ def populate_users():
 
 def populate_class():
     """Populate class"""
+
     for Class in class_list.Classes:
 	add_Class( class_number=Class['class_number'] , remark=Class['remark'])
 	
 
 
 def populate_subject():
+
     """populate subjects and contributors corresponding to them""" 
 
     for sub in sub_list.subs:	
@@ -74,6 +81,17 @@ def populate_subject():
             topic=sub['TOPIC'],
             name=sub['NAME'],
             contributor=coordinator_instance,
+
+    """populate subjects and contribution corresponding them""" 
+
+  	
+        print "Adding AC: %s has coordinator: %s" % (ac['NAME'], ac['COORDINATOR'])
+        usr_instance = User.objects.get(username=ac['COORDINATOR'])
+        coordinator_instance = Coordinator.objects.get(user=usr_instance)
+        add_ac(
+            ac_id=ac['RC_ID'],
+            name=ac['NAME'],
+            coordinator=coordinator_instance,
             city=ac['CITY'],
             state=ac['STATE'],
             active=True)
@@ -81,7 +99,6 @@ def populate_subject():
 
 def populate_project():
     """Populate projects."""
-n
     print "Populating projects.."
     for project in project_list.projects:
         if project['AC_ID'] == "0":
