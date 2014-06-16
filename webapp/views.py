@@ -162,6 +162,13 @@ def reviewer_profile_topic(request,class_num,sub):
 	This function takes the request of user and directs it to the profile page which consists of the contributor's contributions in a specific subject of a specific class.
 	"""
 	context = RequestContext(request)
+	if request.POST:
+		print request
+		subject = get_object_or_404(Subject, id=request.POST['id'])
+		subject.increment_review()
+		print "reviewer has reviewed"
+		print subject.review
+		print subject.id
 	reviewer = Reviewer.objects.get(user=request.user)
 	uploads = Subject.objects.filter(class_number__class_number=class_num).filter(name=sub).filter(review__lt = 3)
 	context_dict = {'uploads': uploads, 'class_num':class_num, 'sub':sub,'reviewer':reviewer}
@@ -189,13 +196,8 @@ def reviewer_profile_comment(request,class_num,sub,topics,id):
 				print comment_form.errors
 	else:	
 		comment_form = CommentForm()
-<<<<<<< HEAD
         context_dict = {'comment_form': comment_form, 'comment' : comment,'reviewer':reviewer}
-	return render_to_response("comments.html",context_dict,context)
-=======
-        context_dict = {'rev_username': rev_username,'comment_form': comment_form, 'comment' : comment}
 	return render_to_response("reviewer_comment.html",context_dict,context)
->>>>>>> 42f99351f45b4574082f5a98babb6a749b39a52d
 
 
 
@@ -311,7 +313,8 @@ def contributor_upload(request):
 	context = RequestContext(request)
 	uploaded= False
 	if request.method == 'POST':
-	        print "we have a request for upload by the contributor"    
+	        print "we have a request for upload by the contributor"  
+		print request  
 	        contributor_upload_form = ContributorUploadForm(request.POST,request.FILES)
 		if contributor_upload_form.is_valid():	
 			print "Forms are valid"
@@ -328,9 +331,6 @@ def contributor_upload(request):
 			                     
                         subject.save()
 			uploaded = True
-			contri_username = request.user.username
-			url=reverse('webapp.views.contributor_profile',kwargs={'contri_username':contri_username})
-                        return HttpResponseRedirect(url)
 			return HttpResponseRedirect(reverse('webapp.views.contributor_profile'))
 	        else:
 			if contributor_upload_form.errors:

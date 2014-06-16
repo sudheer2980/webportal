@@ -5,13 +5,21 @@
 
 
 {% for i in uploads %}
-
-		<!-- <a href="/reviewer/profile/{{rev_username}}/{{class_num}}/{{sub}}/{{i.topic}}/{{i.id}}">{{i.topic}}</a> --> 
 		<h1>{{i.name}}</h1>
 		<h2>{{i.topic}}</h2><a href="/media/{{i.pdf}}">FILE</a>
 		<p>{{i.summary}}</p>
-        <a href= <button id='Review' type='submit'></button></a><br>
-	<a href="/reviewer/profile/{{class_num}}/{{sub}}/{{i.topic}}/{{i.id}}">View comments </a>
+
+		<form id = "{{i.id}}" method="post"
+                enctype="multipart/form-data">
+
+    	            {% csrf_token %}
+		
+		
+       		    <input type="submit" name="submit" value="Approve" /></a>
+		    <input type="hidden" name="id" value="{{ i.id }}">
+
+		</form> 
+        <a href="/reviewer/profile/{{class_num}}/{{sub}}/{{i.topic}}/{{i.id}}">View comments </a>
 {% endfor %}
 
 
