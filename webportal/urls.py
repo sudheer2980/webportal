@@ -37,7 +37,7 @@ urlpatterns = patterns(
     
     url(r'^contributor/profile/(?P<contri_username>\w+)/(?P<class_num>\d+)/$','webapp.views.contributor_profile_subject'), 
     url(r'^contributor/profile/(?P<contri_username>\w+)/(?P<class_num>\d+)/(?P<sub>\w+)/$','webapp.views.contributor_profile_topic'),
-    url(r'^contributor/profile/(?P<contri_username>\w+)/(?P<class_num>\d+)/(?P<sub>\w+)/(?P<topics>\w+)/(?P<id>\d+)/$','webapp.views.contributor_profile_comment'),
+    url(r'^contributor/profile/(?P<contri_username>\w+)/(?P<class_num>\d+)/(?P<sub>\w+)/(?P<topics>[\w\-]+)/(?P<id>\d+)/$','webapp.views.contributor_profile_comment'),
     url(r'^login/$','webapp.views.userlogin'),
     # this is used for logging out the respective user    
     url(r'^logout/$','webapp.views.user_logout'),

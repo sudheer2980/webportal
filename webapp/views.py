@@ -318,7 +318,7 @@ def reviewer_signup(request):
 
 def user_logout(request):
 	context=RequestContext(request)
-ogout(request)
+	logout(request)
 	return HttpResponseRedirect('/')
 
 		
