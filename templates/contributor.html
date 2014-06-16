@@ -14,19 +14,21 @@
 				{% endfor %}
             			</div>
       				<div class="col-md-2"><br/>
-				<table class table table-bordered>
+				
+				
 				<strong>Welcome {{contri_username}}</strong><br>
 				<strong>Name:</strong> {{contributor.user.first_name}}
 				{{contributor.user.last_name}}<br>
-				Contact: {{contributor.contact}}<br>
-				Email: {{contributor.user.email}}<br>
-				</table>
+				<strong>Contact:</strong> {{contributor.contact}}<br>
+				<strong>Email:</strong> {{contributor.user.email}}<br><br>
+				
+				
 				<a href= "/webapp/upload/">Upload more </a><br><br>
 				<a href="/contributor/profile/edit/">
-				<button id='Edit-Profile-button' type='submit' ><span>Edit Profile</span></button></a><br/><br/><br/>
+				<button id='Edit-Profile-button' type='submit' ><span>Edit Profile</span></button></a><br/><br/>
 				<a href="/user/password/change">
 				<button id='Password-reset-button' type='submit' ><span>Change Password</span></button></a>
-		
+		  		
 				</div>
 			        <div class="col-md-1"><br>
                                 <img src="/media/{{contributor.picture}}" width=100px height=100px align=right>
