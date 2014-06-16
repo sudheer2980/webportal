@@ -1,25 +1,65 @@
-<!DOCTYPE html>
-<html>
-<body>
-<h1>Welcome to the Topic page {{contri_username}}</h1>
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<br/><br/><br/><br/><br/><br/><br/>
+   			<div class="row">
+      				<div class="col-md-8 col-md-offset-1"><br/>
+				<h3>contribution in class {{class_num}}</h3>
+				<div class="table-responsive">
+				<table class="table table-hover">
+				 <tr class="success">
+    				    <td><strong>subject</strong></td>
+    				    <td><strong>Topic</strong></td>
+			            <td><strong>Summary</strong></td>
+			            <td><strong>PDF</strong></td>
+				    <td><strong>Video</strong></td>
+				    <td><strong>animation</strong></td>
+					
+  				 </tr>
+  				{% for i in uploads %}
+				 <tr class="active">
+   				 <td><strong>{{i.name}}</strong></a>
+				      </p>
+				    </td>
+				    
+				    <td><a href="/contributor/profile/{{contri_username}}/{{class_num}}/{{sub}}/{{i.topic}}/{{i.id}}"></    a><strong>{{i.topic}}</strong></a>
+				    </td>
+				    
+				    <td>{{i.summary}}
+				    </td>
+				    
+				    <td>
+				    {% if i.pdf %}
+				      <a href="/media/{{i.pdf}}"><img src="{% static 'doc.jpg' %}" height="50" width="50"
+	   				class="img-rounded img-responsive"></a>
+			            {% else %}
+				    {% endif %}	</td><td>
+				    {% if i.video %}
+					<a href="/media/{{i.video}}"><img src="{% static 'video.jpg' %}" height="50" width="50"
+	   				class="img-rounded img-responsive"></a>
+					{% else %}
+				    {% endif %}	</td><td>
+				    {% if i.animation %}
+					<a href="/media/animation/{{i.animation}}">ani</a>
+				    {% else %}
+				    {% endif %}	
+				    </td>         
+				  </tr>
+				{% endfor %}</table></div>
+			        </div>
 
+      				<div class="col-md-3"><br/></br/>
+				<strong>Welcome {{contri_username}}</strong><br/></br>
+				{{contri.first_name}}
+                   
+				<a href= "/contributor/upload/">Upload more </a><br><br>
+				<a href="/contributor/profile/edit/">
+				<button id='Edit-Profile-button' type='submit' ><span>Edit Profile</span></button></a><br/><br/><br/>
+				<a href="/user/password/change">
+				<button id='Password-reset-button' type='submit' ><span>Change Password</span></button></a>
 
+				</div>
+    			</div>
 
+{% endblock content %}
 
-{% for i in uploads %}
-	<a href="/contributor/profile/{{contri_username}}/{{class_num}}/{{sub}}/{{i.topic}}/{{i.id}}">{{i.topic}}</a> 
-{% endfor %}
-
-<p> For more uploads </p>
-<a href= "/webapp/upload/">Upload more </a><br><br>
-
-
-<a href="/logout">
-<button id='Logout-button' type='submit' ><span>Log out</span></button></a><br><br>
-
-
-<a href="/user/password/change">
-<button id='Password-reset-button' type='submit' ><span>Change Password</span></button></a>
-
-</body>
-</html>

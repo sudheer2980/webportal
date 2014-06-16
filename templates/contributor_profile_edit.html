@@ -1,6 +1,7 @@
-{% block body_block %}
+{% extends 'base.html' %}
+{% block content %}
 <div class="container" style="padding-top:1.5cm;padding-bottom:3.5cm;">
-  <div class="page-header">
+  <div class="page-header"><br><br>
     <h1><i class="fa fa-pagelines"></i> Update/Edit profile
       <small>
 for {{user.first_name|capfirst}}
@@ -30,7 +31,7 @@ enctype="multipart/form-data">
 {{contributorform.as_p}}
 
 <div align="center">
-<a href="/contributor/profile" class="btn btn-primary">Go back</a>
+<a href="/contributor/profile/" class="btn btn-primary">Go back</a>
 <input class="btn btn-success" type="submit" name="submit" value="Save changes" />
 </div>
       </form>
@@ -39,4 +40,4 @@ enctype="multipart/form-data">
     </div>
   </div> <!-- row -->
 </div>
-{% endblock body_block %}
+{% endblock content %}

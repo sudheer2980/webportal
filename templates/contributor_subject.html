@@ -1,25 +1,33 @@
-<!DOCTYPE html>
-<html>
-<body>
-<h1>Welcome to the Subject page {{contri_username}}</h1>
+{% extends 'base.html' %}
+{% block content %}
+<br/><br/><br/><br/><br/><br/><br/>
 
+<div class="row">
+  	<div class="col-md-12">
+   		 
+    			<div class="row">
+      				<div class="col-md-8 col-md-offset-1"><br/><br/>
+				<h4>Subjects corresponding to class {{class_num}}</h4>
+				<div class="col-md-8 col-md-offset-2"><br/>
+				{% for i in uploads %}
 
-
-
-{% for i in uploads %}
-	<a href="/contributor/profile/{{contri_username}}/{{class_num}}/{{i}}">{{i}}</a> 
-{% endfor %}
-
-<p> For more uploads </p>
-<a href= "/webapp/upload/">Upload more </a><br><br>
-
-
-<a href="/logout">
-<button id='Logout-button' type='submit' ><span>Log out</span></button></a><br><br>
-
-
-<a href="/user/password/change">
-<button id='Password-reset-button' type='submit' ><span>Change Password</span></button></a>
-
-</body>
-</html>
+			        <h5><a href="/contributor/profile/{{contri_username}}/{{class_num}}/{{i}}">{{i}}</a> <br/>
+				</h5>
+				{% endfor %}
+				</div>
+            			</div>
+      				<div class="col-md-3"><br/></br/>
+				<strong>Welcome {{contri_username}}</strong><br/></br>
+				{{contri.first_name}}
+                   
+				<a href= "/contributor/upload/">Upload more </a><br><br>
+				<a href="/contributor/profile/edit/">
+				<button id='Edit-Profile-button' type='submit' ><span>Edit Profile</span></button></a><br/><br/><br/>
+				<a href="/user/password/change">
+				<button id='Password-reset-button' type='submit' ><span>Change Password</span></button></a>
+		
+				</div>
+    			</div>
+  	</div>
+</div>
+{% endblock content %}
