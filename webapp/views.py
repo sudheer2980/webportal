@@ -23,11 +23,25 @@ def index(request):
 
     This function takes the request of user and direct it to home page.
     """
-    return render_to_response("webapp/index.html")
+    context = RequestContext(request)
+    # print request.user.username
+
+    try:
+        user = User.objects.get(username=request.user.username)
+        contributor= Contributor.objects.filter(user=request.user)
+    except:
+        user = None
+        contributor = None
+
+    context_dict = {
+        'user' : user,
+        'contributor': contributor,
+    }
+    return render_to_response("webapp/index.html", context_dict, context)
 
 def userlogin(request):
     """Login form, Enables the user to login after successful sign-up.
-    
+
     Arguments:
     	REQUEST
     """
@@ -36,20 +50,20 @@ def userlogin(request):
         username = request.POST['username']
         password = request.POST['password']
 
-        user1 = authenticate(username=username, password=password)
+        user = authenticate(username=username, password=password)
 
-        if user1 is not None:
+        if user is not None:
             # Is the account active? It could have been disabled.
-            if user1.is_active:
+            if user.is_active:
                 # If the account is valid and active, we can log the user in.
                 # We'll send the user back to the homepage.
-		u=User.objects.get(username=user1.username)
-		if Contributor.objects.filter(user=u):		
-			login(request,user1)
+		u=User.objects.get(username=user.username)
+		if Contributor.objects.filter(user=u):
+			login(request,user)
                         return HttpResponseRedirect('/contributor/profile/')
                        
             	else:
-			login(request,user1)
+			login(request,user)
 			return HttpResponseRedirect('/reviewer/profile/')
 	    else:
                 # An inactive account was used - no logging in!
@@ -71,11 +85,16 @@ def contributor_profile(request):
 	-`REQUEST`:request from user
 	This function takes the request of user and direct it to profile page.
 	"""
-           
 	context = RequestContext(request)
-	contributor= Contributor.objects.get(user=request.user)
+        contributor= Contributor.objects.filter(user=request.user)
+        print contributor
+
         uploads = Subject.objects.values_list('class_number__class_number',flat=True).filter(contributor__user=request.user).distinct()
-	context_dict = {'uploads': uploads,'contributor':contributor}
+
+        context_dict = {
+            'uploads': uploads,
+            'contributor': contributor
+        }
     	return render_to_response('contributor.html', context_dict, context)
 
 
@@ -200,7 +219,6 @@ def reviewer_profile_comment(request,class_num,sub,topics,id):
 	return render_to_response("reviewer_comment.html",context_dict,context)
 
 
-
 def contributor_signup(request):
         
 	"""Request for new contributor to signup"""
@@ -300,7 +318,7 @@ def reviewer_signup(request):
 
 def user_logout(request):
 	context=RequestContext(request)
-	logout(request)
+ogout(request)
 	return HttpResponseRedirect('/')
 
 		
@@ -309,37 +327,45 @@ def commentpost(request):
 
 
 def contributor_upload(request):
-	"""Request for new upload by the contributor"""
-	context = RequestContext(request)
-	uploaded= False
-	if request.method == 'POST':
-	        print "we have a request for upload by the contributor"  
-		print request  
-	        contributor_upload_form = ContributorUploadForm(request.POST,request.FILES)
-		if contributor_upload_form.is_valid():	
-			print "Forms are valid"
-			subject=contributor_upload_form.save(commit=False)
-			# contri=Contributor.objects.get(user_id=id)
-      			contri = Contributor.objects.get(user=request.user)
-			subject.contributor=contri
-			if 'pdf' in request.FILES:
-                		subject.pdf=request.FILES['pdf']
-			if 'video' in request.FILES:
-                		subject.video = request.FILES['video']
-			if 'animation' in request.FILES:
-                		subject.animation = request.FILES['animation']
-			                     
-                        subject.save()
-			uploaded = True
-			return HttpResponseRedirect(reverse('webapp.views.contributor_profile'))
-	        else:
-			if contributor_upload_form.errors:
-				print contributor_upload_form.errors
-	else:
-		contributor_upload_form = ContributorUploadForm()	
-           
-        context_dict = {'contributor_upload_form': contributor_upload_form, 'uploaded':uploaded}
-        return render_to_response("upload.html", context_dict, context)
+    """Request for new upload by the contributor.
+    """
+    context = RequestContext(request)
+    uploaded= False
+    if request.POST:
+        print "we have a request for upload by the contributor"
+        contributor_upload_form = ContributorUploadForm(request.POST,
+                                                        request.FILES)
+        if contributor_upload_form.is_valid():
+            print "Forms is valid"
+            subject=contributor_upload_form.save(commit=False)
+            # contri=Contributor.objects.get(user_id=id)
+            contributor = Contributor.objects.get(user=request.user)
+            subject.contributor=contributor
+            if 'pdf' in request.FILES:
+                subject.pdf=request.FILES['pdf']
+            if 'video' in request.FILES:
+                subject.video = request.FILES['video']
+            if 'animation' in request.FILES:
+                subject.animation = request.FILES['animation']
+
+            subject.save()
+            uploaded = True
+            contributor_name = request.user.username
+            return HttpResponseRedirect('/contributor/profile/')
+        else:
+            if contributor_upload_form.errors:
+                print contributor_upload_form.errors
+    else:
+        # empty form
+        contributor_upload_form = ContributorUploadForm()
+
+    context_dict = {
+        'contributor_upload_form': contributor_upload_form,
+        'uploaded': uploaded
+    }
+
+    return render_to_response("upload.html", context_dict, context)
+
 
 @login_required
 def contributor_profile_edit(request):
