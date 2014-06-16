@@ -26,11 +26,10 @@ def index(request):
     return render_to_response("webapp/index.html")
 
 def userlogin(request):
-    """
+    """Login form, Enables the user to login after successful sign-up.
+    
     Arguments:
-    -`REQUEST`: request from user
-
-    Login form, Enables the user to login after successful sign-up.
+    	REQUEST
     """
     context = RequestContext(request)
     if request.method == 'POST':
@@ -57,7 +56,6 @@ def userlogin(request):
 			rev_username=user1.username
 			url=reverse('webapp.views.reviewer_profile',kwargs={'rev_username':rev_username})
                         return HttpResponseRedirect(url)
-			# return HttpResponseRedirect('/reviewer/profile')
 	    else:
                 # An inactive account was used - no logging in!
                 messages.info(request, "Your account is disabled.")
@@ -80,9 +78,10 @@ def contributor_profile(request,contri_username):
 	This function takes the request of user and direct it to profile page.
 	"""
            
-	context = RequestContext(request)	
+	context = RequestContext(request)
+	contributor= Contributor.objects.get(user=request.user)
         uploads = Subject.objects.values_list('class_number__class_number',flat=True).filter(contributor__user=request.user).distinct()
-	context_dict = {'uploads': uploads,'contri_username':contri_username}
+	context_dict = {'uploads': uploads,'contri_username':contri_username,'contributor':contributor}
     	return render_to_response('contributor.html', context_dict, context)
 
 
@@ -91,7 +90,7 @@ def contributor_profile_subject(request,contri_username,class_num):
 	Argument:
 	-`REQUEST`:request from user
 	-`contri_username` : username of the contributor logged in
-	-`class_num` : class in which the logged in contributor has contributed
+	class_num: class in which the logged in contributor has contributed
 	This function takes the request of user and direct it to profile page which consists of his contributions in a specific class.
 	"""
 	context = RequestContext(request)
@@ -342,7 +341,6 @@ def contributor_upload(request):
         context_dict = {'contributor_upload_form': contributor_upload_form, 'uploaded':uploaded}
         return render_to_response("upload.html", context_dict, context)
 
-
 @login_required
 def contributor_profile_edit(request):
     """Edit user's/Coordinators profile.
@@ -461,4 +459,3 @@ Arguments:
 
 def edit_success(request):
 	return render_to_response('edit_success.html')
-
