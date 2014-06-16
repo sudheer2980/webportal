@@ -1,5 +1,12 @@
+# Garbage files
 *~
 *.pyc
+
+# Django media
 media/
+
+# Sqlite database
 *.db
 
+# Docs
+docs/_builds
