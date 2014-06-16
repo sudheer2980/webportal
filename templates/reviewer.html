@@ -1,6 +1,10 @@
+{% extends 'base.html' %}
 <!DOCTYPE html>
 <html>
 <body>
+{% block content %}
+
+<br/><br/><br/><br/><br/><br/><br/>
 <h1><u>Welcome to the Review page {{ rev_username }}</u></h1>
 
 
@@ -14,10 +18,6 @@
 {% endfor %}
 
 
-<a href="/logout">
-<button id='Logout-button' type='submit' ><span>Log out</span></button></a><br><br>
-
-
 
 <a href="/reviewer/profile/edit/">
 <button id='Edit-Profile-button' type='submit' ><span>Edit Profile</span></button></a>
@@ -26,5 +26,7 @@
 <a href="/user/password/change">
 <button id='Password-reset-button' type='submit' ><span>Change Password</span></button></a>
 
+
+{% endblock content %}
 </body>
 </html>
