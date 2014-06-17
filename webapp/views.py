@@ -197,7 +197,6 @@ def reviewer_profile_topic(request,class_num,sub):
 	This function takes the request of user and directs it to the profile page which consists of the contributor's contributions in a specific subject of a specific class.
 	"""
 	context = RequestContext(request)
-	approved = False
 	reviewer = Reviewer.objects.get(user=request.user)
 	if request.POST:
 		print request
