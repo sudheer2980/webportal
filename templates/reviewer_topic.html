@@ -46,7 +46,7 @@
 				    </td>         
 				  
 				<td>
-				{% if approved %}
+				{% if reviewer in i.reviewer.all %}
 				<p>Approved</p>
 				{% else %}
 				<form id = "{{i.id}}" method="post"
