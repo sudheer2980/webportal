@@ -13,7 +13,7 @@
 
     <!-- Bootstrap Core CSS -->
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" type="text/css">
-   
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
      <link href="{% static 'css/freelancer.css' %}" rel="stylesheet" type="text/css">
      <link href="{% static 'css/mycss.css' %}" rel="stylesheet" type="text/css">
 
@@ -56,6 +56,10 @@
                     </li>
 
 
+                    <li class="page-scroll">
+                        <a href="/content/">Content</a>
+                    </li>
+
 
 	             {% if user.is_authenticated %}
 		     
@@ -68,14 +72,19 @@
 		    <!-- 	<a href="/reviewer/profile/">review</li> -->
 		    <!--   {% endif %} -->
 
-
+            
 		    <li class="dropdown">
 		      <a href="" class="dropdown-toggle"
 		         data-toggle="dropdown">{{user.username}}<b class="caret"></b></a>
 		      <ul class="dropdown-menu">
 			<li><a href="/contributor/profile/">Profile</a></li>
-			<li><a href="/logout/">Logout</a></li>
-		      </ul>
+			    <!-- {% if contributor %}
+                <li><a href="/contributor/content">Contributor Content</a></li>
+	           {% elif reviewer %}
+               <li><a href="/reviewer/content">Reviewer Content</a></li>
+       	      {% endif %} -->
+              <li><a href="/logout/">Logout</a></li>
+             </ul>
 		    </li>
 		    {% else %}
 		    <li class="dropdown">

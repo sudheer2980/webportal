@@ -1,13 +1,11 @@
 from django.shortcuts import HttpResponse, render_to_response,  get_object_or_404
-from django.template import RequestContext
+from django.template import RequestContext, loader, Context
 from django.http import HttpResponse , HttpResponseRedirect
 from django.contrib.auth import authenticate , login, logout
 from django.contrib import messages
 from django.core.urlresolvers import reverse
 from django.core.mail import send_mail, mail_admins
 from django.contrib.auth.decorators import login_required
-from django.core.urlresolvers import reverse
-
 # import the models here
 from django.contrib.auth.models import User
 from webapp.models import Contributor, Reviewer, Subject ,Comment
@@ -15,6 +13,7 @@ from webapp.models import Contributor, Reviewer, Subject ,Comment
 
 # import the forms here
 from webapp.forms import ContributorForm , ReviewerForm, UserForm, ContributorUploadForm, CommentForm
+
 
 def index(request):
     """
@@ -121,6 +120,7 @@ def contributor_profile_topic(request,class_num,sub):
 	-`sub` : subject in which the logged in contributor has contributed
 	This function takes the request of user and direct it to profile page which consists of his contributions in a specific subject of a specific class.
 	"""
+        contributor= Contributor.objects.get(user=request.user)
 	context = RequestContext(request)
 	contributor= Contributor.objects.get(user=request.user)
 	uploads = Subject.objects.filter(class_number__class_number=class_num).filter(name=sub).filter(contributor__user=request.user)
@@ -133,7 +133,7 @@ def contributor_profile_comment(request,class_num,sub,topics,id):
 	-`REQUEST`:request from user
 	-`class_num` : class in which the logged in contributor has contributed
 	-`sub` : subject in which the logged in contributor has contributed
-	-`topic` : subject topic in which the logged in contributor has contributed
+	-`topics` : subject topic in which the logged in contributor has contributed
 	This function takes the request of user and direct it to profile page which consists of his comments of reviewer on a specified topic of a subject of a specific class.
 	"""	
 	context = RequestContext(request)
@@ -142,6 +142,21 @@ def contributor_profile_comment(request,class_num,sub,topics,id):
 	context_dict = {'comment': comment, 'class_num':class_num, 'sub':sub,'contributor':contributor,'topics':topics,'id':id}
 	return render_to_response('contributor_comment.html', context_dict, context)
 
+
+def contributor_profile_topic_detail(request,class_num,sub,topics,id):
+	"""
+	Argument:
+	-`REQUEST`:request from user
+	-`class_num` : class in which the logged in contributor has contributed
+	-`sub` : subject in which the logged in contributor has contributed
+	-`topics` : subject topic in which the logged in contributor has contributed
+	This function takes the request of user and direct it to profile page which consists of his comments of reviewer on a specified topic of a subject of a specific class.
+	"""	
+	context = RequestContext(request)
+	contributor= Contributor.objects.get(user=request.user)
+	comment = Comment.objects.filter(subject_id=id)
+	context_dict = {'comment': comment, 'class_num':class_num, 'sub':sub,'contributor':contributor,'topics':topics,'id':id}
+	return render_to_response('contributor_topic_detail.html', context_dict, context)
 
 @login_required
 def reviewer_profile(request):
@@ -487,3 +502,23 @@ Arguments:
 
 def edit_success(request):
 	return render_to_response('edit_success.html')
+
+def content(request):
+	context=RequestContext(request)
+	contributor= Contributor.objects.all()
+	uploads = Subject.objects.all().order_by('class_number')
+        context_dict = {
+            'uploads': uploads,
+            'contributor':contributor
+        }
+	return render_to_response('content.html',context_dict,context)
+
+
+def search(request):
+	context = RequestContext(request)
+	query = request.GET['q']
+	results = Subject.objects.filter(topic__icontains=query)
+	template = loader.get_template('search.html')
+	context = Context({'query':query , 'results':results})
+	response = template.render(context)
+	return HttpResponse(response)

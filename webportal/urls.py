@@ -19,9 +19,9 @@ urlpatterns = patterns(
     url(r'^contributor/upload/$','webapp.views.contributor_upload'),
     url(r'^contributor/profile/(?P<class_num>\d+)/$','webapp.views.contributor_profile_subject'), 
     url(r'^contributor/profile/(?P<class_num>\d+)/(?P<sub>\w+)/$','webapp.views.contributor_profile_topic'),
-    url(r'^contributor/profile/(?P<class_num>\d+)/(?P<sub>\w+)/(?P<topic>\w+)/$','webapp.views.contributor_profile_comment'),
-
-
+    url(r'^contributor/profile/(?P<class_num>\d+)/(?P<sub>\w+)/(?P<topics>.+)/(?P<id>\d+)/$','webapp.views.contributor_profile_comment'),
+    url(r'^contributor/profile/(?P<class_num>\d+)/(?P<sub>\w+)/(?P<topics>\w+)/(?P<id>\d+)/detail/$','webapp.views.contributor_profile_topic_detail'),
+    
     url(r'^reviewer/profile/edit/$', 'webapp.views.reviewer_profile_edit'),
 
 
@@ -29,20 +29,15 @@ urlpatterns = patterns(
     url(r'^reviewer/profile/$','webapp.views.reviewer_profile'),
     url(r'^reviewer/profile/(?P<class_num>\d+)/$','webapp.views.reviewer_profile_subject'), 
     url(r'^reviewer/profile/(?P<class_num>\d+)/(?P<sub>\w+)/$','webapp.views.reviewer_profile_topic'),
-    url(r'^reviewer/profile/(?P<class_num>\d+)/(?P<sub>\w+)/(?P<topics>\w+)/(?P<id>\d+)/$','webapp.views.reviewer_profile_comment'),
+    url(r'^reviewer/profile/(?P<class_num>\d+)/(?P<sub>\w+)/(?P<topics>.+)/(?P<id>\d+)/$','webapp.views.reviewer_profile_comment'),
     
-    # url(r'^reviewer/profile/comments/(?P<sub_id>\d+)/(?P<rev_id>\d+)/$',
-    #    'webapp.views.reviewer_comment', name="comments"),
-    # this enables us to edit our profile
     
-    url(r'^contributor/profile/(?P<contri_username>\w+)/(?P<class_num>\d+)/$','webapp.views.contributor_profile_subject'), 
-    url(r'^contributor/profile/(?P<contri_username>\w+)/(?P<class_num>\d+)/(?P<sub>\w+)/$','webapp.views.contributor_profile_topic'),
-    url(r'^contributor/profile/(?P<contri_username>\w+)/(?P<class_num>\d+)/(?P<sub>\w+)/(?P<topics>[\w\-]+)/(?P<id>\d+)/$','webapp.views.contributor_profile_comment'),
+    
     url(r'^login/$','webapp.views.userlogin'),
     # this is used for logging out the respective user    
     url(r'^logout/$','webapp.views.user_logout'),
     
-   
+    # this enables us to edit our profile
     url(r'^reviewer/profile/edit_success/$','webapp.views.edit_success'),  
     url(r'^contributor/profile/edit_success/$','webapp.views.edit_success'),
 
@@ -55,8 +50,15 @@ urlpatterns = patterns(
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
+    # this is used to display the content page of either the contributor or the reviewer
+    url(r'^content/$','webapp.views.content'),
+    
+
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
+    
+    url(r'^search/','webapp.views.search'),
+
 )
 
 
