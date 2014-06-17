@@ -12,7 +12,7 @@
 				{% for i in uploads %}
 				<table class="table table-hover">
     				
-			        <td><h5><a href="/reviewer/profile/{{rev_username}}/{{class_num}}/{{i}}">{{i}}</a></h5></td> 
+			        <td><h5><a href="/reviewer/profile/{{class_num}}/{{i}}">{{i}}</a></h5></td> 
 								
 				</table>
 				{% endfor %}
@@ -28,9 +28,6 @@
 				<strong>Contact:</strong> {{reviewer.contact}}<br>
 				<strong>Email:</strong> {{reviewer.user.email}}<br><br>
 				
-				
-
-				<a href= "/reviewer/upload/">Upload more </a><br><br>
 				<a href="/reviewer/profile/edit/">
 				<button id='Edit-Profile-button' type='submit' ><span>Edit Profile</span></button></a><br/><br/>
 				<a href="/user/password/change">
