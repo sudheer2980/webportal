@@ -36,11 +36,11 @@ Installation
 
 - Install pre-requisites using the command ::
 
-    pip install -r requirement.txt
+    pip install -r requirements.txt
 
   or you can also type ::
 
-    easy_install `cat requirement.txt`
+    easy_install `cat requirements.txt`
 
 
 Usage
@@ -93,7 +93,7 @@ To generate docs:
 
     make html
 
-  and browse `docs/_builds/html/index.html` file from Web Browser
+  and browse `docs/_build/html/index.html` file from Web Browser
 
 - Generate PDF(Optional)
 
@@ -101,7 +101,7 @@ To generate docs:
 
     make latexpdf
 
-  PDF file will be generated inside `docs/_builds/latex` directory.
+  PDF file will be generated inside `docs/_build/latex` directory.
 
 Contributing
 ------------

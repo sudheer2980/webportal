@@ -1,13 +1,11 @@
 from django.shortcuts import HttpResponse, render_to_response,  get_object_or_404
-from django.template import RequestContext
+from django.template import RequestContext, loader, Context
 from django.http import HttpResponse , HttpResponseRedirect
 from django.contrib.auth import authenticate , login, logout
 from django.contrib import messages
 from django.core.urlresolvers import reverse
 from django.core.mail import send_mail, mail_admins
 from django.contrib.auth.decorators import login_required
-
-
 # import the models here
 from django.contrib.auth.models import User
 from webapp.models import Contributor, Reviewer, Subject ,Comment
@@ -15,6 +13,7 @@ from webapp.models import Contributor, Reviewer, Subject ,Comment
 
 # import the forms here
 from webapp.forms import ContributorForm , ReviewerForm, UserForm, ContributorUploadForm, CommentForm
+
 
 def index(request):
     """
@@ -503,3 +502,23 @@ Arguments:
 
 def edit_success(request):
 	return render_to_response('edit_success.html')
+
+def content(request):
+	context=RequestContext(request)
+	contributor= Contributor.objects.all()
+	uploads = Subject.objects.all().order_by('class_number')
+        context_dict = {
+            'uploads': uploads,
+            'contributor':contributor
+        }
+	return render_to_response('content.html',context_dict,context)
+
+
+def search(request):
+	context = RequestContext(request)
+	query = request.GET['q']
+	results = Subject.objects.filter(topic__icontains=query)
+	template = loader.get_template('search.html')
+	context = Context({'query':query , 'results':results})
+	response = template.render(context)
+	return HttpResponse(response)
