@@ -15,7 +15,7 @@
 			            <td><strong>PDF</strong></td>
 				    <td><strong>Video</strong></td>
 				    <td><strong>animation</strong></td>
-					
+				    <td><strong>Approve</strong></td>
   				 </tr>
   				{% for i in uploads %}
 				 <tr class="active">
@@ -44,19 +44,31 @@
 				    {% else %}
 				    {% endif %}	
 				    </td>         
-				  </tr>
+				  
+				<td>
+				<form id = "{{i.id}}" method="post"
+		                enctype="multipart/form-data">
+
+		    	            {% csrf_token %}
+		
+		
+		       		    <input type="submit" name="submit" value="Approve" /></a>
+				    <input type="hidden" name="id" value="{{ i.id }}">
+
+				</form>
+				</td>
+				</tr>
 				{% endfor %}</table></div>
 			        </div>
     				<div class="col-md-2 col-sm-2"><br/>
 				
 				
-				<strong>Welcome {{rev_username}}</strong><br>
+				<strong>Welcome {{reviewer.user.username}}</strong><br>
 				<strong>Name:</strong> {{reviewer.user.first_name}}
 				{{reviewer.user.last_name}}<br>
 				<strong>Contact:</strong> {{reviewer.contact}}<br>
 				<strong>Email:</strong> {{reviewer.user.email}}<br><br>
-				
-				
+										
 				<a href="/reviewer/profile/edit/">
 				<button id='Edit-Profile-button' type='submit' ><span>Edit Profile</span></button></a><br/>
 				<a href="/user/password/change">

@@ -6,7 +6,6 @@ from django.contrib import messages
 from django.core.urlresolvers import reverse
 from django.core.mail import send_mail, mail_admins
 from django.contrib.auth.decorators import login_required
-
 # import the models here
 from django.contrib.auth.models import User
 from webapp.models import Contributor, Reviewer, Subject ,Comment
