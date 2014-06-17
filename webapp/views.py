@@ -121,6 +121,7 @@ def contributor_profile_topic(request,class_num,sub):
 	-`sub` : subject in which the logged in contributor has contributed
 	This function takes the request of user and direct it to profile page which consists of his contributions in a specific subject of a specific class.
 	"""
+        contributor= Contributor.objects.get(user=request.user)
 	context = RequestContext(request)
 	contributor= Contributor.objects.get(user=request.user)
 	uploads = Subject.objects.filter(class_number__class_number=class_num).filter(name=sub).filter(contributor__user=request.user)

@@ -1,30 +1,33 @@
-<!DOCTYPE html>
-<html>
-<body>
-<h1><u>Welcome to the Review page</u></h1>
+{% extends 'base.html' %}
+{% block content %}
+<br/><br/><br/><br/><br/><br/><br/>
+<div class="row">
+  	<div class="col-md-12">
+   		 
+    			<div class="row">
+      				<div class="col-md-8 col-md-offset-1"><br/><br/>
+				<h4>comments corresponding to class {{class_num}}-{{sub_name}}--{{sub_topic}}</h4>
+				{% for i in comment %}
+				<p class="bg-success">
+					{{i.comment}}</p>
+				<div class="row">
+					<div class="col-md-4 col-md-offset-5">
+					<em>posted by-{{i.user}}  on {{i.submit_date}}</em>	
+				</div>	</div>	        
+				{% endfor %}		
+				</div>
+      				<div class="col-md-3"><br/></br/>
+				<strong>Welcome {{contri_username}}</strong><br/></br>
+				{{contri.first_name}}
+				<a href= "/reviewer/upload/">Upload more </a><br><br>
+				<a href="/reviewer/profile/edit/">
+				<button id='Edit-Profile-button' type='submit' ><span>Edit Profile</span></button></a><br/><br/><br/>
+				<a href="/user/password/change">
+				<button id='Password-reset-button' type='submit' ><span>Change Password</span></button></a>
 
+				</div>
+    			</div>
+  	</div>
+</div>
 
-{% for i in comment %}
-	{{i.comment}} 
-		
-{% endfor %}
-<form id="comment_form" method="post"
-                enctype="multipart/form-data">
-
-            {% csrf_token %}
-
-       
-            {{ comment_form.as_p }}
-
-            <input type="submit" name="submit" value="Upload" />
-
-</form>
-
-
-<a href="/logout">
-<button id='Logout-button' type='submit' ><span>Log out</span></button></a><br><br>
-
-<a href="/reviewer/profile/" class="btn btn-primary">Click here to go back to profile</a>
-
-</body>
-</html>
+{% endblock content %}
