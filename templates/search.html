@@ -2,10 +2,14 @@
 {% load static %}
 {% block content %}
 <br><br><br><br><br>
-	<p>You searched for " {{query}} "; the results are listed below. </p>
 	<ul>
-
-		{% if results_name %}
+    <div align="center">
+      <p>You searched for " {{query}} "; the results are listed below. </p>
+  <a href="/content/">
+                <button id='Go-back-button' type='submit' class="btn btn-primary"><span>Go Back</span></button></a>
+  		<br><br>
+    </div>
+      {% if results_name %}
     <div class="table-responsive">
                 <table class="table table-hover">
                  <tr class="success">
@@ -55,6 +59,7 @@
                   </tr>
 		 {% endfor %}
      
+		  </table>
 
 
     {% elif results_topic %}
@@ -111,7 +116,7 @@
      <p>No results found</p>
      
      {% endif %}
-
+   </table>
     </ul>
 </div>
 {% endblock content %}
