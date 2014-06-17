@@ -5,7 +5,7 @@
 	<p>You searched for " {{query}} "; the results are listed below. </p>
 	<ul>
 
-		{% if results %}
+		{% if results_name %}
     <div class="table-responsive">
                 <table class="table table-hover">
                  <tr class="success">
@@ -19,7 +19,7 @@
                     
                  </tr>
 
-	{% for page in results %}
+	{% for page in results_name %}
 		   <tr class="active">
                  <td><strong>Class {{page.class_number}}</strong></a>
                       </p>
@@ -55,9 +55,63 @@
                   </tr>
 		 {% endfor %}
      
-		 {% else %}
-		 <p>No results found</p>
-		 {% endif %}
+
+
+    {% elif results_topic %}
+    <div class="table-responsive">
+                <table class="table table-hover">
+                 <tr class="success">
+                        <td><strong>Class</strong></td>
+                        <td><strong>subject</strong></td>
+                        <td><strong>Topic</strong></td>
+                        <td><strong>Summary</strong></td>
+                        <td><strong>PDF</strong></td>
+                    <td><strong>Video</strong></td>
+                    <td><strong>animation</strong></td>
+                    
+                 </tr>
+
+  {% for page in results_topic %}
+       <tr class="active">
+                 <td><strong>Class {{page.class_number}}</strong></a>
+                      </p>
+                    </td>
+                 
+                 <td><strong>{{page.name}}</strong></a>
+                      </p>
+                    </td>
+                    
+                    <td><a href="/contributor/profile/{{class_num}}/{{sub}}/{{page.topic}}/{{page.id}}"></    a><strong>{{page.topic}}</strong></a>
+                    </td>
+                    
+                    <td class="lead" text-align="justify">
+                      {{page.summary|safe|linebreaks}}
+                    </td>
+                    
+                    <td>
+                    {% if page.pdf %}
+                      <a href="/media/{{page.pdf}}"><img src="{% static 'doc.jpg' %}" height="50" width="50"
+                    class="img-rounded img-responsive"></a>
+                        {% else %}
+                    {% endif %} </td><td>
+                    {% if page.video %}
+                    <a href="/media/{{page.video}}"><img src="{% static 'video.jpg' %}" height="50" width="50"
+                    class="img-rounded img-responsive"></a>
+                    {% else %}
+                    {% endif %} </td><td>
+                    {% if page.animation %}
+                    <a href="/media/animation/{{page.animation}}">ani</a>
+                    {% else %}
+                    {% endif %} 
+                    </td>         
+                  </tr>
+     {% endfor %}
+     
+     {% else %}
+     <p>No results found</p>
+     
+     {% endif %}
+
     </ul>
 </div>
 {% endblock content %}
