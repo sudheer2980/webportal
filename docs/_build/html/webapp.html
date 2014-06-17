@@ -230,48 +230,128 @@ specific subject of a  specific class.</p>
 <dl class="class">
 <dt id="webapp.models.Class">
 <em class="property">class </em><tt class="descclassname">webapp.models.</tt><tt class="descname">Class</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#webapp.models.Class" title="Permalink to this definition">¶</a></dt>
-<dd><p>This will be class number like first, second .. eight .. tenth.</p>
+<dd><p>Fields are:</p>
+<p>CLASS_NUMBER: This will be class number like first, second .. eight .. tenth.</p>
+<p>REMARK : This is the remark given by the teacher.</p>
 </dd></dl>
 
 <dl class="class">
 <dt id="webapp.models.Comment">
 <em class="property">class </em><tt class="descclassname">webapp.models.</tt><tt class="descname">Comment</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#webapp.models.Comment" title="Permalink to this definition">¶</a></dt>
-<dd><p>Comment(id, subject_id, user_id, comment, submit_date)</p>
+<dd><p>Fields are:</p>
+<p>SUBJECT: This field indicates the subject on which comments are arrived. This field is the foreign key to the Subject class.</p>
+<p>USER: This field indicates the reviewer who has commented on the uploaded files of the contributor. This is a foreign key to the Reviewer class.</p>
+<p>COMMENT: This describes the actual comments of the reviewer.</p>
+<p>SUBMIT_DATE: Submit_date field tells us when the comment was submitted, at which time and on which date. This uses DateTime field.</p>
 </dd></dl>
 
 <dl class="class">
 <dt id="webapp.models.Contact">
 <em class="property">class </em><tt class="descclassname">webapp.models.</tt><tt class="descname">Contact</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#webapp.models.Contact" title="Permalink to this definition">¶</a></dt>
-<dd><p>Contact us.</p>
+<dd><p>Fields are:</p>
+<p>NAME: This field indicates the name of the non-user who wants to suggest any modifications.</p>
+<p>EMAIL: This fied indicates the mail-id of the non-user.</p>
+<p>MESSAGE: This field describes the modifications suggested by the non-user, if any.</p>
 </dd></dl>
 
 <dl class="class">
 <dt id="webapp.models.Contributor">
 <em class="property">class </em><tt class="descclassname">webapp.models.</tt><tt class="descname">Contributor</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#webapp.models.Contributor" title="Permalink to this definition">¶</a></dt>
-<dd><p>Contributor(id, user_id, contact, picture, validation_docs)</p>
+<dd><p>Fields are:</p>
+<p>USER: This is the Default django user object</p>
+<p>CONTACT: This is the contact number of the user. It must be an integer.</p>
+<p>PICTURE: The profile picture of the contributor. may be jpg or jpeg or png or bmp.</p>
+<p>VALIDATION_DOCS: The Valid certificate of the user stating his educational qualifications.</p>
 </dd></dl>
 
 <dl class="class">
 <dt id="webapp.models.Faq">
 <em class="property">class </em><tt class="descclassname">webapp.models.</tt><tt class="descname">Faq</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#webapp.models.Faq" title="Permalink to this definition">¶</a></dt>
-<dd><p>FAQs</p>
+<dd><p>Fields are:</p>
+<p>QUESTION: This field descibes the frequently asked questions.</p>
+<p>ANSWER: This field describes the answers for the frequently asked questions.</p>
 </dd></dl>
 
 <dl class="class">
 <dt id="webapp.models.Reviewer">
 <em class="property">class </em><tt class="descclassname">webapp.models.</tt><tt class="descname">Reviewer</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#webapp.models.Reviewer" title="Permalink to this definition">¶</a></dt>
-<dd><p>Reviewer(id, user_id, contact, picture)</p>
+<dd><p>Fields are:</p>
+<p>USER: This is the Default django user object</p>
+<p>CONTACT: This is the contact number of the user. It must be an integer.</p>
+<p>PICTURE: The profile picture of the contributor. may be jpg or jpeg or png or bmp.</p>
 </dd></dl>
 
 <dl class="class">
 <dt id="webapp.models.Subject">
 <em class="property">class </em><tt class="descclassname">webapp.models.</tt><tt class="descname">Subject</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#webapp.models.Subject" title="Permalink to this definition">¶</a></dt>
-<dd><p>Subjects.</p>
+<dd><p>Fields are:</p>
+<p>CONTRIBUTOR: This field is a foreign key to the contributor class. This is used to refer to the contributors who are already signed up.</p>
+<p>NAME: This field is the name of the subject,the contributor is specialized in.</p>
+<p>TOPIC: The subject of the topic the contibutor is going to contribute.</p>
+<p>CLASS_NUMBER: This may be the class number like first, second .. eight .. tenth for which the contributor is uploading his files.</p>
+<p>PDF: The contributor has to upload the files.This field describes that the uploaded file must be a pdf file.</p>
+<p>VIDEO: The contributor has to upload the files.This field describes that the uploaded file must be a video. May be mp4.</p>
+<p>ANIMATION: The contributor has to upload the files.This field describes that the uploaded file must be an animation file. This may be gif.</p>
+<p>PDF_URL: If the size of the uploaded file is high contributor can just mention the url of the file. This field is used to mention the url of the file.</p>
+<p>Video_URL: If the size of the uploading video is greater than the limited size, contributor can just mention the url of the video. This field is used to mention the url of the video.</p>
+<p>ANIMATION_URL: If the size of the uploaded Animation is greater than the limited size, contributor can just mention the url of the animation. This field is used to mention the  url of the animation.</p>
+<p>UPLOADED_ON: This field is used to obtain the date on which the file is uploaded by the contributor. This must be the date field.</p>
+<p>SUMMARY: This is the Summary given by the contributor about the specified topic of the specified subject including when to use and how to use.</p>
+<p>RATING: The field indicates the rating given by the reviewer for his uploaded files. This must be an integer and default value is 0.</p>
+<p>REVIEW: This field indicate the number of reviews made by the reviewers. This This must be an integer and default value is 0.</p>
 </dd></dl>
 
 </div>
 <div class="section" id="module-webapp.forms">
 <span id="forms"></span><h2>Forms<a class="headerlink" href="#module-webapp.forms" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="webapp.forms.CommentForm">
+<em class="property">class </em><tt class="descclassname">webapp.forms.</tt><tt class="descname">CommentForm</tt><big>(</big><em>data=None</em>, <em>files=None</em>, <em>auto_id=u'id_%s'</em>, <em>prefix=None</em>, <em>initial=None</em>, <em>error_class=&lt;class 'django.forms.util.ErrorList'&gt;</em>, <em>label_suffix=u':'</em>, <em>empty_permitted=False</em>, <em>instance=None</em><big>)</big><a class="headerlink" href="#webapp.forms.CommentForm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Field  is:</p>
+<p>COMMENT: This field describes the comment form which takes maximum length of 1000 characters. The comment is made by the reviewer.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="webapp.forms.ContributorForm">
+<em class="property">class </em><tt class="descclassname">webapp.forms.</tt><tt class="descname">ContributorForm</tt><big>(</big><em>data=None</em>, <em>files=None</em>, <em>auto_id=u'id_%s'</em>, <em>prefix=None</em>, <em>initial=None</em>, <em>error_class=&lt;class 'django.forms.util.ErrorList'&gt;</em>, <em>label_suffix=u':'</em>, <em>empty_permitted=False</em>, <em>instance=None</em><big>)</big><a class="headerlink" href="#webapp.forms.ContributorForm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fields are:</p>
+<p>CONTACT: This is the contact number of the user. It must be an integer.</p>
+<p>VALIDATION_DOCS: The Valid certificate of the user stating his educational qualifications.</p>
+<p>PICTURE: The profile picture of the contributor. may be jpg or jpeg or png or bmp.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="webapp.forms.ContributorUploadForm">
+<em class="property">class </em><tt class="descclassname">webapp.forms.</tt><tt class="descname">ContributorUploadForm</tt><big>(</big><em>data=None</em>, <em>files=None</em>, <em>auto_id=u'id_%s'</em>, <em>prefix=None</em>, <em>initial=None</em>, <em>error_class=&lt;class 'django.forms.util.ErrorList'&gt;</em>, <em>label_suffix=u':'</em>, <em>empty_permitted=False</em>, <em>instance=None</em><big>)</big><a class="headerlink" href="#webapp.forms.ContributorUploadForm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fields are:</p>
+<p>CLASS_NUMBER: This will be class number like first, second .. eight .. tenth.</p>
+<p>NAME: This field is the name of the subject,the contributor is specialized in.</p>
+<p>TOPIC: The subject of the topic the contibutor is going to contribute.</p>
+<p>PDF: The contributor has to upload the files.This field describes that the uploaded file must be a pdf file.</p>
+<p>VIDEO: The contributor has to upload the files.This field describes that the uploaded file must be a video. May be mp4.</p>
+<p>ANIMATION: The contributor has to upload the files.This field describes that the uploaded file must be an animation file. This may be gif.</p>
+<p>SUMMARY: This is the summary given by the contributor about the specified topic of the specified subject including when to use and how to use.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="webapp.forms.ReviewerForm">
+<em class="property">class </em><tt class="descclassname">webapp.forms.</tt><tt class="descname">ReviewerForm</tt><big>(</big><em>data=None</em>, <em>files=None</em>, <em>auto_id=u'id_%s'</em>, <em>prefix=None</em>, <em>initial=None</em>, <em>error_class=&lt;class 'django.forms.util.ErrorList'&gt;</em>, <em>label_suffix=u':'</em>, <em>empty_permitted=False</em>, <em>instance=None</em><big>)</big><a class="headerlink" href="#webapp.forms.ReviewerForm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fields are:</p>
+<p>PICTURE: The profile picture of the Reviewer. may be jpg or jpeg or png or bmp.</p>
+<p>CONTACT: This is the contact number of the user. It must be an integer.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="webapp.forms.UserForm">
+<em class="property">class </em><tt class="descclassname">webapp.forms.</tt><tt class="descname">UserForm</tt><big>(</big><em>data=None</em>, <em>files=None</em>, <em>auto_id=u'id_%s'</em>, <em>prefix=None</em>, <em>initial=None</em>, <em>error_class=&lt;class 'django.forms.util.ErrorList'&gt;</em>, <em>label_suffix=u':'</em>, <em>empty_permitted=False</em>, <em>instance=None</em><big>)</big><a class="headerlink" href="#webapp.forms.UserForm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fields are:</p>
+<p>USERNAME: He is the user who sign in.</p>
+<p>FIRST_NAME: This field tells the First name of the user.</p>
+<p>LAST_NAME: This field tells the Last name of the user.</p>
+<p>EMAIL: Email field tells the mail id of the user who sign in.</p>
+<p>PASSWORD: This tells the user to set his own password.</p>
+</dd></dl>
+
 </div>
 </div>
 
