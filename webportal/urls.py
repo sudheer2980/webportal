@@ -19,8 +19,9 @@ urlpatterns = patterns(
     url(r'^contributor/upload/$','webapp.views.contributor_upload'),
     url(r'^contributor/profile/(?P<class_num>\d+)/$','webapp.views.contributor_profile_subject'), 
     url(r'^contributor/profile/(?P<class_num>\d+)/(?P<sub>\w+)/$','webapp.views.contributor_profile_topic'),
-    url(r'^contributor/profile/(?P<class_num>\d+)/(?P<sub>\w+)/(?P<topic>\w+)/$','webapp.views.contributor_profile_comment'),
-
+    url(r'^contributor/profile/(?P<class_num>\d+)/(?P<sub>\w+)/(?P<topic>\w+)/(?P<id>\d+)/$','webapp.views.contributor_profile_comment'),
+    url(r'^contributor/profile/(?P<class_num>\d+)/(?P<sub>\w+)/(?P<topic>\w+)/(?P<id>\d+)/detail/$','webapp.views.contributor_profile_topic_detail'),
+    
 
     url(r'^reviewer/profile/edit/$', 'webapp.views.reviewer_profile_edit'),
 

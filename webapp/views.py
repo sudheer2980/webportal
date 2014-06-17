@@ -143,6 +143,22 @@ def contributor_profile_comment(request,class_num,sub,topics,id):
 	return render_to_response('contributor_comment.html', context_dict, context)
 
 
+def contributor_profile_topic_detail(request,class_num,sub,topics,id):
+	"""
+	Argument:
+	-`REQUEST`:request from user
+	-`class_num` : class in which the logged in contributor has contributed
+	-`sub` : subject in which the logged in contributor has contributed
+	-`topic` : subject topic in which the logged in contributor has contributed
+	This function takes the request of user and direct it to page containing full description corresponding to a subject-topic.
+	"""
+	context = RequestContext(request)
+	contributor= Contributor.objects.get(user=request.user)
+	comment = Comment.objects.filter(subject_id=id)
+	context_dict = {'comment': comment, 'class_num':class_num, 'sub':sub,'contributor':contributor,'topics':topics,'id':id}
+	return render_to_response('contributor_topic_detail.html', context_dict, context)
+
+
 @login_required
 def reviewer_profile(request):
 	"""
