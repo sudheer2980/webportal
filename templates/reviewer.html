@@ -1,29 +1,37 @@
+{% extends 'base.html' %}
 <!DOCTYPE html>
+{% load static %}
+
+{% block title %}
+- Reviewer
+{% endblock title %}
 <html>
 <body>
-<h1><u>Welcome to the Review page {{ user.username }}</u></h1>
+{% block content %}
+
+<br/><br/><br/><br/><br/><br/><br/>
+<h1><u>Welcome to the Review page {{ rev_username }}</u></h1>
 
 
 {% for i in uploads %}
 
-		<h1>{{i.name}}</h1>
-		<h2>{{i.topic}}</h2><a href="/media/{{i.pdf}}">FILE</a>
-		<p>{{i.summary}}</p>
-	<a href="comments/{{i.id}}/{{user.id}}">View comments </a>
+
+		<a href="/reviewer/profile/{{i}}">{{i}}</a>
+<!-- <h1>{{i.name}}</h1>
+<h2>{{i.topic}}</h2><a href="/media/{{i.pdf}}">FILE</a>
+<p>{{i.summary}}</p>
+<a href="comments/{{i.id}}/{{user.id}}">View comments </a> -->
 {% endfor %}
 
 
-<a href="/logout">
-<button id='Logout-button' type='submit' ><span>Log out</span></button></a><br><br>
 
-
-
-<a href="/reviewer/profile/edit/">
-<button id='Edit-Profile-button' type='submit' ><span>Edit Profile</span></button></a>
+<a href="/reviewer/profile/edit">Edit Profile</a>
 
 
 <a href="/user/password/change">
 <button id='Password-reset-button' type='submit' ><span>Change Password</span></button></a>
 
+
+{% endblock content %}
 </body>
 </html>

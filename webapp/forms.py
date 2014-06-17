@@ -4,11 +4,14 @@ from django.contrib.auth.models import User
 from webapp.models import Contributor
 
 class UserForm(forms.ModelForm):
-	username = forms.CharField(label='Username',
-       		widget = forms.TextInput(attrs={'class': 'form-control',
-			'placeholder': 'Username  to login*.'}), 
-				help_text="", required =True,
-					error_messages={'required':'Username is required.'})
+        username = forms.CharField(label='Username',
+        widget = forms.TextInput(
+                attrs={'class': 'form-control',
+                       'placeholder': 'Username*.'}),
+        help_text="", required =True,
+        error_messages={'required':'Username is required.'})
+
+        
 	first_name = forms.CharField(
         	widget= forms.TextInput(
            		 attrs={'class': 'form-control',
@@ -51,13 +54,6 @@ class ContributorForm(forms.ModelForm):
         				help_text="", required=False,
        						 error_messages={'required':'Last name is required.'})
 
-	specialised_subject = forms.CharField(
-        	widget= forms.TextInput(
-            		attrs={'class': 'form-control',
-                   		'placeholder': 'Contribtor specialised subject.'}),
-        				help_text="", required=False,
-       						 error_messages={'required':'specialised subject is required.'})
-	
 	validation_docs = forms.FileField(
         	label = 'Validation file.',
         		widget = forms.FileInput(),
@@ -70,7 +66,7 @@ class ContributorForm(forms.ModelForm):
         			required=False)
 	class Meta:
         		model =  Contributor
-        		fields = ('picture', 'contact','specialised_subject', 'validation_docs')
+        		fields = ('picture', 'contact', 'validation_docs')
 
 	def clean_validtion_docs_file(self):
         		"""Limit doc_file upload size."""
@@ -79,16 +75,10 @@ class ContributorForm(forms.ModelForm):
                       		return validation_docs
 			else:
 				raise forms.ValidationError("Not a valid file!")
-	def clean_picture_file(self):
-        		"""Limit doc_file upload size."""
-        		if self.cleaned_data['picture']:
-            			picture= self.cleaned_data['picture']
-                      		return picture
-			else:
-				raise forms.ValidationError("Not a valid profile picture!")	
-
 
 class ReviewerForm(forms.ModelForm):	
+	error_css_class = 'error'
+        required_css_class = 'required'
 	picture = forms.ImageField(label='Profile picture',
         	widget = forms.FileInput(
             		attrs={'placeholder': 'Reviewer picture.'}),
@@ -99,38 +89,23 @@ class ReviewerForm(forms.ModelForm):
                    		'placeholder': 'Reviewer contact number.'}),
         				help_text="", required=False,
        						 error_messages={'required':'Last name is required.'})
-
-	specialised_subject = forms.CharField(
-        	widget= forms.TextInput(
-            		attrs={'class': 'form-control',
-                   		'placeholder': 'Reviewer specialised subject.'}),
-        				help_text="", required=True,
-       						 error_messages={'required':'specialised subject is required.'})
 	
 	class Meta:
         		model =  Reviewer
-        		fields = ('picture', 'contact','specialised_subject')
-
-	def clean_picture_file(self):
-        		"""Limit doc_file upload size."""
-        		if self.cleaned_data['picture']:
-            			picture= self.cleaned_data['picture']
-                      		return picture
-			else:
-				raise forms.ValidationError("Not a valid profile picture!")	
+        		fields = ('picture', 'contact')
 
 
 class ContributorUploadForm(forms.ModelForm):
 
 	
 	class_number = forms.ModelChoiceField(
-		       label='Class',
-		       cache_choices=True,
-		       widget=None,
-		       queryset=Class.objects.all(),
-		       empty_label=None,
-		       help_text="",required=True,
-                       error_messages={'required':'Class is required'})	
+                label='Class',
+                cache_choices=True,
+                widget=None,
+                queryset=Class.objects.all(),
+                empty_label=None,
+                help_text="",required=True,
+                error_messages={'required':'Class is required'})
 	name = forms.CharField(
         	widget= forms.TextInput(
             		attrs={'class': 'form-control',
@@ -160,19 +135,18 @@ class ContributorUploadForm(forms.ModelForm):
         	widget = forms.FileInput(),
         	help_text = 'Upload animations file.',
         	required=False)
-	summary = forms.CharField(label='Summary',
-	          widget= forms.TextInput(
-	          attrs={'class': 'form-control',
-	                   'placeholder': 'Summary for the uploaded documents.'}),
-	          help_text="", required=True,
-	          error_messages={'required':'Summary is required.'})
-        
-			
-	
+
+        summary = forms.CharField(
+                widget= forms.Textarea(
+                attrs={'class': 'form-control',
+                       'placeholder': 'Summary of the topic*.'}),
+                help_text="",
+                required=True,
+                error_messages={'required': 'Summary is required.'})
+
 	class Meta:
         	model = Subject
         	fields = ['class_number', 'name','topic', 'pdf', 'video', 'animation', 'summary']
-
 
 
 	def clean_pdf_doc_file(self):

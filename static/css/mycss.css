@@ -1,0 +1,6 @@
+.error input, .error select {
+    border: 2px red solid;
+}
+.required input, .required select{
+    border: 2px red solid
+    
