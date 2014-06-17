@@ -55,8 +55,15 @@ urlpatterns = patterns(
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
+    # this is used to display the content page of either the contributor or the reviewer
+    url(r'^content/$','webapp.views.content'),
+    
+
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
+    
+    url(r'^search/','webapp.views.search'),
+
 )
 
 
