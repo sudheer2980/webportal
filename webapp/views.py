@@ -133,7 +133,7 @@ def contributor_profile_comment(request,class_num,sub,topics,id):
 	-`REQUEST`:request from user
 	-`class_num` : class in which the logged in contributor has contributed
 	-`sub` : subject in which the logged in contributor has contributed
-	-`topic` : subject topic in which the logged in contributor has contributed
+	-`topics` : subject topic in which the logged in contributor has contributed
 	This function takes the request of user and direct it to profile page which consists of his comments of reviewer on a specified topic of a subject of a specific class.
 	"""	
 	context = RequestContext(request)
