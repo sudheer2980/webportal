@@ -44,9 +44,8 @@ def userlogin(request):
      Argument:
 
     `REQUEST` : Request from the user to login
-
-    Login form, Enables the user to login after successful sign-up.
     """
+   
     context = RequestContext(request)
     if request.method == 'POST':
         username = request.POST['username']
@@ -81,6 +80,7 @@ def userlogin(request):
 
 
 
+
 def contributor_profile(request,contri_username):
     """
     Arguments:
@@ -97,11 +97,10 @@ def contributor_profile(request,contri_username):
     context_dict = {'uploads': uploads,'contri_username':contri_username,'contributor':contributor}	     
     return render_to_response('contributor.html', context_dict, context)
 
-
 def contributor_profile_subject(request,contri_username,class_num):
     """
     Arguments:
-	
+
     `REQUEST`: Request from user
     
     `CONTRI_USERNAME`: Username of the contributor logged in
@@ -180,8 +179,6 @@ def contributor_profile_topic_detail(request,class_num,sub,topics,id):
     context_dict = {'comment': comment, 'class_num':class_num, 'sub':sub,'contributor':contributor,'topics':topics,'id':id}
     return render_to_response('contributor_topic_detail.html', context_dict, context)
 
-
-
 @login_required
 def reviewer_profile(request,rev_username):
     """
@@ -197,7 +194,6 @@ def reviewer_profile(request,rev_username):
     uploads = Subject.objects.values_list('class_number__class_number',flat=True).filter(review__lt = 3).distinct()
     context_dict = {'uploads' : uploads , 'rev_username':rev_username}
     return render_to_response("reviewer.html",context_dict,context)
-
 
 def reviewer_profile_subject(request,rev_username,class_num):
     """
@@ -215,7 +211,6 @@ def reviewer_profile_subject(request,rev_username,class_num):
     uploads = Subject.objects.values_list('name',flat=True).filter(class_number__class_number=class_num).filter(review__lt = 3).distinct()
     context_dict = {'uploads': uploads, 'class_num':class_num,'rev_username':rev_username}
     return render_to_response('reviewer_subject.html', context_dict, context)
-
 
 def reviewer_profile_topic(request,rev_username,class_num,sub):
     """
@@ -323,9 +318,6 @@ def contributor_signup(request):
     else:
         contributor_form = ContributorForm()
 	user_form = UserForm()	 
-        context_dict = {'user_form':user_form, 'contributor_form': contributor_form, 'registered': registered}
-        return render_to_response('webapp/contributor_signup.html', context_dict, context)
-
 
 def reviewer_signup(request):
     """
@@ -372,8 +364,6 @@ def reviewer_signup(request):
     else:
 	reviewer_form = ReviewerForm()
         user_form = UserForm() 
-        context_dict = {'user_form':user_form, 'reviewer_form': reviewer_form, 'registered': registered}
-        return render_to_response('webapp/reviewer_signup.html', context_dict, context)
 
 def user_logout(request):
     """
@@ -428,14 +418,7 @@ def contributor_upload(request):
 	    url=reverse('webapp.views.contributor_profile',kwargs={'contri_username':contri_username})
             return HttpResponseRedirect(url)
 	    return HttpResponseRedirect(reverse('webapp.views.contributor_profile'))
-	else:
-            if contributor_upload_form.errors:
-		print contributor_upload_form.errors
-    else:
-	contributor_upload_form = ContributorUploadForm()   
-        context_dict = {'contributor_upload_form': contributor_upload_form, 'uploaded':uploaded}
-        return render_to_response("upload.html", context_dict, context)
-
+	
 @login_required
 def contributor_profile_edit(request):
     """
