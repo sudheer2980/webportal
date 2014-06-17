@@ -46,16 +46,19 @@
 				    </td>         
 				  
 				<td>
+				{% if approved %}
+				<p>Approved</p>
+				{% else %}
 				<form id = "{{i.id}}" method="post"
 		                enctype="multipart/form-data">
 
 		    	            {% csrf_token %}
 		
 		
-		       		    <input type="submit" name="submit" value="Approve" /></a>
+		       		    <input type="submit" name="Approve" value="Approve" id = {{i.id}} /></a>
 				    <input type="hidden" name="id" value="{{ i.id }}">
-
 				</form>
+				{% endif %}
 				</td>
 				</tr>
 				{% endfor %}</table></div>

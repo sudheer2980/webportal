@@ -197,16 +197,21 @@ def reviewer_profile_topic(request,class_num,sub):
 	This function takes the request of user and directs it to the profile page which consists of the contributor's contributions in a specific subject of a specific class.
 	"""
 	context = RequestContext(request)
+	approved = False
+	reviewer = Reviewer.objects.get(user=request.user)
+	if Reviewer.objects.get(user = request.user).subject_set.all():
+		approved = True
 	if request.POST:
 		print request
 		subject = get_object_or_404(Subject, id=request.POST['id'])
 		subject.increment_review()
+		subject.reviewer.add(reviewer)
+		approved = True
 		print "reviewer has reviewed"
 		print subject.review
 		print subject.id
-	reviewer = Reviewer.objects.get(user=request.user)
 	uploads = Subject.objects.filter(class_number__class_number=class_num).filter(name=sub).filter(review__lt = 3)
-	context_dict = {'uploads': uploads, 'class_num':class_num, 'sub':sub,'reviewer':reviewer}
+	context_dict = {'uploads': uploads, 'class_num':class_num, 'sub':sub,'reviewer':reviewer, 'approved' : approved}
 	return render_to_response('reviewer_topic.html', context_dict, context)
 
 def reviewer_profile_comment(request,class_num,sub,topics,id):

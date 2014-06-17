@@ -54,6 +54,7 @@ class Subject(models.Model):
     summary = models.TextField(blank=False)
     rating = models.IntegerField(default=0)
     review = models.IntegerField(default=0) 
+    reviewer = models.ManyToManyField(Reviewer)
 
     def __unicode__(self):
         return u"%s : %s" % (self.name, self.topic)
