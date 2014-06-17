@@ -318,6 +318,12 @@ specific subject of a  specific class.</p>
 <p>CONTACT: This is the contact number of the user. It must be an integer.</p>
 <p>VALIDATION_DOCS: The Valid certificate of the user stating his educational qualifications.</p>
 <p>PICTURE: The profile picture of the contributor. may be jpg or jpeg or png or bmp.</p>
+<dl class="method">
+<dt id="webapp.forms.ContributorForm.clean_validtion_docs_file">
+<tt class="descname">clean_validtion_docs_file</tt><big>(</big><big>)</big><a class="headerlink" href="#webapp.forms.ContributorForm.clean_validtion_docs_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Limit doc_file upload size.</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="class">
@@ -331,6 +337,24 @@ specific subject of a  specific class.</p>
 <p>VIDEO: The contributor has to upload the files.This field describes that the uploaded file must be a video. May be mp4.</p>
 <p>ANIMATION: The contributor has to upload the files.This field describes that the uploaded file must be an animation file. This may be gif.</p>
 <p>SUMMARY: This is the summary given by the contributor about the specified topic of the specified subject including when to use and how to use.</p>
+<dl class="method">
+<dt id="webapp.forms.ContributorUploadForm.clean_animations_doc_file">
+<tt class="descname">clean_animations_doc_file</tt><big>(</big><big>)</big><a class="headerlink" href="#webapp.forms.ContributorUploadForm.clean_animations_doc_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Limit doc_file upload size.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="webapp.forms.ContributorUploadForm.clean_pdf_doc_file">
+<tt class="descname">clean_pdf_doc_file</tt><big>(</big><big>)</big><a class="headerlink" href="#webapp.forms.ContributorUploadForm.clean_pdf_doc_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Upload a valid .</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="webapp.forms.ContributorUploadForm.clean_video_doc_file">
+<tt class="descname">clean_video_doc_file</tt><big>(</big><big>)</big><a class="headerlink" href="#webapp.forms.ContributorUploadForm.clean_video_doc_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Limit doc_file upload size.</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="class">
