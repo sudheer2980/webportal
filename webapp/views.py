@@ -508,7 +508,7 @@ def edit_success(request):
 def content(request):
 	context=RequestContext(request)
 	contributor= Contributor.objects.all()
-	uploads = Subject.objects.all().order_by('class_number')
+	uploads = Subject.objects.filter(review__gte = 3).order_by('class_number')
         context_dict = {
             'uploads': uploads,
             'contributor':contributor
