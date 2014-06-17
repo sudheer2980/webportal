@@ -14,5 +14,4 @@ c4 = {
 	'class_number' : "10",
 	'remark' : "this is 10th class "
      }
-classes = [c1 ,c2 ,c3 ,c4]
-	'
+classes = [c1, c2, c3, c4]
