@@ -15,7 +15,7 @@
 			            <td><strong>PDF</strong></td>
 				    <td><strong>Video</strong></td>
 				    <td><strong>animation</strong></td>
-					
+				    <td><strong>Approve</strong></td>
   				 </tr>
   				{% for i in uploads %}
 				 <tr class="active">
@@ -44,7 +44,20 @@
 				    {% else %}
 				    {% endif %}	
 				    </td>         
-				  </tr>
+				  
+				<td>
+				<form id = "{{i.id}}" method="post"
+		                enctype="multipart/form-data">
+
+		    	            {% csrf_token %}
+		
+		
+		       		    <input type="submit" name="submit" value="Approve" /></a>
+				    <input type="hidden" name="id" value="{{ i.id }}">
+
+				</form>
+				</td>
+				</tr>
 				{% endfor %}</table></div>
 			        </div>
     				<div class="col-md-2 col-sm-2"><br/>
