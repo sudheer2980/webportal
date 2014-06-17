@@ -517,8 +517,9 @@ def content(request):
 def search(request):
 	context = RequestContext(request)
 	query = request.GET['q']
-	results = Subject.objects.filter(topic__icontains=query)
+	results_topic = Subject.objects.filter(topic__icontains=query)
+	results_name = Subject.objects.filter(name__icontains=query)
 	template = loader.get_template('search.html')
-	context = Context({'query':query , 'results':results})
+	context = Context({'query':query , 'results_topic':results_topic, 'results_name':results_name})
 	response = template.render(context)
 	return HttpResponse(response)
