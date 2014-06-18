@@ -505,8 +505,8 @@ def search(request):
 	except:
 		user = None
 	query = request.GET['q']
-	results_topic = Subject.objects.filter(topic__icontains=query)
-	results_name = Subject.objects.filter(name__icontains=query)
+	results_topic = Subject.objects.filter(topic__icontains=query).filter(review__gte = 3).order_by('class_number')
+	results_name = Subject.objects.filter(name__icontains=query).filter(review__gte = 3).order_by('class_number')
 	template = loader.get_template('search.html')
 	context = Context({'query':query ,
 	 'results_topic':results_topic,
