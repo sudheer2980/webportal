@@ -26,25 +26,8 @@ def index(request):
     context = RequestContext(request)
     # print request.user.username
 
-    try:
-        user = User.objects.get(username=request.user.username)
-        if Contributor.objects.filter(user=request.user):
-		contributor = Contributor.objects.get(user = request.user)
-		reviewer = None
-	elif Reviewer.objects.filter(user=request.user):
-		reviewer = Reviewer.objects.get(user = request.user)
-		contributor = None
-    except:
-        user = None
-        contributor = None
-	reviewer = None
-
-    context_dict = {
-        'user' : user,
-        'contributor': contributor,
-	'reviewer': reviewer,
-    }
-    return render_to_response("webapp/index.html", context_dict, context)
+    
+    return render_to_response("webapp/index.html", context)
 
 def userlogin(request):
     """Login form, Enables the user to login after successful sign-up.
@@ -363,14 +346,24 @@ def contributor_upload(request):
             print "Forms is valid"
             subject=contributor_upload_form.save(commit=False)
             # contri=Contributor.objects.get(user_id=id)
-            contributor = Contributor.objects.get(user=request.user)
+            if ( 'pdf' not in request.FILES and  'video' not in request.FILES and 'animantion' not in request.FILES):		 
+	    	# Bad upload details were provided.
+            	messages.error(request, "need to provide atleast one upload")
+		contributor_upload_form = ContributorUploadForm()
+		context_dict = {
+	        'contributor_upload_form': contributor_upload_form,
+	        'uploaded': uploaded
+   		}
+		return render_to_response("upload.html", context_dict, context)
+	    else:	
+	    	if 'pdf' in request.FILES:
+                	subject.pdf=request.FILES['pdf']
+         	if 'video' in request.FILES:
+               		 subject.video = request.FILES['video']
+           	if 'animation' in request.FILES:
+               		 subject.animation = request.FILES['animation']
+	    contributor = Contributor.objects.get(user=request.user)
             subject.contributor=contributor
-            if 'pdf' in request.FILES:
-                subject.pdf=request.FILES['pdf']
-            if 'video' in request.FILES:
-                subject.video = request.FILES['video']
-            if 'animation' in request.FILES:
-                subject.animation = request.FILES['animation']
 
             subject.save()
             uploaded = True
@@ -425,6 +418,7 @@ Arguments:
                 old_username.save()
             # print user.username
             # print user.first_name
+
             # print user.last_name
             user.set_password(user.password)
             user.save()
@@ -443,7 +437,6 @@ Arguments:
             if contributorform.errors or userform.errors:
                 print contributorform.errors, userform.errors
     else:
-        # aakashcentreform = AakashCentreForm(instance=aakashcentre)
         contributorform = ContributorForm()
         userform = UserForm()
 
