@@ -71,7 +71,7 @@ def userlogin(request):
 
 
 
-def contributor_profile(request,contri_username):
+def contributor_profile(request):
     """
     Arguments:
 
@@ -84,7 +84,7 @@ def contributor_profile(request,contri_username):
     context = RequestContext(request)
     contributor= Contributor.objects.get(user=request.user)
     uploads = Subject.objects.values_list('class_number__class_number',flat=True).filter(contributor__user=request.user).distinct()  
-    context_dict = {'uploads': uploads,'contri_username':contri_username,'contributor':contributor}	     
+    context_dict = {'uploads': uploads,'contributor':contributor}	     
     return render_to_response('contributor.html', context_dict, context)
 
 def contributor_profile_subject(request,contri_username,class_num):
