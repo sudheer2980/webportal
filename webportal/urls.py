@@ -37,9 +37,6 @@ urlpatterns = patterns(
     # this is used for logging out the respective user    
     url(r'^logout/$','webapp.views.user_logout'),
     
-    # this enables us to edit our profile
-    url(r'^reviewer/profile/edit_success/$','webapp.views.edit_success'),  
-    url(r'^contributor/profile/edit_success/$','webapp.views.edit_success'),
 
     # this is for changing password, and for confirmation of that change
     url(r'^user/password/change/$','django.contrib.auth.views.password_change'),

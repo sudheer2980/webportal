@@ -25,26 +25,8 @@ def index(request):
     """
     context = RequestContext(request)
     # print request.user.username
+    return render_to_response("webapp/index.html", context)
 
-    try:
-        user = User.objects.get(username=request.user.username)
-        if Contributor.objects.filter(user=request.user):
-		contributor = Contributor.objects.get(user = request.user)
-		reviewer = None
-	elif Reviewer.objects.filter(user=request.user):
-		reviewer = Reviewer.objects.get(user = request.user)
-		contributor = None
-    except:
-        user = None
-        contributor = None
-	reviewer = None
-
-    context_dict = {
-        'user' : user,
-        'contributor': contributor,
-	'reviewer': reviewer,
-    }
-    return render_to_response("webapp/index.html", context_dict, context)
 
 def userlogin(request):
     """Login form, Enables the user to login after successful sign-up.
@@ -390,14 +372,14 @@ def contributor_upload(request):
 
     return render_to_response("upload.html", context_dict, context)
 
-
 @login_required
 def contributor_profile_edit(request):
-    """Edit user's/Coordinators profile.
+    """Edit Contributor's profile.
 
 Arguments:
 - `request`:
 """
+    print "hi"
     context = RequestContext(request)
     print request.user
     user = get_object_or_404(User, username=request.user)
@@ -416,21 +398,16 @@ Arguments:
         if contributorform.is_valid() and userform.is_valid():
             print "Forms are Valid"
             user = userform.save(commit=False)
-            if old_username == user.username:
-                print "Username unchanged"
-            else:
-                print "Username changed!. Deactivating old user."
-                old_username = get_object_or_404(User, username=old_username)
-                old_username.is_active = False
-                old_username.save()
-            # print user.username
-            # print user.first_name
-            # print user.last_name
+            if old_username != user.username:
+                messages.error(request,'Username cant be changed')
+                context_dict = {'contributorform': contributorform,
+                    			'userform': userform}
+                return render_to_response('contributor_profile_edit.html', context_dict, context)
+
             user.set_password(user.password)
             user.save()
 
             contributor = contributorform.save(commit=False)
-            # print coordinator.contact
             if 'picture' in request.FILES:
                 contributor.picture = request.FILES['picture']
             contributor.user = User.objects.get(username=user.username)
@@ -438,18 +415,19 @@ Arguments:
 
             
             messages.success(request, "Profile updated successfully.")
-            return HttpResponseRedirect('/contributor/profile/edit_success')
+            return render_to_response("edit_success.html",context)
         else:
             if contributorform.errors or userform.errors:
                 print contributorform.errors, userform.errors
     else:
-        # aakashcentreform = AakashCentreForm(instance=aakashcentre)
-        contributorform = ContributorForm()
-        userform = UserForm()
+	print "ELSE hi"
+        contributorform = ContributorForm(instance=contributor)
+        userform = UserForm(instance=user)
 
     context_dict = {'contributorform': contributorform,
                     'userform': userform}
     return render_to_response('contributor_profile_edit.html', context_dict, context)
+
 
 @login_required
 def reviewer_profile_edit(request):
@@ -495,22 +473,20 @@ Arguments:
 
             
             messages.success(request, "Profile updated successfully.")
-            return HttpResponseRedirect('/reviewer/profile/edit_success')
+            return render_to_response("edit_success.html",context)
         else:
             if reviewerform.errors or userform.errors:
                 print reviewerform.errors, userform.errors
     else:
 	print "ELSE"
-        reviewerform = ReviewerForm()
-        userform = UserForm()
+        reviewerform = ReviewerForm(instance=reviewer)
+        userform = UserForm(instance=user)
 
     context_dict = {'reviewerform': reviewerform,
                     'userform': userform}
     return render_to_response('reviewer_profile_edit.html', context_dict, context)
 
 
-def edit_success(request):
-	return render_to_response('edit_success.html')
 
 def content(request):
 	context=RequestContext(request)
