@@ -428,7 +428,7 @@ def contributor_upload(request):
 		contributor_upload_form = ContributorUploadForm()
 		context_dict = {
 	        'contributor_upload_form': contributor_upload_form,
-	        'uploaded': uploaded
+	        'uploaded': uploaded,
    		}
 		return render_to_response("upload.html", context_dict, context)
 	    else:	
@@ -454,7 +454,7 @@ def contributor_upload(request):
 	'contributor_upload_form': contributor_upload_form,
 	'uploaded' : uploaded,
     }
-    return HttpResponseRedirect('upload.html',context_dict,context)
+    return HttpResponseRedirect('/contributor/upload/',context_dict,context)
 
 	
 @login_required
