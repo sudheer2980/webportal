@@ -180,12 +180,12 @@ def reviewer_profile(request):
     `REQUEST`: Request from user
       
      This function takes the request of user and directs it to the profile page.
-     """
-     context = RequestContext(request)
-     reviewer = Reviewer.objects.get(user=request.user)
-     uploads = Subject.objects.values_list('class_number__class_number',flat=True).filter(review__lt = 3).distinct()
-     context_dict = {'uploads' : uploads , 'reviewer':reviewer}
-     return render_to_response("reviewer.html",context_dict,context)
+    """
+    context = RequestContext(request)
+    reviewer = Reviewer.objects.get(user=request.user)
+    uploads = Subject.objects.values_list('class_number__class_number',flat=True).filter(review__lt = 3).distinct()
+    context_dict = {'uploads' : uploads , 'reviewer':reviewer}
+    return render_to_response("reviewer.html",context_dict,context)
 
 
 def reviewer_profile_subject(request,class_num):
@@ -260,20 +260,20 @@ def reviewer_profile_comment(request,class_num,sub,topics,id):
     if request.method == 'POST':
 	print  "we have a new comment"
 	comment_form = CommentForm(data = request.POST)
-	    if comment_form.is_valid():
-		comments = comment_form.save(commit=False)
-		subject = Subject.objects.get(pk = id)
-		comments.subject = subject
-		comments.user = reviewer
-		comments.save()
-		url = reverse('webapp.views.reviewer_profile_comment', kwargs={
-		    'class_num' : class_num ,'sub':sub,'topics':topics,'id':id}
-		    )
-		return HttpResponseRedirect(url) 
-	    else:
-		if comment_form.errors:
-		    print comment_form.errors
-    else:	
+	if comment_form.is_valid():
+	    comments = comment_form.save(commit=False)
+	    subject = Subject.objects.get(pk = id)
+	    comments.subject = subject
+	    comments.user = reviewer
+	    comments.save()
+	    url = reverse('webapp.views.reviewer_profile_comment', kwargs={
+	        'class_num' : class_num ,'sub':sub,'topics':topics,'id':id}
+	        )
+	    return HttpResponseRedirect(url) 
+    	else:
+   	    if comment_form.errors:
+	        print comment_form.errors
+    else:		
 	comment_form = CommentForm()
         context_dict = {'comment_form': comment_form,
         'comment' : comment,'reviewer':reviewer}
@@ -435,7 +435,7 @@ def contributor_upload(request):
      	   	return HttpResponseRedirect('/contributor/profile/')
 	else:
 	    if contributor_upload_form.errors:
-	    print contributor_upload_form.errors
+	        print contributor_upload_form.errors
     else:
 	# empty form
 	contributor_upload_form = ContributorUploadForm()
@@ -446,18 +446,6 @@ def contributor_upload(request):
     }
     return HttpResponseRedirect('upload.html',context_dict,context)
 
-<<<<<<< HEAD
-    return render_to_response("upload.html", context_dict, context)
-
-@login_required
-def contributor_profile_edit(request):
-    """Edit Contributor's profile.
-
-Arguments:
-- `request`:
-"""
-    print "hi"
-=======
 	
 @login_required
 def contributor_profile_edit(request):
