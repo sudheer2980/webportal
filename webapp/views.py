@@ -125,7 +125,7 @@ def contributor_profile_topic(request,contri_username,class_num,sub):
     context_dict = {'uploads': uploads, 'class_num':class_num, 'sub':sub,'contri_username':contri_username}
     return render_to_response('contributor_topic.html', context_dict, context)
 
-def contributor_profile_comment(request,contri_username,class_num,sub,topics,id):
+def contributor_profile_comment(request,class_num,sub,topics,id):
     """
     Arguments:
 	
@@ -144,7 +144,7 @@ def contributor_profile_comment(request,contri_username,class_num,sub,topics,id)
     """	
     context = RequestContext(request)
     comment = Comment.objects.filter(subject_id=id)
-    context_dict = {'comment': comment, 'class_num':class_num, 'sub':sub,'contri_username':contri_username,'topics':topics,'id':id}
+    context_dict = {'comment': comment, 'class_num':class_num, 'sub':sub,'topics':topics,'id':id}
     return render_to_response('contributor_comment.html', context_dict, context)
 
 
