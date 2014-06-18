@@ -144,8 +144,8 @@ def contributor_profile_topic_detail(request,class_num,sub,topics,id):
 	"""	
 	context = RequestContext(request)
 	contributor= Contributor.objects.get(user=request.user)
-	comment = Comment.objects.filter(subject_id=id)
-	context_dict = {'comment': comment, 'class_num':class_num, 'sub':sub,'contributor':contributor,'topics':topics,'id':id}
+	subject = Subject.objects.get(id=id)
+	context_dict = {'subject': subject, 'class_num':class_num, 'sub':sub,'contributor':contributor,'topics':topics,'id':id}
 	return render_to_response('contributor_topic_detail.html', context_dict, context)
 
 @login_required
