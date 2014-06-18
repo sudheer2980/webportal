@@ -71,7 +71,7 @@ def userlogin(request):
 
 
 
-def contributor_profile(request,contri_username):
+def contributor_profile(request):
     """
     Arguments:
 
@@ -84,10 +84,10 @@ def contributor_profile(request,contri_username):
     context = RequestContext(request)
     contributor= Contributor.objects.get(user=request.user)
     uploads = Subject.objects.values_list('class_number__class_number',flat=True).filter(contributor__user=request.user).distinct()  
-    context_dict = {'uploads': uploads,'contri_username':contri_username,'contributor':contributor}	     
+    context_dict = {'uploads': uploads,'contributor':contributor}	     
     return render_to_response('contributor.html', context_dict, context)
 
-def contributor_profile_subject(request,contri_username,class_num):
+def contributor_profile_subject(request,class_num):
     """
     Arguments:
 
@@ -101,11 +101,11 @@ def contributor_profile_subject(request,contri_username,class_num):
     """
     context = RequestContext(request)
     uploads = Subject.objects.values_list('name',flat=True).filter(class_number__class_number=class_num).filter(contributor__user=request.user).distinct()
-    context_dict = {'uploads': uploads, 'class_num':class_num,'contri_username':contri_username}
+    context_dict = {'uploads': uploads, 'class_num':class_num}
     return render_to_response('contributor_subject.html', context_dict, context)
 
 
-def contributor_profile_topic(request,contri_username,class_num,sub):
+def contributor_profile_topic(request,class_num,sub):
     """
     Arguments:
 
@@ -122,10 +122,10 @@ def contributor_profile_topic(request,contri_username,class_num,sub):
     """
     context = RequestContext(request)
     uploads = Subject.objects.filter(class_number__class_number=class_num).filter(name=sub).filter(contributor__user=request.user)
-    context_dict = {'uploads': uploads, 'class_num':class_num, 'sub':sub,'contri_username':contri_username}
+    context_dict = {'uploads': uploads, 'class_num':class_num, 'sub':sub}
     return render_to_response('contributor_topic.html', context_dict, context)
 
-def contributor_profile_comment(request,contri_username,class_num,sub,topics,id):
+def contributor_profile_comment(request,class_num,sub,topics,id):
     """
     Arguments:
 	
@@ -144,7 +144,7 @@ def contributor_profile_comment(request,contri_username,class_num,sub,topics,id)
     """	
     context = RequestContext(request)
     comment = Comment.objects.filter(subject_id=id)
-    context_dict = {'comment': comment, 'class_num':class_num, 'sub':sub,'contri_username':contri_username,'topics':topics,'id':id}
+    context_dict = {'comment': comment, 'class_num':class_num, 'sub':sub,'topics':topics,'id':id}
     return render_to_response('contributor_comment.html', context_dict, context)
 
 
