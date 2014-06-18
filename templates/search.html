@@ -32,9 +32,20 @@
                  <td><strong>{{page.name}}</strong></a>
                       </p>
                     </td>
-                    
-                    <td><a href="/contributor/profile/{{class_num}}/{{sub}}/{{page.topic}}/{{page.id}}"></    a><strong>{{page.topic}}</strong></a>
+                   {% if user.is_authenticated %}
+                    {% if user.contributor %}
+                    <td><a href="/contributor/profile/{{page.class_number}}/{{page.name}}/{{page.topic}}/{{page.id}}"><strong>{{page.topic}}</strong></a>
                     </td>
+                    {% elif user.reviewer %}
+                    <td><a href="/reviewer/profile/{{page.class_number}}/{{page.name}}/{{page.topic}}/{{page.id}}"><strong>{{page.topic}}</strong></a>
+                    </td>
+                    {% endif %}
+                    
+                    {% else %}
+                  
+                    <td><strong>{{page.topic}}</strong></a>
+                    </td>
+                    {% endif %}
                     
                     <td class="lead" text-align="justify">
                       {{page.summary|safe|linebreaks}}
@@ -85,10 +96,19 @@
                  <td><strong>{{page.name}}</strong></a>
                       </p>
                     </td>
-                    
-                    <td><a href="/contributor/profile/{{class_num}}/{{sub}}/{{page.topic}}/{{page.id}}"></    a><strong>{{page.topic}}</strong></a>
+                    {% if user.is_authenticated %}
+                        {% if user.contributor %}
+                    <td><a href="/contributor/profile/{{page.class_number}}/{{page.name}}/{{page.topic}}/{{page.id}}"><strong>{{page.topic}}</strong></a>
                     </td>
-                    
+                        {% elif user.reviewer %}
+                    <td><a href="/reviewer/profile/{{page.class_number}}/{{page.name}}/{{page.topic}}/{{page.id}}"><strong>{{page.topic}}</strong></a>
+                    </td>
+                    {% endif %}
+
+                    {% else %}
+                    <td><strong>{{page.topic}}</strong></a>
+                    </td>
+                    {% endif %}
                     <td class="lead" text-align="justify">
                       {{page.summary|safe|linebreaks}}
                     </td>
