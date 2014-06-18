@@ -87,7 +87,7 @@ def contributor_profile(request):
     context_dict = {'uploads': uploads,'contributor':contributor}	     
     return render_to_response('contributor.html', context_dict, context)
 
-def contributor_profile_subject(request,contri_username,class_num):
+def contributor_profile_subject(request,class_num):
     """
     Arguments:
 
@@ -101,11 +101,11 @@ def contributor_profile_subject(request,contri_username,class_num):
     """
     context = RequestContext(request)
     uploads = Subject.objects.values_list('name',flat=True).filter(class_number__class_number=class_num).filter(contributor__user=request.user).distinct()
-    context_dict = {'uploads': uploads, 'class_num':class_num,'contri_username':contri_username}
+    context_dict = {'uploads': uploads, 'class_num':class_num}
     return render_to_response('contributor_subject.html', context_dict, context)
 
 
-def contributor_profile_topic(request,contri_username,class_num,sub):
+def contributor_profile_topic(request,class_num,sub):
     """
     Arguments:
 
@@ -122,7 +122,7 @@ def contributor_profile_topic(request,contri_username,class_num,sub):
     """
     context = RequestContext(request)
     uploads = Subject.objects.filter(class_number__class_number=class_num).filter(name=sub).filter(contributor__user=request.user)
-    context_dict = {'uploads': uploads, 'class_num':class_num, 'sub':sub,'contri_username':contri_username}
+    context_dict = {'uploads': uploads, 'class_num':class_num, 'sub':sub}
     return render_to_response('contributor_topic.html', context_dict, context)
 
 def contributor_profile_comment(request,class_num,sub,topics,id):
