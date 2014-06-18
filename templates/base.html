@@ -74,17 +74,16 @@
 
             
 		    <li class="dropdown">
-		      <a href="" class="dropdown-toggle"
+		     <a href="" class="dropdown-toggle"
 		         data-toggle="dropdown">{{user.username}}<b class="caret"></b></a>
-		      <ul class="dropdown-menu">
-			<li><a href="/contributor/profile/">Profile</a></li>
-			    <!-- {% if contributor %}
-                <li><a href="/contributor/content">Contributor Content</a></li>
-	           {% elif reviewer %}
-               <li><a href="/reviewer/content">Reviewer Content</a></li>
-       	      {% endif %} -->
-              <li><a href="/logout/">Logout</a></li>
-             </ul>
+		    <ul class="dropdown-menu">
+		    		{% if contributor %}
+				<li><a href="/contributor/profile/">Profile</a></li>
+				{% else %}
+				<li><a href="/reviewer/profile/">Profile</a></li>
+				{% endif %}
+			        <li><a href="/logout/">Logout</a></li>
+             		</ul>
 		    </li>
 		    {% else %}
 		    <li class="dropdown">
