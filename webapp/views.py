@@ -28,14 +28,21 @@ def index(request):
 
     try:
         user = User.objects.get(username=request.user.username)
-        contributor= Contributor.objects.filter(user=request.user)
+        if Contributor.objects.filter(user=request.user):
+		contributor = Contributor.objects.get(user = request.user)
+		reviewer = None
+	elif Reviewer.objects.filter(user=request.user):
+		reviewer = Reviewer.objects.get(user = request.user)
+		contributor = None
     except:
         user = None
         contributor = None
+	reviewer = None
 
     context_dict = {
         'user' : user,
         'contributor': contributor,
+	'reviewer': reviewer,
     }
     return render_to_response("webapp/index.html", context_dict, context)
 
