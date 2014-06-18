@@ -26,9 +26,8 @@ def index(request):
     """
     context = RequestContext(request)
     # print request.user.username
-
-    
     return render_to_response("webapp/index.html", context)
+
 
 def userlogin(request):
     """
@@ -181,12 +180,12 @@ def reviewer_profile(request):
     `REQUEST`: Request from user
       
      This function takes the request of user and directs it to the profile page.
-     """
-     context = RequestContext(request)
-     reviewer = Reviewer.objects.get(user=request.user)
-     uploads = Subject.objects.values_list('class_number__class_number',flat=True).filter(review__lt = 3).distinct()
-     context_dict = {'uploads' : uploads , 'reviewer':reviewer}
-     return render_to_response("reviewer.html",context_dict,context)
+    """
+    context = RequestContext(request)
+    reviewer = Reviewer.objects.get(user=request.user)
+    uploads = Subject.objects.values_list('class_number__class_number',flat=True).filter(review__lt = 3).distinct()
+    context_dict = {'uploads' : uploads , 'reviewer':reviewer}
+    return render_to_response("reviewer.html",context_dict,context)
 
 
 def reviewer_profile_subject(request,class_num):
@@ -261,20 +260,20 @@ def reviewer_profile_comment(request,class_num,sub,topics,id):
     if request.method == 'POST':
 	print  "we have a new comment"
 	comment_form = CommentForm(data = request.POST)
-	    if comment_form.is_valid():
-		comments = comment_form.save(commit=False)
-		subject = Subject.objects.get(pk = id)
-		comments.subject = subject
-		comments.user = reviewer
-		comments.save()
-		url = reverse('webapp.views.reviewer_profile_comment', kwargs={
-		    'class_num' : class_num ,'sub':sub,'topics':topics,'id':id}
-		    )
-		return HttpResponseRedirect(url) 
-	    else:
-		if comment_form.errors:
-		    print comment_form.errors
-    else:	
+	if comment_form.is_valid():
+	    comments = comment_form.save(commit=False)
+	    subject = Subject.objects.get(pk = id)
+	    comments.subject = subject
+	    comments.user = reviewer
+	    comments.save()
+	    url = reverse('webapp.views.reviewer_profile_comment', kwargs={
+	        'class_num' : class_num ,'sub':sub,'topics':topics,'id':id}
+	        )
+	    return HttpResponseRedirect(url) 
+    	else:
+   	    if comment_form.errors:
+	        print comment_form.errors
+    else:		
 	comment_form = CommentForm()
         context_dict = {'comment_form': comment_form,
         'comment' : comment,'reviewer':reviewer}
@@ -436,7 +435,7 @@ def contributor_upload(request):
      	   	return HttpResponseRedirect('/contributor/profile/')
 	else:
 	    if contributor_upload_form.errors:
-	    print contributor_upload_form.errors
+	        print contributor_upload_form.errors
     else:
 	# empty form
 	contributor_upload_form = ContributorUploadForm()
@@ -472,42 +471,33 @@ def contributor_profile_edit(request):
         if contributorform.is_valid() and userform.is_valid():
             print "Forms are Valid"
             user = userform.save(commit=False)
-            if old_username == user.username:
-                print "Username unchanged"
-            else:
-                print "Username changed!. Deactivating old user."
-                old_username = get_object_or_404(User, username=old_username)
-                old_username.is_active = False
-                old_username.save()
-            # print user.username
-            # print user.first_name
-
-            # print user.last_name
+            if old_username != user.username:
+                messages.error(request,'Username cant be changed')
+                context_dict = {'contributorform': contributorform,
+                    			'userform': userform}
+                return render_to_response('contributor_profile_edit.html', context_dict, context)
             user.set_password(user.password)
             user.save()
             contributor = contributorform.save(commit=False)
-            # print coordinator.contact
             if 'picture' in request.FILES:
                 contributor.picture = request.FILES['picture']
-                contributor.user = User.objects.get(username=user.username)
-                contributor.save()  
-                messages.success(request, "Profile updated successfully.")
-            return HttpResponseRedirect('/contributor/profile/edit_success')
+            contributor.user = User.objects.get(username=user.username)
+            contributor.save()
+
+            
+            messages.success(request, "Profile updated successfully.")
+            return render_to_response("edit_success.html",context)
         else:
             if contributorform.errors or userform.errors:
                 print contributorform.errors, userform.errors
     else:
-        contributorform = ContributorForm()
-        userform = UserForm()
+	print "ELSE hi"
+        contributorform = ContributorForm(instance=contributor)
+        userform = UserForm(instance=user)
 
     context_dict = {'contributorform': contributorform,
                     'userform': userform}
     return render_to_response('contributor_profile_edit.html', context_dict, context)
-
-        contributorform = ContributorForm(instance=contributor)
-        userform = UserForm(instance=user)
-        context_dict = {'contributorform': contributorform,'userform': userform}
-        return render_to_response('contributor_profile_edit.html', context_dict, context)
 
 
 @login_required
@@ -533,13 +523,11 @@ def reviewer_profile_edit(request):
         if reviewerform.is_valid() and userform.is_valid():
             print "Forms are Valid"
             user = userform.save(commit=False)
-            if old_username == user.username:
-                print "Username unchanged"
-            else:
-                print "Username changed!. Deactivating old user."
-                old_username = get_object_or_404(User, username=old_username)
-                old_username.is_active = False
-                old_username.save()
+            if old_username != user.username:
+                messages.error(request,'Username cant be changed')
+                context_dict = {'reviewerform': reviewerform,
+                    			'userform': userform}
+                return render_to_response('reviewer_profile_edit.html', context_dict, context)
             user.set_password(user.password)
             user.save()
             reviewer = reviewerform.save(commit=False)
@@ -548,18 +536,19 @@ def reviewer_profile_edit(request):
             reviewer.user = User.objects.get(username=user.username)
             reviewer.save()         
             messages.success(request, "Profile updated successfully.")
-            return HttpResponseRedirect('/reviewer/profile/edit_success')
+            return render_to_response("edit_success.html",context)
         else:
             if reviewerform.errors or userform.errors:
                 print reviewerform.errors, userform.errors
     else:
 	print "ELSE"
-        reviewerform = ReviewerForm()
-        userform = UserForm()
+        reviewerform = ReviewerForm(instance=reviewer)
+        userform = UserForm(instance=user)
 
     context_dict = {'reviewerform': reviewerform,
                     'userform': userform}
     return render_to_response('reviewer_profile_edit.html', context_dict, context)
+
 
 def content(request):
     """
@@ -578,28 +567,22 @@ def content(request):
 
 
 def search(request):
-    """
-    Argument:
+	context = RequestContext(request)
+	try:
+		user = User.objects.get(username=request.user.username)
+	except:
+		user = None
+	query = request.GET['q']
+	results_topic = Subject.objects.filter(topic__icontains=query).filter(review__gte = 3).order_by('class_number')
+	results_name = Subject.objects.filter(name__icontains=query).filter(review__gte = 3).order_by('class_number')
+	template = loader.get_template('search.html')
+	context = Context({'query':query ,
+	 'results_topic':results_topic,
+	  'results_name':results_name,
+	  'user':user})
+	response = template.render(context)
+	return HttpResponse(response)
 
-    `REQUEST`: This searches for the particular content. 
-    """	
-    context = RequestContext(request)
-    try:
-	user = User.objects.get(username=request.user.username)
-    except:
-	user = None
-    query = request.GET['q']
-    results_topic = Subject.objects.filter(topic__icontains=query)
-    results_name = Subject.objects.filter(name__icontains=query)
-    template = loader.get_template('search.html')
-    context = Context({'query':query ,
-	'results_topic':results_topic,
-	'results_name':results_name,
-	'user':user
-    })
-    response = template.render(context)
-    return HttpResponse(response)
-    
 
 def edit_success(request):
     """
@@ -610,3 +593,4 @@ def edit_success(request):
     Editing user's/Reviewer's profile is successful.
     """
     return render_to_response('edit_success.html')
+
