@@ -455,13 +455,11 @@ Arguments:
         if reviewerform.is_valid() and userform.is_valid():
             print "Forms are Valid"
             user = userform.save(commit=False)
-            if old_username == user.username:
-                print "Username unchanged"
-            else:
-                print "Username changed!. Deactivating old user."
-                old_username = get_object_or_404(User, username=old_username)
-                old_username.is_active = False
-                old_username.save()
+            if old_username != user.username:
+                messages.error(request,'Username cant be changed')
+                context_dict = {'reviewerform': reviewerform,
+                    			'userform': userform}
+                return render_to_response('reviewer_profile_edit.html', context_dict, context)
             user.set_password(user.password)
             user.save()
 
