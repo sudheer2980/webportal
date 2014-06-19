@@ -327,12 +327,12 @@ footer h3 {
 }
 
 footer .footer-above {
-    padding-top: 10px;
+    padding-top: 5px;
     background-color:#0f233a;
 }
 
 footer .footer-col {
-    margin-bottom: 5px;
+    margin-bottom: 0px;
 }
 
 footer .footer-below {
