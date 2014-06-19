@@ -512,8 +512,8 @@ def contributor_profile_edit(request):
     else:
         contributorform = ContributorForm(instance=contributor)
         userform = UserForm(instance=user)
-        context_dict = {'contributorform': contributorform,'userform': userform}
-        return render_to_response('contributor_profile_edit.html', context_dict, context)
+    context_dict = {'contributorform': contributorform,'userform': userform}
+    return render_to_response('contributor_profile_edit.html', context_dict, context)
 
 
 @login_required
