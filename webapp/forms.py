@@ -198,7 +198,11 @@ class CommentForm(forms.ModelForm):
   
     COMMENT: This field describes the comment form which takes maximum length of 1000 characters. The comment is made by the reviewer.
     """
-    comment = forms.CharField(label='Comment', widget = forms.Textarea, max_length= 1000)
+    comment = forms.CharField(
+        widget= forms.TextInput(
+        attrs={'class': 'form-control'}),
+        help_text="", required=False,
+	)
 
     class Meta:
         model = Comment
