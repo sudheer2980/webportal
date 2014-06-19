@@ -53,9 +53,13 @@ def userlogin(request):
 			login(request,user)
                         return HttpResponseRedirect('/contributor/profile/')
                        
-            	else:
+            	elif Reviewer.objects.filter(user=u):
 			login(request,user)
 			return HttpResponseRedirect('/reviewer/profile/')
+		elif user.username == 'admin':
+			login(request,user)
+			return HttpResponseRedirect('/admin')
+			
 	    else:
                 # An inactive account was used - no logging in!
                 messages.info(request, "Your account is disabled.")
