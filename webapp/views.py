@@ -181,8 +181,8 @@ def reviewer_profile(request):
     Arguments:
 
     `REQUEST`: Request from user
-      
-     This function takes the request of user and directs it to the profile page.
+
+    This function takes the request of user and directs it to the profile page.
     """
     context = RequestContext(request)
     reviewer = Reviewer.objects.get(user=request.user)
@@ -239,6 +239,7 @@ def reviewer_profile_topic(request,class_num,sub):
     context_dict = {'uploads': uploads, 'class_num':class_num, 'sub':sub,'reviewer':reviewer}
     return render_to_response('reviewer_topic.html', context_dict, context)
 
+
 def reviewer_profile_comment(request,class_num,sub,topics,id):
     """
     Arguments:
@@ -255,7 +256,7 @@ def reviewer_profile_comment(request,class_num,sub,topics,id):
     
     `ID` : Id of the reviewer
     
-     This function takes the request of user and directs it to the profile page which consists of the contributor's contributions in a specific subject of a specific class.
+    This function takes the request of user and directs it to the profile page which consists of the contributor's contributions in a specific subject of a specific class.
     """
     context = RequestContext(request)
     comment = Comment.objects.filter(subject_id = id)
@@ -271,12 +272,12 @@ def reviewer_profile_comment(request,class_num,sub,topics,id):
 	    comments.save()
 	    url = reverse('webapp.views.reviewer_profile_comment', kwargs={
 	        'class_num' : class_num ,'sub':sub,'topics':topics,'id':id}
-	        )
-	    return HttpResponseRedirect(url) 
-    	else:
-   	    if comment_form.errors:
-	        print comment_form.errors
-    else:		
+	    )
+            return HttpResponseRedirect(url) 
+	else:
+	    if comment_form.errors:
+		print comment_form.errors
+    else:	
 	comment_form = CommentForm()
         context_dict = {'comment_form': comment_form,
         'comment' : comment,'reviewer':reviewer}
@@ -297,7 +298,7 @@ def contributor_signup(request):
         print "we have a request to register"    
 	user_form = UserForm(data=request.POST)
         contributor_form = ContributorForm(data=request.POST)
-        if user_form.is_valid() and contributor_form.is_valid():
+	if user_form.is_valid() and contributor_form.is_valid():
 	    user = user_form.save()
             print "Forms are Valid"
             print user.username
@@ -311,19 +312,19 @@ def contributor_signup(request):
             	contributor.picture = request.FILES['picture']
 	    if 'validation_docs' in request.FILES:
 	        contributor.validation_docs=request.FILES['validation_docs']
-                contributor.save()                       
-                registered = True
-                email_subject="New Contributor has registered"
-	        email_message="""
-                New Contributor has registered.
-	        Details:
-                Name:""" + user.first_name + """  """ + user.last_name + """"
-                Email:""" + user.email + """
-                Waiting for your your approval"""
-	        #send_mail(email_subject, email_message, 'khushbu.ag23@gmail.com', ['pri.chundawat@gmail.com'],fail_silently=False)
-	        messages.success(request,"Form successfully submitted. Waiting for activation  from admin.")
-	        return HttpResponseRedirect(reverse('webapp.views.contributor_signup'))
-        else:
+            contributor.save()                       
+            registered = True
+            email_subject="New Contributor has registered"
+	    email_message="""
+New Contributor has registered.
+Details:
+Name:""" + user.first_name + """  """ + user.last_name + """"
+Email:""" + user.email + """
+Waiting for your your approval"""
+#send_mail(email_subject, email_message, 'khushbu.ag23@gmail.com', ['pri.chundawat@gmail.com'],fail_silently=False)
+            messages.success(request,"Form successfully submitted. Waiting for activation  from admin.")
+	    return HttpResponseRedirect(reverse('webapp.views.contributor_signup'))
+	else:
 	    if contributor_form.errors or user_form.errors:
 		print user_form.errors, contributor_form.errors
     else:
@@ -331,6 +332,7 @@ def contributor_signup(request):
 	user_form = UserForm()
     context_dict = {'user_form':user_form, 'contributor_form': contributor_form, 'registered': registered}
     return render_to_response('webapp/contributor_signup.html', context_dict, context)
+
 
 def reviewer_signup(request):
     """
@@ -347,7 +349,7 @@ def reviewer_signup(request):
         print "we have a request to register"    
 	user_form = UserForm(data=request.POST)
 	reviewer_form = ReviewerForm(data=request.POST)
-        if user_form.is_valid() and reviewer_form.is_valid():
+	if user_form.is_valid() and reviewer_form.is_valid():
 	    user = user_form.save()
             print "Forms are Valid"
             print user.username
@@ -359,26 +361,31 @@ def reviewer_signup(request):
             reviewer.user = user
             if 'picture' in request.FILES:
   	        reviewer.picture = request.FILES['picture']
-		reviewer.save()                       
-		registered = True
-                email_subject="New reviewer has registered"
-	        email_message="""
-   		New reviewer has registered.
-	    	Details:
-		Name:""" + user.first_name + """  """ + user.last_name + """"
-		Email:""" + user.email + """
-		Waiting for your your approval"""
-		#send_mail(email_subject, email_message, 'khushbu.ag23@gmail.com', ['pri.chundawat@gmail.com'],fail_silently=False)
-		messages.success(request,"form successfully submitted. Waiting for activation  from admin.")
-		return HttpResponseRedirect(reverse('webapp.views.reviewer_signup'))
-        else:
+	    reviewer.save()                       
+	    registered = True
+            email_subject="New reviewer has registered"
+	    email_message="""
+New reviewer has registered.
+Details:
+Name:""" + user.first_name + """  """ + user.last_name + """"
+Email:""" + user.email + """
+Waiting for your your approval"""
+	    #send_mail(email_subject, email_message, 'khushbu.ag23@gmail.com', ['pri.chundawat@gmail.com'],fail_silently=False)
+	    messages.success(request,"form successfully submitted. Waiting for activation  from admin.")
+	    return HttpResponseRedirect(reverse('webapp.views.reviewer_signup'))
+	else:
             if reviewer_form.errors or user_form.errors:
 		print user_form.errors, reviewer_form.errors
     else:
 	reviewer_form = ReviewerForm()
         user_form = UserForm() 
-    context_dict = {'user_form':user_form, 'reviewer_form': reviewer_form, 'registered': registered}
-    return render_to_response('webapp/reviewer_signup.html', context_dict, context)
+
+    context_dict = {
+	'user_form' : user_form,
+        'reviewer_from' : reviewer_form,
+	'registered' : registered,
+    } 
+    return render_to_response('webapp/reviewer_signup.html', context_dict, context) 
 
 
 def user_logout(request):
@@ -413,12 +420,13 @@ def contributor_upload(request):
     """
     context = RequestContext(request)
     uploaded= False
-    if request.method == 'POST':
-        print "we have a request for upload by the contributor"    
-	contributor_upload_form = ContributorUploadForm(request.POST,request.FILES)
-	if contributor_upload_form.is_valid():	
-            print "Forms are valid"
-	    subject=contributor_upload_form.save(commit=False)
+    if request.POST:
+        print "we have a request for upload by the contributor"
+        contributor_upload_form = ContributorUploadForm(request.POST,
+                                                        request.FILES)
+        if contributor_upload_form.is_valid():
+            print "Forms is valid"
+            subject=contributor_upload_form.save(commit=False)
             # contri=Contributor.objects.get(user_id=id)
             if ( 'pdf' not in request.FILES and  'video' not in request.FILES and 'animantion' not in request.FILES):		 
 	    	# Bad upload details were provided.
@@ -436,23 +444,26 @@ def contributor_upload(request):
                		 subject.video = request.FILES['video']
            	if 'animation' in request.FILES:
                		 subject.animation = request.FILES['animation']
-        	contributor = Contributor.objects.get(user=request.user)
-                subject.contributor=contributor
-                subject.save()
-                uploaded = True
-     	   	return HttpResponseRedirect('/contributor/profile/')
-	else:
-	    if contributor_upload_form.errors:
-	        print contributor_upload_form.errors
-    else:
-	# empty form
-	contributor_upload_form = ContributorUploadForm()
+	    contributor = Contributor.objects.get(user=request.user)
+            subject.contributor=contributor
 
-    context_dict = { 
-	'contributor_upload_form': contributor_upload_form,
-	'uploaded' : uploaded,
+            subject.save()
+            uploaded = True
+            contributor_name = request.user.username
+            return HttpResponseRedirect('/contributor/profile/')
+        else:
+            if contributor_upload_form.errors:
+                print contributor_upload_form.errors
+    else:
+        # empty form
+        contributor_upload_form = ContributorUploadForm()
+
+    context_dict = {
+        'contributor_upload_form': contributor_upload_form,
+        'uploaded': uploaded
     }
-    return render_to_response('upload.html',context_dict,context)
+
+    return render_to_response("upload.html", context_dict, context)
 
 	
 @login_required
@@ -499,13 +510,10 @@ def contributor_profile_edit(request):
             if contributorform.errors or userform.errors:
                 print contributorform.errors, userform.errors
     else:
-	print "ELSE hi"
         contributorform = ContributorForm(instance=contributor)
         userform = UserForm(instance=user)
-
-    context_dict = {'contributorform': contributorform,
-                    'userform': userform}
-    return render_to_response('contributor_profile_edit.html', context_dict, context)
+        context_dict = {'contributorform': contributorform,'userform': userform}
+        return render_to_response('contributor_profile_edit.html', context_dict, context)
 
 
 @login_required
