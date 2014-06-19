@@ -1,39 +1,47 @@
-<!-- {% extends 'base.html' %}
-{% block content %} -->
-<br/><br/><br/><br/><br/><br/><br/>
+{% extends 'base.html' %}
+{% block content %} 
+<div class="container" style= "padding-top: 5%; padding-bottom:5%">
 <div class="row">
   	<div class="col-md-12">
-   		 
-    			<div class="row">
-      				<div class="col-md-8 col-md-offset-1"><br/><br/>
-				<h4>comments corresponding to class {{class_num}}-{{sub_name}}--{{sub_topic}}</h4>
+   		 <div class="row">
+      				<div class="col-md-8" style= " background-color:#d5dce1; margin-top:8%">
+				<h4>comments corresponding to class {{class_num}}:{{sub}}-{{topics}}</h4><br>
 				{% for i in comment %}
-				<p class="bg-success">
-					{{i.comment}}</p>
+				<p><div class="row">
+					<div class="col-md-11" style="border:1px solid gray;margin-left:10px; ">
+					{{i.comment}}</div></div>
 				<div class="row">
-					<div class="col-md-4 col-md-offset-5">
-					<em>posted by-{{i.user}}  on {{i.submit_date}}</em>	
-				</div>	</div>	        
+				<div class="col-md-5 col-md-offset-7">
+					<em>posted by-<b>{{i.user}}</b><br>  on <b>{{i.submit_date}}</b></em>
+				</div>	</div><hr>
 				{% endfor %}
 				<div>
 				<form id="comment_form" method="post"
                 			enctype="multipart/form-data">
             			{% csrf_token %}
-				{{ comment_form.as_p }}	
-				<input type="submit" name="submit" class="btn btn-lg btn-success" value="Comment" />
+				<!-- <p><label for="id_comment">Comment:</label>
+    				<input id="id_comment" type="text" name="comment" /></p> -->
+				{{comment_form.as_p}}
+				<input type="submit" name="submit" class="btn btn-primary" value="Comment"  />
 				</form>	
 				</div>	
 				</div>
-      				<div class="col-md-3"><br/></br/>
-				<strong>Welcome {{reviewer.user.username}}</strong><br/></br>
+      				<div class="col-md-1"></div>
+      				<div class="col-md-3" style= "margin-top:8%;background-color:#d5dce1"><br>
+				<strong>Welcome {{reviewer.user.username}}</strong><br><br>
+                                <img src="/media/{{reviewer.picture}}" width=100px height=100px align="center">
+				<br><br>
+                                <a href= "/reviewer/upload/">Upload more </a><br><br>
 				<a href="/reviewer/profile/edit/">
-				<button id='Edit-Profile-button' type='submit' ><span>Edit Profile</span></button></a><br/><br/><br/>
-				<a href="/user/password/change">
-				<button id='Password-reset-button' type='submit' ><span>Change Password</span></button></a>
-
-				</div>
+    				<button id='Edit-Profile-button' class="btn btn-primary" type='submit' ><span>Edit Profile</span></button></a><br/><br/>
+  				<a href="/user/password/change">
+   			        <button id='Password-reset-button'  type='submit' class="btn btn-primary"><span>Change Password</span></button></a><br><br>
+  
+                          	</div>
+				
+				
+                            </div>
     			</div>
-  	</div>
-</div>
-
-<!-- {% endblock content %} -->
+  </div>
+   </div>
+{% endblock content %}

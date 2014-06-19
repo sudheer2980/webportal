@@ -30,7 +30,7 @@ urlpatterns = patterns(
     url(r'^reviewer/profile/(?P<class_num>\d+)/$','webapp.views.reviewer_profile_subject'), 
     url(r'^reviewer/profile/(?P<class_num>\d+)/(?P<sub>[\w ]+)/$','webapp.views.reviewer_profile_topic'),
     url(r'^reviewer/profile/(?P<class_num>\d+)/(?P<sub>[\w ]+)/(?P<topics>[\w ]+)/(?P<id>\d+)/$','webapp.views.reviewer_profile_comment'),
-    
+    url(r'^reviewer/profile/(?P<class_num>\d+)/(?P<sub>[\w ]+)/(?P<topics>[\w ]+)/(?P<id>\d+)/detail/$','webapp.views.reviewer_profile_topic_detail'),
     
     
     url(r'^login/$','webapp.views.userlogin'),
