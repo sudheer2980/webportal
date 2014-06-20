@@ -11,7 +11,7 @@ urlpatterns = patterns(
     url(r'^$','webapp.views.index'),
     url(r'^webapp/', include('webapp.urls')),
     # url(r'^user/', include('django.contrib.auth.urls')),
-
+    url(r'^about/$', 'webapp.views.about', name='about'),
     url(r'^contributor/profile/edit/$', 'webapp.views.contributor_profile_edit',),
     
     # this takes us to contributor profile

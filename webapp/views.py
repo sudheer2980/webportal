@@ -29,6 +29,15 @@ def index(request):
     return render_to_response("webapp/index.html", context)
 
 
+def about(request):
+    """About page.
+
+    Arguments:
+    - `Request`:
+    """
+    context = RequestContext(request)
+    return render_to_response('about.html', context)
+
 def userlogin(request):
     """
      Argument:
