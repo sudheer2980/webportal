@@ -10,8 +10,10 @@
     <table class="table-responsive">
     <form method="get" action="/search/">
       <p><label for="id_q">Search:</label>
-        <input type="text" name="q" id="id_q" placeholder="Search by Subject or Topic"></input>
-        <input type="submit" value="Submit"/></p>
+        <input type="text" name="q" id="id_q" autocomplete="off" class="gray" placeholder="Enter Subject or Topic">
+        <button type="submit" class="add-on"><i class="fa fa-search"></i></button>
+      </input>
+    </div>
     </form>
     <h1>{{Subject.name}}</h1>
     </div>
