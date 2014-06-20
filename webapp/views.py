@@ -39,6 +39,15 @@ def index(request):
     }
     return render_to_response("webapp/index.html", context_dict, context)
 
+def about(request):
+    """About page.
+
+    Arguments:
+    - `Request`:
+    """
+    context = RequestContext(request)
+    return render_to_response('about.html', context)
+
 def userlogin(request):
     """Login form, Enables the user to login after successful sign-up.
 
