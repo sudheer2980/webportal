@@ -32,7 +32,7 @@ def index(request):
 def about(request):
     """About page.
 
-    Arguments:
+    Argument:
     - `Request`:
     """
     context = RequestContext(request)
