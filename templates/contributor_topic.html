@@ -9,9 +9,9 @@
                                 
                                  
 				<h3>contribution in class {{class_num}}</h3>
- 			
+ 			{% if uploads %}
 				<div class="table-responsive">
-				<table class="table table-hover">
+				<table class="table table-hover" id="uploads">
 				 <tr class="success">
     				    <td><strong>subject</strong></td>
     				    <td><strong>Topic</strong></td>
@@ -21,7 +21,7 @@
 				    <td><strong>animation</strong></td>
 					
   				 </tr>
-  		
+  				{% for i in uploads %}
 				 <tr class="active">
 		
    				 <td><strong>{{i.name}}</strong></a>
@@ -55,12 +55,14 @@
 				</td>         
 				  </tr>
 				
-			
+			         {% endfor %}
 				</table></div>
 			        </div>
-                               <!--  <ul class="pagination" id="unordered-code-list"></ul> -->
+                                 
+                                
 
-      				
+
+      				<div class="col-md-1"></div>
       				<div class="col-md-3" style= " background-color:#cad3d9; margin-top:8%"><br/>
 				<strong>Welcome {{contributor.user.username}}</strong><br><br>
                                 {% if contributer.picture %}
@@ -79,17 +81,19 @@
 				
 				
                             </div>
+
+<ul class="pagination" id="unordered-code-list"></ul> 
+				{% else %}
+  				<p>Nothing to display.</p>
+  				{% endif %}
     			</div>
   </div>
    </div>
 
 
-<!--<script src="{% static 'js/paging.js' %}"></script>
-<script type="text/javascript"> 
-  var pager = new Pager('code', 5, 'unordered-code-list'); 
- 
-</script> -->
-   
-
+<script src="{% static 'js/paging.js' %}"></script>
+<script type="text/javascript">
+ var pager = new Pager('uploads', 5, 'unordered-code-list');
+</script>
 
 {% endblock content %}

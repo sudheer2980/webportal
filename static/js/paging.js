@@ -29,56 +29,6 @@ function Pager(tableName, itemsPerPage, listID) {
     
 }
 
-function Packages(tableName, itemsPerPage, listID) {
-    package_context = this;
-    this.tableName = tableName;
-    this.listID = listID;
-    this.itemsPerPage = itemsPerPage;
-    this.pages = 0;
-    this.records;
-    this.next_counter = 3;
-    this.old_page = 1;
-    this.currentPage = 1;
-    
-    try{
-	//code before paging
-	init(tableName, package_context);
-	if(package_context.pages > 1){
-		//show page navigator
-		showPageNav(tableName, package_context, listID, 'p'); 
-	}
-	//show page
-	showPage(1, tableName);
-    }catch(err){
-    	//do nothing, execute remaining code
-    }
-}
-
-function Bundles(tableName, itemsPerPage, listID) {
-    bundle_context = this;
-    this.tableName = tableName;
-    this.listID = listID;
-    this.itemsPerPage = itemsPerPage;
-    this.pages = 0;
-    this.records;
-    this.next_counter = 3;
-    this.old_page = 1;
-    this.currentPage = 1;
-    
-    try{
-	//code before paging
-	init(tableName, bundle_context);
-	if(bundle_context.pages > 1){
-		//show page navigator
-		showPageNav(tableName, bundle_context, listID, 'b'); 
-	}
-	//show page
-	showPage(1, tableName);
-    }catch(err){
-    	//do nothing, execute remaining code
-    }
-}
-
 
 /*
     get the total no of records and no of pages to be displayed 
@@ -116,25 +66,12 @@ function Bundles(tableName, itemsPerPage, listID) {
     	var cont;
     	var id_extension;
     	
-	if(tableName == 'code'){
+	if(tableName == 'uploads'){
 		cont = context;
 		id_extension = 'c';
-	}else if(tableName.id == 'code'){
+	}else if(tableName.id == 'uploads'){
 		cont = context;
-		id_extension = 'c';
-	}else if(tableName == 'package'){
-		cont = package_context;
-		id_extension = 'p';
-	}else if(tableName.id == 'package'){
-		cont = package_context;
-		id_extension = 'p';
-	}else if(tableName == 'bundle'){
-		cont = bundle_context;
-		id_extension = 'b';
-	}else if(tableName.id == 'bundle'){
-		cont = bundle_context;
-		id_extension = 'b';
-	}
+		id_extension = 'c';}
     	   
         var oldPageAnchor = document.getElementById('pg'+id_extension+cont.old_page);
         oldPageAnchor.style.textDecoration = 'none';	
