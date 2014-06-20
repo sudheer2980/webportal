@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
+{% load static %}
 <div class="container" style= "padding-top: 5%; padding-bottom:5%">
 <div class="row">
   	<div class="col-md-12">
@@ -16,7 +17,11 @@
             			</div><div class="col-md-1"></div>
       				<div class="col-md-3" style= " background-color:#cad3d9; margin-top:8%"><br/>
 				<strong>Welcome {{contributor.user.username}}</strong><br><br>
+				{% if contributer.picture %}
                                 <img src="/media/{{contributor.picture}}" width=100px height=100px align="center">
+				{% else %}
+				<img src = "{% static 'img/default.png' %}" width=100px height=100px align="center">
+				{% endif %}
 				<br><br>
                                 <a href= "/contributor/upload/">Upload more </a><br><br>
 
