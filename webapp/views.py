@@ -128,7 +128,7 @@ def contributor_profile_topic(request,class_num,sub):
     context = RequestContext(request)
     contributor= Contributor.objects.get(user=request.user)
     uploads = Subject.objects.filter(class_number__class_number=class_num).filter(name=sub).filter(contributor__user=request.user)
-    context_dict = {'uploads': uploads, 'class_num':class_num, 'sub':sub, 'contributor':contributor}
+    context_dict = {'uploads': uploads, 'class_num':class_num, 'sub':sub,'contributor':contributor}
     return render_to_response('contributor_topic.html', context_dict, context)
 
 def contributor_profile_comment(request,class_num,sub,topics,id):
@@ -177,6 +177,28 @@ def contributor_profile_topic_detail(request,class_num,sub,topics,id):
     subject = Subject.objects.get(id=id)
     context_dict = {'subject': subject, 'class_num':class_num, 'sub':sub,'contributor':contributor,'topics':topics,'id':id}
     return render_to_response('contributor_topic_detail.html', context_dict, context)
+
+def reviewer_profile_topic_detail(request,class_num,sub,topics,id):
+    """
+    Arguments:
+
+    `REQUEST`: Request from user.
+
+    `CLASS_NUM` : Class in which the logged in contributor has contributed.
+
+    `SUB` : Subject in which the logged in contributor has contributed.
+
+    `TOPICS` : Subject topic in which the logged in contributor has contributed.
+
+    `ID` : Id of the subject in which the logged in contributor has contributed.
+
+    This function takes the request of user and direct it to profile page which consists of his comments of reviewer on a specified topic of a subject of a specific class.
+    """
+    context = RequestContext(request)
+    reviewer= Reviewer.objects.get(user=request.user)
+    subject = Subject.objects.get(pk=id)
+    context_dict = {'subject': subject, 'class_num':class_num, 'sub':sub,'reviewer':reviewer,'topics':topics,'id':id}
+    return render_to_response('reviewer_topic_detail.html', context_dict, context)
 
 
 @login_required

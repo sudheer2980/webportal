@@ -1,38 +1,28 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="container" style= "padding-top: 10%">
+<div class="container" style= "padding-top: 5%; padding-bottom:5%">
 <div class="row">
   	<div class="col-md-12">
-   		 
-    			<div class="row">
-      				<div class="col-md-8 col-md-offset-1"><br/>
-				<h3>contribution in class</h3><br/>
+   		 <div class="row">
+      				<div class="col-md-8" style= " background-color:#d5dce1; margin-top:8%">
+                                
+				<h3>contribution in class</h3>
 				{% for i in uploads %}
-			        <a href="/contributor/profile/{{i}}">Class {{i}}</a>
-				<hr>	
+				<table class="table table-hover">
+			        <td><a href="/contributor/profile/{{i}}">Class {{i}}</a></td><hr>	
 				{% endfor %}
-            			</div>
-      				<div class="col-md-2"><br/>
-				
-				
-				<strong>Welcome {{contributor.user.username}}</strong><br>
-				<strong>Name:</strong> {{contributor.user.first_name}}
-				{{contributor.user.last_name}}<br>
-				<strong>Contact:</strong> {{contributor.contact}}<br>
-				<strong>Email:</strong> {{contributor.user.email}}<br><br>
-				
-				
-				<a href= "/contributor/upload/">Upload more </a><br><br>
-				<a href="/contributor/profile/edit/">
+				</table>
+            			</div><div class="col-md-1"></div>
+      				<div class="col-md-3" style= " background-color:#cad3d9; margin-top:8%"><br/>
+				<strong>Welcome {{contributor.user.username}}</strong><br><br>
+                                <img src="/media/{{contributor.picture}}" width=100px height=100px align="center">
+				<br><br>
+                                <a href= "/contributor/upload/">Upload more </a><br><br>
 				<a href="/contributor/profile/edit/">
     				<button id='Edit-Profile-button' class="btn btn-primary" type='submit' ><span>Edit Profile</span></button></a><br/><br/>
   				<a href="/user/password/change">
-   			        <button id='Password-reset-button'  type='submit' class="btn btn-primary"><span>Change Password</span></button></a>
+   			        <button id='Password-reset-button'  type='submit' class="btn btn-primary"><span>Change Password</span></button></a><br><br>
   
-				</div>
-			        <div class="col-md-1"><br>
-                                <img src="/media/{{contributor.picture}}" width=100px height=100px align=right>
-				<br><br>
                           	</div>
 				
 				

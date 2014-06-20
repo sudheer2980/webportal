@@ -1,10 +1,11 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-
-<br/><br/><br/><br/><br/><br/><br/>
-   			<div class="row">
-      				<div class="col-md-8 col-sm-8 col-md-offset-1"><br/>
+<div class="container" style= "padding-top: 5%; padding-bottom:5%">
+<div class="row">
+  	<div class="col-md-12">
+   		 <div class="row">
+      				<div class="col-md-8" style= " background-color:#d5dce1; margin-top:8%">
 				<h3>Review in class {{class_num}}</h3>
 				<div class="table-responsive">
 				<table class="table table-hover">
@@ -26,7 +27,7 @@
 				    <td><a href="/reviewer/profile/{{class_num}}/{{sub}}/{{i.topic}}/{{i.id}}/"><strong>{{ i.topic }}</strong></a>
 				    </td>
 				    
-				    <td>{{i.summary}}
+				    <td>{{i.summary|truncatewords:10}}<a href="/reviewer/profile/{{class_num}}/{{sub}}/{{i.topic}}/{{i.id}}/detail/">Read More ...</a>
 				    </td>
 				    
 				    <td>
@@ -63,27 +64,22 @@
 				</tr>
 				{% endfor %}</table></div>
 			        </div>
-    				<div class="col-md-2 col-sm-2"><br/>
-				
-				
-				<strong>Welcome {{reviewer.user.username}}</strong><br>
-				<strong>Name:</strong> {{reviewer.user.first_name}}
-				{{reviewer.user.last_name}}<br>
-				<strong>Contact:</strong> {{reviewer.contact}}<br>
-				<strong>Email:</strong> {{reviewer.user.email}}<br><br>
-										
-				<a href="/reviewer/profile/edit/">
-				<button id='Edit-Profile-button' type='submit' ><span>Edit Profile</span></button></a><br/>
-				<a href="/user/password/change">
-				<button id='Password-reset-button' type='submit' ><span>Change Password</span></button></a>
-		  		
-				</div>
-			        <div class="col-md-1 col-sm-1"><br>
-                                <img src="/media/{{reviewer.picture}}" width=100px height=100px align=right>
+    				
+<div class="col-md-1"></div>
+      				<div class="col-md-3" style= " background-color:#cad3d9; margin-top:8%"><br/>
+				<strong>Welcome {{reviewer.user.username}}</strong><br><br>
+                                <img src="/media/{{reviewer.picture}}" width=100px height=100px align="center">
 				<br><br>
+				<a href="/reviewer/profile/edit/">
+    				<button id='Edit-Profile-button' class="btn btn-primary" type='submit' ><span>Edit Profile</span></button></a><br/><br/>
+  				<a href="/user/password/change">
+   			        <button id='Password-reset-button'  type='submit' class="btn btn-primary"><span>Change Password</span></button></a><br><br>
+  
                           	</div>
-
 				
+				
+                            </div>
     			</div>
+  </div>
+   </div>
 {% endblock content %}
-
