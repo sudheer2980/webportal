@@ -37,38 +37,41 @@ def userlogin(request):
     """
    
     context = RequestContext(request)
-    if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
+    if request.user.is_authenticated():
+	return HttpResponseRedirect('/')
+    else:
+        if request.method == 'POST':
+            username = request.POST['username']
+            password = request.POST['password']
 
-        user = authenticate(username=username, password=password)
+            user = authenticate(username=username, password=password)
 
-        if user is not None:
-            # Is the account active? It could have been disabled.
-            if user.is_active:
-                # If the account is valid and active, we can log the user in.
-                # We'll send the user back to the homepage.
-		u=User.objects.get(username=user.username)
-		if Contributor.objects.filter(user=u):
+            if user is not None:
+                # Is the account active? It could have been disabled.
+                if user.is_active:
+                    # If the account is valid and active, we can log the user in.
+                    # We'll send the user back to the homepage.
+		    u=User.objects.get(username=user.username)
+		    if Contributor.objects.filter(user=u):
 			login(request,user)
                         return HttpResponseRedirect('/contributor/profile/')
                        
-            	else:
+            	    elif Reviewer.objects.filter(user=u):
 			login(request,user)
 			return HttpResponseRedirect('/reviewer/profile/')
-	    else:
-                # An inactive account was used - no logging in!
-                messages.info(request, "Your account is disabled.")
-		return render_to_response('webapp/login.html', context)
+		    elif user.username == 'admin':
+			login(request,user)
+			return HttpResponseRedirect('/admin')
+	        else:
+                    # An inactive account was used - no logging in!
+                    messages.info(request, "Your account is disabled.")
+		    return render_to_response('webapp/login.html', context)
+            else:
+                # Bad login details were provided. So we can't log the user in.
+                messages.error(request, "Bad login!")
+                return render_to_response('webapp/login.html', context)
         else:
-            # Bad login details were provided. So we can't log the user in.
-            messages.error(request, "Bad login!")
             return render_to_response('webapp/login.html', context)
-    else:
-        return render_to_response('webapp/login.html', context)
-
-
-
 
 
 def contributor_profile(request):
