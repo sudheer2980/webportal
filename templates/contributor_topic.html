@@ -6,7 +6,10 @@
   	<div class="col-md-12">
    		 <div class="row">
       				<div class="col-md-8" style= " background-color:#d5dce1; margin-top:8%">
+                                
+                                 
 				<h3>contribution in class {{class_num}}</h3>
+ 			
 				<div class="table-responsive">
 				<table class="table table-hover">
 				 <tr class="success">
@@ -18,8 +21,9 @@
 				    <td><strong>animation</strong></td>
 					
   				 </tr>
-  				{% for i in uploads %}
+  		
 				 <tr class="active">
+		
    				 <td><strong>{{i.name}}</strong></a>
 				      </p>
 				    </td>
@@ -32,8 +36,9 @@
 				    </td>
 				    
 				    <td>
-				    {% if i.pdf %}
 				    
+				    {% if i.pdf %}
+				   
 				      <a href="/media/{{i.pdf}}"><i class="fa fa-file-pdf-o fa-2x"></i></a>
 			            {% else %}
 				    {% endif %}	</td><td>
@@ -46,13 +51,16 @@
 					
 				    {% else %}
 				    {% endif %}	
-				    </td>         
+				       
+				</td>         
 				  </tr>
-				{% endfor %}</table></div>
+				
+			
+				</table></div>
 			        </div>
+                               <!--  <ul class="pagination" id="unordered-code-list"></ul> -->
 
-
-      				<div class="col-md-1"></div>
+      				
       				<div class="col-md-3" style= " background-color:#cad3d9; margin-top:8%"><br/>
 				<strong>Welcome {{contributor.user.username}}</strong><br><br>
                                 <img src="/media/{{contributor.picture}}" width=100px height=100px align="center">
@@ -70,4 +78,14 @@
     			</div>
   </div>
    </div>
+
+
+<!--<script src="{% static 'js/paging.js' %}"></script>
+<script type="text/javascript"> 
+  var pager = new Pager('code', 5, 'unordered-code-list'); 
+ 
+</script> -->
+   
+
+
 {% endblock content %}
