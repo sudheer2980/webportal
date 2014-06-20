@@ -14,7 +14,7 @@ def populate_users():
     # Admin
     os.system("python manage.py syncdb --noinput")
     # os.system("python manage.py schemamigration ac --initial")
-    # os.system("python manage.py migrate ac")    
+    # os.system("python manage.py migrate ac")
     os.system("python manage.py createsuperuser --username=admin --email=admin@example.com")
 
 
@@ -32,7 +32,7 @@ def populate_users():
         add_contributor(user=u['USERNAME'],
                         contact=u['CONTACT'],
                         picture=u['PHOTO'],
-			validation_docs=u['validation_docs'])
+validation_docs=u['validation_docs'])
 
 
 
@@ -57,7 +57,7 @@ def populate_users():
         print "Following user(s) created successfully."
         for i in user_list:
             print i.username
-	    
+
 
 
 
@@ -67,7 +67,7 @@ def populate_class():
 
     for Class in class_list.classes:
 	add_Class( class_number=Class['class_number'] , remark=Class['remark'])
-	
+
 
 
 def populate_subject():
@@ -83,9 +83,9 @@ def populate_subject():
             name=Subject['name'],
             contributor=contributor_instance,
 	    class_number=class_num_instance,
-	    summary=Subject['summary'])
+            summary=Subject['summary'])
 
-    	
+    
 
 def populate_comments():
 
@@ -94,17 +94,17 @@ def populate_comments():
 	usr_instance = User.objects.get(username=Comment['user'])
 	reviewer_instance = Reviewer.objects.get(user=usr_instance)
 	sub_instance = Subject.objects.filter(name=Comment['subject'])
-	
+
 	for subjec in sub_instance:
 		add_comment(
-				subject=subjec,
-				user=reviewer_instance,
-				comment=Comment['comment'],
-				submit_date=Comment['submit_date'])	  	
+		subject=subjec,
+		user=reviewer_instance,
+		comment=Comment['comment'],
+		submit_date=Comment['submit_date'])	
 
 def populate_faq():
     """Populate FAQs.
-    """
+"""
     print "Populating FAQ"
     q1 = add_faq(
         
@@ -114,26 +114,24 @@ def populate_faq():
 1. Foremost make sure that you USB debugging is enabled.
 2. Connect your tablet to the computer.
 
-        For Window User.
+For Window User.
 3. Go to the Start option. Open command prompt. Type cmd and press enter.
 4. A window will pop up with a C: prompt.
-        Ex :-   C:\Users\user>
+Ex :- C:\Users\user>
 5. Type the following commands
-        C:\Users\user>adb shell
-        sh-3.2# rm/data/system/gesture.key
-        rm/data/system/gesture.key
-        sh-3.2#
+C:\Users\user>adb shell
+sh-3.2# rm/data/system/gesture.key
+rm/data/system/gesture.key
+sh-3.2#
 
-        Once this is done, one has to restart/reboot their tablet. Now
-        the tablet is ready to use.
-        
-        For Ubuntu User.
-        
+Once this is done, one has to restart/reboot their tablet. Now
+the tablet is ready to use.
+For Ubuntu User.
 6. Go to the terminal.
 7. Then go to the folder where adb is installed.
 8. Repeat the commands from step number 5.
 
-        In addition to the above steps, a link has been provided for
+In addition to the above steps, a link has been provided for
 your reference(http://www.youtube.com/watch?v=QYdkgO1KHmk)"""
     
     )
