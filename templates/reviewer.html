@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
 <div class="container" style= "padding-top: 5%; padding-bottom:5%">
 <div class="row">
@@ -17,10 +18,13 @@
             			</div><div class="col-md-1"></div>
       				<div class="col-md-3" style= " background-color:#cad3d9; margin-top:8%"><br/>
 				<strong>Welcome {{reviewer.user.username}}</strong><br><br>
+                                {% if reviewer.picture %}
                                 <img src="/media/{{reviewer.picture}}" width=100px height=100px align="center">
+				{% else %}
+				<img src = "{% static 'img/default.png' %}" width=100px height=100px align="center">
+				{% endif %}
 				<br><br>
-                               
-				<a href="/reviewer/profile/edit/">
+                                <a href="/reviewer/profile/edit/">
     				<button id='Edit-Profile-button' class="btn btn-primary" type='submit' ><span>Edit Profile</span></button></a><br/><br/>
   				<a href="/user/password/change">
    			        <button id='Password-reset-button'  type='submit' class="btn btn-primary"><span>Change Password</span></button></a><br><br>
