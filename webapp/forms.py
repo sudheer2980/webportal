@@ -52,6 +52,7 @@ class UserForm(forms.ModelForm):
    	model =  User
         fields = ('username', 'first_name', 'last_name', 'email', 'password',)
 
+
 class ContributorForm(forms.ModelForm):	
     """
     Fields are:
@@ -91,6 +92,7 @@ class ContributorForm(forms.ModelForm):
 	else:
             raise forms.ValidationError("Not a valid file!")
 
+
 class ReviewerForm(forms.ModelForm):	
     """
     Fields are:
@@ -112,6 +114,7 @@ class ReviewerForm(forms.ModelForm):
     class Meta:
         model =  Reviewer
      	fields = ('picture', 'contact')
+
 
 class ContributorUploadForm(forms.ModelForm):
     """
@@ -191,6 +194,7 @@ class ContributorUploadForm(forms.ModelForm):
             return animation
 	else:
 	    raise forms.ValidationError("Not a valid file!")
+
 
 class CommentForm(forms.ModelForm):
     """
