@@ -40,13 +40,13 @@ def userlogin(request):
     if request.user.is_authenticated():
 	return HttpResponseRedirect('/')
     else:
-	if request.method == 'POST':
+        if request.method == 'POST':
             username = request.POST['username']
             password = request.POST['password']
 
             user = authenticate(username=username, password=password)
 
-	    if user is not None:
+            if user is not None:
                 # Is the account active? It could have been disabled.
                 if user.is_active:
                     # If the account is valid and active, we can log the user in.
@@ -62,16 +62,15 @@ def userlogin(request):
 		    elif user.username == 'admin':
 			login(request,user)
 			return HttpResponseRedirect('/admin')
-
 	        else:
-		    # An inactive account was used - no logging in!
+                    # An inactive account was used - no logging in!
                     messages.info(request, "Your account is disabled.")
 		    return render_to_response('webapp/login.html', context)
             else:
                 # Bad login details were provided. So we can't log the user in.
                 messages.error(request, "Bad login!")
                 return render_to_response('webapp/login.html', context)
-	else:
+        else:
             return render_to_response('webapp/login.html', context)
 
 
