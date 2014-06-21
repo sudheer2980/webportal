@@ -61,13 +61,13 @@ def userlogin(request):
                 if user.is_active:
                     # If the account is valid and active, we can log the user in.
                     # We'll send the user back to the homepage.
-		    u=User.objects.get(username=user.username)
-		    if Contributor.objects.filter(user=u):
-			login(request,user)
+                    u=User.objects.get(username=user.username)
+                    if Contributor.objects.filter(user=u):
+                        login(request,user)
                         return HttpResponseRedirect('/contributor/profile/')
                        
-            	    elif Reviewer.objects.filter(user=u):
-			login(request,user)
+                    elif Reviewer.objects.filter(user=u):
+           		login(request,user)
 			return HttpResponseRedirect('/reviewer/profile/')
 		    elif user.username == 'admin':
 			login(request,user)
@@ -614,8 +614,11 @@ def content(request):
     context=RequestContext(request)
     contributor= Contributor.objects.all()
     uploads = Subject.objects.all().filter(review__gte = 3).order_by('class_number')
+    count = len(uploads)
+    print count
     context_dict = {
 	'uploads': uploads,
+	'count':count,
         'contributor':contributor
     }
     return render_to_response('content.html',context_dict,context)
