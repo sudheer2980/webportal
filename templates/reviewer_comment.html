@@ -14,17 +14,17 @@
 				<!-- <p><label for="id_comment">Comment:</label>
     				<input id="id_comment" type="text" name="comment" /></p> -->
 				{{comment_form.as_p}}
-				<input type="submit" name="submit" class="btn btn-primary" value="Comment"  />
-				</form>	
+				<p align="right"><input type="submit" name="submit" class="btn btn-primary" value="Comment" align="right"  /></p>
+				</form>	<br>
 				</div>	
 				{% for i in comment %}
 				<p><div class="row">
-					<div class="col-md-11" style="border:1px solid gray;margin-left:10px; ">
-					{{i.comment}}</div></div>
+					<div class="col-md-11" style="margin-left:10px;background-color:#ffffff ">
+					<b><em>{{i.comment}}</em></b></div></div>
 				<div class="row">
 				<div class="col-md-5 col-md-offset-7">
-					<em>posted by-<b>{{i.user}}</b><br>  on <b>{{i.submit_date}}</b></em>
-				</div>	</div><hr>
+					<em>by: {{i.user}}<br>  on {{i.submit_date}}</em>
+				</div>	</div>
 				{% endfor %}
 				</div>
       				<div class="col-md-1"></div>
