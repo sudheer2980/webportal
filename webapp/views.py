@@ -20,7 +20,7 @@ def index(request):
     """
     Argument:
 
-    `REQUEST`: Request from client
+    `REQUEST`: Request from client.
 
     This function takes the request of client and direct it to home page.
     """
@@ -34,17 +34,18 @@ def index(request):
 
 
 def about(request):
-    """About page.
-
-    Arguments:
-    - `Request`:
+    """
+    Argument:
+    
+    `REQUEST`: This is the brief description about the site.
     """
     context = RequestContext(request)
     return render_to_response('about.html', context)
 
+
 def userlogin(request):
     """
-     Argument:
+    Argument:
 
     `REQUEST` : Request from the user to login
     """
@@ -64,13 +65,13 @@ def userlogin(request):
                 if user.is_active:
                     # If the account is valid and active, we can log the user in.
                     # We'll send the user back to the homepage.
-		    u=User.objects.get(username=user.username)
-		    if Contributor.objects.filter(user=u):
-			login(request,user)
+                    u=User.objects.get(username=user.username)
+                    if Contributor.objects.filter(user=u):
+                        login(request,user)
                         return HttpResponseRedirect('/contributor/profile/')
                        
-            	    elif Reviewer.objects.filter(user=u):
-			login(request,user)
+                    elif Reviewer.objects.filter(user=u):
+           		login(request,user)
 			return HttpResponseRedirect('/reviewer/profile/')
 		    elif user.username == 'admin':
 			login(request,user)
@@ -102,6 +103,7 @@ def contributor_profile(request):
     uploads = Subject.objects.values_list('class_number__class_number',flat=True).filter(contributor__user=request.user).distinct()  
     context_dict = {'uploads': uploads,'contributor':contributor}	     
     return render_to_response('contributor.html', context_dict, context)
+
 
 def contributor_profile_subject(request,class_num):
     """
@@ -143,6 +145,7 @@ def contributor_profile_topic(request,class_num,sub):
     context_dict = {'uploads': uploads, 'class_num':class_num, 'sub':sub,'contributor':contributor}
     return render_to_response('contributor_topic.html', context_dict, context)
 
+
 def contributor_profile_comment(request,class_num,sub,topics,id):
     """
     Arguments:
@@ -167,7 +170,6 @@ def contributor_profile_comment(request,class_num,sub,topics,id):
     return render_to_response('contributor_comment.html', context_dict, context)
 
 
-
 def contributor_profile_topic_detail(request,class_num,sub,topics,id):
     """
     Arguments:
@@ -189,6 +191,7 @@ def contributor_profile_topic_detail(request,class_num,sub,topics,id):
     subject = Subject.objects.get(id=id)
     context_dict = {'subject': subject, 'class_num':class_num, 'sub':sub,'contributor':contributor,'topics':topics,'id':id}
     return render_to_response('contributor_topic_detail.html', context_dict, context)
+
 
 def reviewer_profile_topic_detail(request,class_num,sub,topics,id):
     """
@@ -439,6 +442,7 @@ def user_logout(request):
     logout(request)
     return HttpResponseRedirect('/')
 	
+
 def commentpost(request):
     """
     Argument:
@@ -447,6 +451,7 @@ def commentpost(request):
     
     """
     return render_to_response('templates/comments.html')
+
 
 def contributor_upload(request):
     """
@@ -613,8 +618,11 @@ def content(request):
     context=RequestContext(request)
     contributor= Contributor.objects.all()
     uploads = Subject.objects.all().filter(review__gte = 3).order_by('class_number')
+    count = len(uploads)
+    print count
     context_dict = {
 	'uploads': uploads,
+	'count':count,
         'contributor':contributor
     }
     return render_to_response('content.html',context_dict,context)
