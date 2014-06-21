@@ -8,8 +8,10 @@
     <table class="table-responsive">
     <form method="get" action="/search/">
       <p><label for="id_q">Search:</label>
-        <input type="text" name="q" id="id_q" placeholder="Search by Subject or Topic"></input>
-        <input type="submit" value="Submit"/></p>
+        <input type="text" name="q" id="id_q" autocomplete="off" class="gray" placeholder="Enter Subject or Topic">
+        <button type="submit" class="add-on"><i class="fa fa-search"></i></button>
+      </input>
+    </div>
     </form>
     <h1>{{Subject.name}}</h1>
     </div>
@@ -27,6 +29,7 @@
            <td><strong>animation</strong></td>
                     
         </tr>
+        <p>Total number is : {{count}}</p>
         {% for i in uploads %}
            <tr class="active">
            <td><strong>Class {{i.class_number}}</strong></a>
@@ -81,4 +84,21 @@
 </script>
 </div>
 
+<input type="text" id="hidden" value="Page number">
+<script type="text/javascript">
+    var x = document.getElementById("hidden").value;
+    var y=1;
+    for(var i=1; i<={{count}}; i+=2 )
+    {  var btn = document.createElement("BUTTON");
+       var t = document.createTextNode(y);
+       btn.appendChild(t);
+       document.body.appendChild(btn);
+       btn.value = y;
+       btn.onclick = function(){window.location = "/"};
+       y++;
+    }
+</script>
+      
+
+      
 {% endblock content %}
