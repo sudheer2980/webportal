@@ -20,7 +20,7 @@ def index(request):
     """
     Argument:
 
-    `REQUEST`: Request from client
+    `REQUEST`: Request from client.
 
     This function takes the request of client and direct it to home page.
     """
@@ -30,17 +30,18 @@ def index(request):
 
 
 def about(request):
-    """About page.
-
-    Arguments:
-    - `Request`:
+    """
+    Argument:
+    
+    `REQUEST`: This is the brief description about the site.
     """
     context = RequestContext(request)
     return render_to_response('about.html', context)
 
+
 def userlogin(request):
     """
-     Argument:
+    Argument:
 
     `REQUEST` : Request from the user to login
     """
@@ -99,6 +100,7 @@ def contributor_profile(request):
     context_dict = {'uploads': uploads,'contributor':contributor}	     
     return render_to_response('contributor.html', context_dict, context)
 
+
 def contributor_profile_subject(request,class_num):
     """
     Arguments:
@@ -139,6 +141,7 @@ def contributor_profile_topic(request,class_num,sub):
     context_dict = {'uploads': uploads, 'class_num':class_num, 'sub':sub,'contributor':contributor}
     return render_to_response('contributor_topic.html', context_dict, context)
 
+
 def contributor_profile_comment(request,class_num,sub,topics,id):
     """
     Arguments:
@@ -163,7 +166,6 @@ def contributor_profile_comment(request,class_num,sub,topics,id):
     return render_to_response('contributor_comment.html', context_dict, context)
 
 
-
 def contributor_profile_topic_detail(request,class_num,sub,topics,id):
     """
     Arguments:
@@ -185,6 +187,7 @@ def contributor_profile_topic_detail(request,class_num,sub,topics,id):
     subject = Subject.objects.get(id=id)
     context_dict = {'subject': subject, 'class_num':class_num, 'sub':sub,'contributor':contributor,'topics':topics,'id':id}
     return render_to_response('contributor_topic_detail.html', context_dict, context)
+
 
 def reviewer_profile_topic_detail(request,class_num,sub,topics,id):
     """
@@ -435,6 +438,7 @@ def user_logout(request):
     logout(request)
     return HttpResponseRedirect('/')
 	
+
 def commentpost(request):
     """
     Argument:
@@ -443,6 +447,7 @@ def commentpost(request):
     
     """
     return render_to_response('templates/comments.html')
+
 
 def contributor_upload(request):
     """
