@@ -161,7 +161,7 @@ class ContributorUploadForm(forms.ModelForm):
         widget = forms.FileInput(),
         help_text = 'Upload animations file.',required=False)
     summary = forms.CharField(label='Summary',
-	widget= forms.TextInput(
+	widget= forms.Textarea(
         attrs={'class': 'form-control','placeholder': 'Summary for the uploaded documents.'}),
 	help_text="", required=True,
 	error_messages={'required':'Summary is required.'})       	
@@ -199,8 +199,8 @@ class CommentForm(forms.ModelForm):
     COMMENT: This field describes the comment form which takes maximum length of 1000 characters. The comment is made by the reviewer.
     """
     comment = forms.CharField(
-        widget= forms.TextInput(
-        attrs={'class': 'form-control'}),
+        widget= forms.Textarea(
+        attrs={'class': 'form-control','rows': '3'}),
         help_text="", required=False,
 	)
 

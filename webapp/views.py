@@ -25,8 +25,12 @@ def index(request):
     This function takes the request of client and direct it to home page.
     """
     context = RequestContext(request)
+    latest_uploads = Subject.objects.filter(review__gte = 3).order_by('-uploaded_on')[:3]
+    print latest_uploads.query
     # print request.user.username
-    return render_to_response("webapp/index.html", context)
+    context_dict = {'latest_uploads': latest_uploads,
+    } 
+    return render_to_response("webapp/index.html", context_dict, context)
 
 
 def about(request):
