@@ -80,22 +80,6 @@
 	</div>
 </div>
 
-<input type="text" id="hidden" value="Page number">
-<script type="text/javascript">
-    var x = document.getElementById("hidden").value;
-    var y=1;
-    for(var i=1; i<={{count}}; i+=2 )
-    {  var btn = document.createElement("BUTTON");
-       var t = document.createTextNode(y);
-       btn.appendChild(t);
-       document.body.appendChild(btn);
-       btn.value = y;
-       btn.onclick = function(){window.location = "/"};
-       y++;
-    }
-</script>
-      
-
       
 {% endblock content %}
 </body>

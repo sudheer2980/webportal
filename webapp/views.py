@@ -614,11 +614,8 @@ def content(request):
     context=RequestContext(request)
     contributor= Contributor.objects.all()
     uploads = Subject.objects.all().filter(review__gte = 3).order_by('class_number')
-    count = len(uploads)
-    print count
     context_dict = {
 	'uploads': uploads,
-	'count':count,
         'contributor':contributor
     }
     return render_to_response('content.html',context_dict,context)
