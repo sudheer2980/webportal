@@ -20,7 +20,7 @@ def index(request):
     """
     Argument:
 
-    `REQUEST`: Request from client
+    `REQUEST`: Request from client.
 
     This function takes the request of client and direct it to home page.
     """
@@ -31,53 +31,57 @@ def index(request):
 
 def about(request):
     """About page.
-
     Argument:
-    - `Request`:
+    
+    `REQUEST`: This is the brief description about the site.
     """
     context = RequestContext(request)
     return render_to_response('about.html', context)
 
+
 def userlogin(request):
     """
-     Argument:
+    Argument:
 
     `REQUEST` : Request from the user to login
     """
    
     context = RequestContext(request)
-    if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
+    if request.user.is_authenticated():
+	return HttpResponseRedirect('/')
+    else:
+        if request.method == 'POST':
+            username = request.POST['username']
+            password = request.POST['password']
 
-        user = authenticate(username=username, password=password)
+            user = authenticate(username=username, password=password)
 
-        if user is not None:
-            # Is the account active? It could have been disabled.
-            if user.is_active:
-                # If the account is valid and active, we can log the user in.
-                # We'll send the user back to the homepage.
-		u=User.objects.get(username=user.username)
-		if Contributor.objects.filter(user=u):
+            if user is not None:
+                # Is the account active? It could have been disabled.
+                if user.is_active:
+                    # If the account is valid and active, we can log the user in.
+                    # We'll send the user back to the homepage.
+		    u=User.objects.get(username=user.username)
+		    if Contributor.objects.filter(user=u):
 			login(request,user)
                         return HttpResponseRedirect('/contributor/profile/')
                        
-            	else:
+            	    elif Reviewer.objects.filter(user=u):
 			login(request,user)
 			return HttpResponseRedirect('/reviewer/profile/')
-	    else:
-                # An inactive account was used - no logging in!
-                messages.info(request, "Your account is disabled.")
-		return render_to_response('webapp/login.html', context)
+		    elif user.username == 'admin':
+			login(request,user)
+			return HttpResponseRedirect('/admin')
+	        else:
+                    # An inactive account was used - no logging in!
+                    messages.info(request, "Your account is disabled.")
+		    return render_to_response('webapp/login.html', context)
+            else:
+                # Bad login details were provided. So we can't log the user in.
+                messages.error(request, "Bad login!")
+                return render_to_response('webapp/login.html', context)
         else:
-            # Bad login details were provided. So we can't log the user in.
-            messages.error(request, "Bad login!")
             return render_to_response('webapp/login.html', context)
-    else:
-        return render_to_response('webapp/login.html', context)
-
-
-
 
 
 def contributor_profile(request):
@@ -95,6 +99,7 @@ def contributor_profile(request):
     uploads = Subject.objects.values_list('class_number__class_number',flat=True).filter(contributor__user=request.user).distinct()  
     context_dict = {'uploads': uploads,'contributor':contributor}	     
     return render_to_response('contributor.html', context_dict, context)
+
 
 def contributor_profile_subject(request,class_num):
     """
@@ -136,6 +141,7 @@ def contributor_profile_topic(request,class_num,sub):
     context_dict = {'uploads': uploads, 'class_num':class_num, 'sub':sub,'contributor':contributor}
     return render_to_response('contributor_topic.html', context_dict, context)
 
+
 def contributor_profile_comment(request,class_num,sub,topics,id):
     """
     Arguments:
@@ -160,7 +166,6 @@ def contributor_profile_comment(request,class_num,sub,topics,id):
     return render_to_response('contributor_comment.html', context_dict, context)
 
 
-
 def contributor_profile_topic_detail(request,class_num,sub,topics,id):
     """
     Arguments:
@@ -182,6 +187,7 @@ def contributor_profile_topic_detail(request,class_num,sub,topics,id):
     subject = Subject.objects.get(id=id)
     context_dict = {'subject': subject, 'class_num':class_num, 'sub':sub,'contributor':contributor,'topics':topics,'id':id}
     return render_to_response('contributor_topic_detail.html', context_dict, context)
+
 
 def reviewer_profile_topic_detail(request,class_num,sub,topics,id):
     """
@@ -432,6 +438,7 @@ def user_logout(request):
     logout(request)
     return HttpResponseRedirect('/')
 	
+
 def commentpost(request):
     """
     Argument:
@@ -440,6 +447,7 @@ def commentpost(request):
     
     """
     return render_to_response('templates/comments.html')
+
 
 def contributor_upload(request):
     """
