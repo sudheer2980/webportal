@@ -18,11 +18,11 @@ class Contributor(models.Model):
     # Addition info
     contact = models.CharField(max_length=12, blank=True)
     picture = models.ImageField(upload_to='profile_image', blank=True)
-    # specialised_subject = models.CharField(max_length=20, blank=False)
     validation_docs = models.FileField(upload_to='validation_docs',blank=False)
   
     def __unicode__(self):
         return self.user.username
+
 
 class Reviewer(models.Model):
     """
@@ -38,11 +38,9 @@ class Reviewer(models.Model):
     # Addition info
     contact = models.CharField(max_length=12, blank=True)
     picture = models.ImageField(upload_to='profile_image', blank=True)
-    # specialised_subject = models.CharField(max_length=20, blank=False)
-    
+
     def __unicode__(self):
         return self.user.username
-
 
 
 class Class(models.Model):
@@ -114,7 +112,6 @@ class Subject(models.Model):
     def increment_review(self):
         self.review += 1
         self.save()
-
 
 
 class Contact(models.Model):

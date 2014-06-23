@@ -26,8 +26,14 @@
 				    
 				    <td><a href="/reviewer/profile/{{class_num}}/{{sub}}/{{i.topic}}/{{i.id}}/"><strong>{{ i.topic }}</strong></a>
 				    </td>
+				
 				    
-				    <td>{{i.summary|truncatewords:10}}<a href="/reviewer/profile/{{class_num}}/{{sub}}/{{i.topic}}/{{i.id}}/detail/">Read More ...</a>
+				    <td>
+				    {% if i.summary|length >= 100 %}
+				      {{i.summary|truncatewords:10}}<a href="/reviewer/profile/{{class_num}}/{{sub}}/{{i.topic}}/{{i.id}}/detail">Read More ...</a>
+				    {% else %}
+					{{i.summary}}
+				    {% endif %}
 				    </td>
 				    
 				    <td>
@@ -50,13 +56,13 @@
 				{% if reviewer in i.reviewer.all %}
 				<p>Approved</p>
 				{% else %}
-				<form id = "{{i.id}}" method="post"
+				<form method="post"
 		                enctype="multipart/form-data">
 
 		    	            {% csrf_token %}
 		
 		
-		       		    <input type="submit" name="Approve" value="Approve" id = {{i.id}} /></a>
+		       		    <input type="submit" name="Approve" value="Approve" /></a>
 				    <input type="hidden" name="id" value="{{ i.id }}">
 				</form>
 				{% endif %}

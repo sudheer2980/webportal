@@ -47,7 +47,9 @@
       <a class="left carousel-control" href="http://getbootstrap.com/examples/carousel/#myCarousel" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
       <a class="right carousel-control" href="http://getbootstrap.com/examples/carousel/#myCarousel" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
     </div><!-- /.carousel -->
-
+    {% for i in latest_uploads %}
+	{{i}}
+    {% endfor %}
 
     <section id="portfolio">
         <div class="container">

@@ -27,6 +27,7 @@ urlpatterns = patterns(
 
     # this takes us to reviewer profile
     url(r'^reviewer/profile/$','webapp.views.reviewer_profile'),
+    url(r'^reviewer/past/approvals/$','webapp.views.reviewer_past_approvals'),
     url(r'^reviewer/profile/(?P<class_num>\d+)/$','webapp.views.reviewer_profile_subject'), 
     url(r'^reviewer/profile/(?P<class_num>\d+)/(?P<sub>[\w ]+)/$','webapp.views.reviewer_profile_topic'),
     url(r'^reviewer/profile/(?P<class_num>\d+)/(?P<sub>[\w ]+)/(?P<topics>[\w ]+)/(?P<id>\d+)/$','webapp.views.reviewer_profile_comment'),
@@ -41,6 +42,13 @@ urlpatterns = patterns(
     # this is for changing password, and for confirmation of that change
     url(r'^user/password/change/$','django.contrib.auth.views.password_change'),
     url(r'^user/password/change/done/$','django.contrib.auth.views.password_change_done'),
+
+    # this is for resetting password by sending an email, when a user forgets password
+    url(r'^admin/password_reset/$','django.contrib.auth.views.password_reset',name='admin_password_reset'),
+    url(r'^admin/password_reset/done/$','django.contrib.auth.views.password_reset_done'),
+    url(r'^reset/(?P<uidb36>[0-9A-Za-z]+)-(?P<token>.+)/$','django.contrib.auth.views.password_reset_confirm'),
+    url(r'^reset/done/$','django.contrib.auth.views.password_reset_complete'),
+
 
     url(r'^contributor/signup/$','webapp.views.contributor_signup'),
     url(r'^reviewer/signup/$','webapp.views.reviewer_signup'),

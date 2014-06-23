@@ -6,12 +6,9 @@
   	<div class="col-md-12">
    		 <div class="row">
       				<div class="col-md-8" style= " background-color:#d5dce1; margin-top:8%">
-                                
-                                 
-				<h3>contribution in class {{class_num}}</h3>
- 			{% if uploads %}
+				<h3>Review in class {{class_num}}</h3>
 				<div class="table-responsive">
-				<table class="table table-hover" id="uploads">
+				<table class="table table-hover">
 				 <tr class="success">
     				    <td><strong>subject</strong></td>
     				    <td><strong>Topic</strong></td>
@@ -19,30 +16,24 @@
 			            <td><strong>PDF</strong></td>
 				    <td><strong>Video</strong></td>
 				    <td><strong>animation</strong></td>
-					
+				    <td><strong>Approve</strong></td>
   				 </tr>
-  				{% for i in uploads %}
+  				{% for i in subject %}
+				{% if reviewer in i.reviewer.all %}
 				 <tr class="active">
-		
    				 <td><strong>{{i.name}}</strong></a>
 				      </p>
 				    </td>
 				    
-				    <td><a href="/contributor/profile/{{class_num}}/{{sub}}/{{i.topic}}/{{i.id}}/"><strong>{{i.topic}}</strong></a>
+				    <td><a href="/reviewer/profile/{{class_num}}/{{sub}}/{{i.topic}}/{{i.id}}/"><strong>{{ i.topic }}</strong></a>
+				    </td>
+				    
+				    <td>{{i.summary|truncatewords:10}}<a href="/reviewer/profile/{{class_num}}/{{sub}}/{{i.topic}}/{{i.id}}/detail/">read more ...</a>
 				    </td>
 				    
 				    <td>
-				    {% if i.summary|length >= 100 %}
-				      {{i.summary|truncatewords:10}}<a href="/contributor/profile/{{class_num}}/{{sub}}/{{i.topic}}/{{i.id}}/detail">Read More ...</a>
-				    {% else %}
-					{{i.summary}}
-				    {% endif %}
-				    </td>
-				    
-				    <td>
-				    
 				    {% if i.pdf %}
-				   
+				    
 				      <a href="/media/{{i.pdf}}"><i class="fa fa-file-pdf-o fa-2x"></i></a>
 			            {% else %}
 				    {% endif %}	</td><td>
@@ -51,32 +42,29 @@
 					{% else %}
 				    {% endif %}	</td><td>
 				    {% if i.animation %}
-					<a href="/media/{{i.animation}}"><i class="fa fa-file-image-o fa-2x"></i></a>
-					
+					<a href="/media/animation/{{i.animation}}"><i class="fa fa-file-image-o fa-2x"></i></a>
 				    {% else %}
 				    {% endif %}	
-				       
-				</td>         
-				  </tr>
-				
-			         {% endfor %}
-				</table></div>
+				    </td>         
+				  
+				<td>
+				<p>Approved</p>
+				</td>
+				</tr>
+				{% endif %}
+				{% endfor %}</table></div>
 			        </div>
-                                 
-                                
-
-
-      				<div class="col-md-1"></div>
+    				
+<div class="col-md-1"></div>
       				<div class="col-md-3" style= " background-color:#cad3d9; margin-top:8%"><br/>
-				<strong>Welcome {{contributor.user.username}}</strong><br><br>
-                                {% if contributer.picture %}
-                                <img src="/media/{{contributor.picture}}" width=100px height=100px align="center">
+				<strong>Welcome {{reviewer.user.username}}</strong><br><br>
+                                {% if reviewer.picture %}
+                                <img src="/media/{{reviewer.picture}}" width=100px height=100px align="center">
 				{% else %}
 				<img src = "{% static 'img/default.png' %}" width=100px height=100px align="center">
 				{% endif %}
 				<br><br>
-                                <a href= "/contributor/upload/">Upload more </a><br><br>
-				<a href="/contributor/profile/edit/">
+				<a href="/reviewer/profile/edit/">
     				<button id='Edit-Profile-button' class="btn btn-primary" type='submit' ><span>Edit Profile</span></button></a><br/><br/>
   				<a href="/user/password/change">
    			        <button id='Password-reset-button'  type='submit' class="btn btn-primary"><span>Change Password</span></button></a><br><br>
@@ -85,19 +73,7 @@
 				
 				
                             </div>
-
-<ul class="pagination" id="unordered-code-list"></ul> 
-				{% else %}
-  				<p>Nothing to display.</p>
-  				{% endif %}
     			</div>
   </div>
    </div>
-
-
-<script src="{% static 'js/paging.js' %}"></script>
-<script type="text/javascript">
- var pager = new Pager('uploads', 5, 'unordered-code-list');
-</script>
-
 {% endblock content %}

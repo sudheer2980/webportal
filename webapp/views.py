@@ -25,8 +25,12 @@ def index(request):
     This function takes the request of client and direct it to home page.
     """
     context = RequestContext(request)
+    latest_uploads = Subject.objects.filter(review__gte = 3).order_by('-uploaded_on')[:3]
+    print latest_uploads.query
     # print request.user.username
-    return render_to_response("webapp/index.html", context)
+    context_dict = {'latest_uploads': latest_uploads,
+    } 
+    return render_to_response("webapp/index.html", context_dict, context)
 
 
 def about(request):
@@ -62,13 +66,13 @@ def userlogin(request):
                 if user.is_active:
                     # If the account is valid and active, we can log the user in.
                     # We'll send the user back to the homepage.
-		    u=User.objects.get(username=user.username)
-		    if Contributor.objects.filter(user=u):
-			login(request,user)
+                    u=User.objects.get(username=user.username)
+                    if Contributor.objects.filter(user=u):
+                        login(request,user)
                         return HttpResponseRedirect('/contributor/profile/')
                        
-            	    elif Reviewer.objects.filter(user=u):
-			login(request,user)
+                    elif Reviewer.objects.filter(user=u):
+           		login(request,user)
 			return HttpResponseRedirect('/reviewer/profile/')
 		    elif user.username == 'admin':
 			login(request,user)
@@ -320,6 +324,21 @@ def reviewer_profile_comment(request,class_num,sub,topics,id):
         context_dict = {'comment_form': comment_form,
         'comment' : comment,'reviewer':reviewer}
 	return render_to_response("reviewer_comment.html",context_dict,context)
+
+
+def reviewer_past_approvals(request):
+    """
+    Argument:
+
+    `REQUEST`: Request from contributor to sign up
+    
+    This function takes the request of user and directs it to the profile page which consists of the reviewer's past approvals.
+    """
+    context = RequestContext(request)
+    reviewer = Reviewer.objects.get(user = request.user)
+    subject = Subject.objects.all().order_by('-uploaded_on')
+    context_dict = { 'subject':subject ,'reviewer':reviewer }
+    return render_to_response("reviewer_past_approvals.html",context_dict,context)
 
 
 def contributor_signup(request):
@@ -619,8 +638,11 @@ def content(request):
     context=RequestContext(request)
     contributor= Contributor.objects.all()
     uploads = Subject.objects.all().filter(review__gte = 3).order_by('class_number')
+    count = len(uploads)
+    print count
     context_dict = {
 	'uploads': uploads,
+	'count':count,
         'contributor':contributor
     }
     return render_to_response('content.html',context_dict,context)

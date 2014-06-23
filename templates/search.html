@@ -4,7 +4,7 @@
 <br><br><br><br><br>
 	<ul>
     <div align="center">
-      <p>You searched for " {{query}} "; the results are listed below. </p>
+      <p>You searched for " {{query}} " </p>
   <a href="/content/">
                 <button id='Go-back-button' type='submit' class="btn btn-primary"><span>Go Back</span></button></a>
   		<br><br>
@@ -53,17 +53,15 @@
                     
                     <td>
                     {% if page.pdf %}
-                      <a href="/media/{{page.pdf}}"><img src="{% static 'doc.jpg' %}" height="50" width="50"
-                    class="img-rounded img-responsive"></a>
+                      <a href="/media/{{page.pdf}}"><i class="fa fa-file-pdf-o fa-2x"></i></a>
                         {% else %}
                     {% endif %} </td><td>
                     {% if page.video %}
-                    <a href="/media/{{page.video}}"><img src="{% static 'video.jpg' %}" height="50" width="50"
-                    class="img-rounded img-responsive"></a>
+                    <a href="/media/{{page.video}}"><i class="fa fa-file-video-o fa-2x"></i></a>
                     {% else %}
                     {% endif %} </td><td>
                     {% if page.animation %}
-                    <a href="/media/animation/{{page.animation}}">ani</a>
+                    <a href="/media/animation/{{page.animation}}"><i class="fa fa-file-image-o fa-2x"></i></a>
                     {% else %}
                     {% endif %} 
                     </td>         
