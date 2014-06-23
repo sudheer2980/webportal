@@ -185,9 +185,9 @@ class ContributorUploadForm(forms.ModelForm):
                 	return pdf
 		
             	else:
-			raise forms.ValidationError("Filesize should be less than 5MB.")
+			raise forms.ValidationError("Filesize should be less than 20MB.")
             else:
-	    	raise forms.ValidationError("Not a valid file!")
+	    	raise forms.ValidationError("Not a valid file, Please upload a pdf file!")
 
     def clean_video(self):
       	"""Limit doc_file upload size."""
@@ -200,9 +200,9 @@ class ContributorUploadForm(forms.ModelForm):
                 	return video
 		
             	else:
-                	raise forms.ValidationError("Filesize should be less than 15MB.")
+                	raise forms.ValidationError("Filesize should be less than 200MB.")
 	    else:
-	    	raise forms.ValidationError("Not a valid file!")
+	    	raise forms.ValidationError("Not a valid file, Please Upload a mp4, mkv, avi or flv file")
 
     def clean_animation(self):
         """Limit doc_file upload size."""
@@ -213,9 +213,9 @@ class ContributorUploadForm(forms.ModelForm):
                 	return animation
 		
             	else:
-                	raise forms.ValidationError("Filesize should be less than 2MB.")
+                	raise forms.ValidationError("Filesize should be less than 10MB.")
 	    else:
-	    	raise forms.ValidationError("Not a valid file, Upload .swf file!")
+	    	raise forms.ValidationError("Not a valid file, Please Upload .swf file!")
 
 
 class CommentForm(forms.ModelForm):

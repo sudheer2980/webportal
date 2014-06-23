@@ -488,7 +488,7 @@ def contributor_upload(request):
             print "Forms is/are valid"
             subject=contributor_upload_form.save(commit=False)
             # contri=Contributor.objects.get(user_id=id)
-            if ( 'pdf' not in request.FILES and  'video' not in request.FILES and 'animantion' not in request.FILES):		 
+            if ( 'pdf' not in request.FILES and  'animation' not in request.FILES and 'video' not in request.FILES):		 
 	    	# Bad upload details were provided.
             	messages.error(request, "need to provide atleast one upload")
 		contributor_upload_form = ContributorUploadForm()
