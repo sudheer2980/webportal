@@ -32,7 +32,11 @@
 				    </td>
 				    
 				    <td>
+				    {% if i.summary|length >= 100 %}
 				      {{i.summary|truncatewords:10}}<a href="/contributor/profile/{{class_num}}/{{sub}}/{{i.topic}}/{{i.id}}/detail">Read More ...</a>
+				    {% else %}
+					{{i.summary}}
+				    {% endif %}
 				    </td>
 				    
 				    <td>
