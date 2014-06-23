@@ -38,7 +38,6 @@ class Reviewer(models.Model):
     # Addition info
     contact = models.CharField(max_length=12, blank=True)
     picture = models.ImageField(upload_to='profile_image', blank=True)
-    subject = models.ManyToManyField(Subject)
 
     def __unicode__(self):
         return self.user.username
