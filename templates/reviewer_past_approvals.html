@@ -8,7 +8,6 @@
       				<div class="col-md-8" style= " background-color:#d5dce1; margin-top:8%">
 				<h3>Review in class {{class_num}}</h3>
 				<div class="table-responsive">
-				
 				<table class="table table-hover">
 				 <tr class="success">
     				    <td><strong>subject</strong></td>
@@ -19,8 +18,8 @@
 				    <td><strong>animation</strong></td>
 				    <td><strong>Approve</strong></td>
   				 </tr>
-                                
-  				{% for i in approvals %}		
+  				{% for i in subject %}
+				{% if reviewer in i.reviewer.all %}
 				 <tr class="active">
    				 <td><strong>{{i.name}}</strong></a>
 				      </p>
@@ -49,17 +48,11 @@
 				    </td>         
 				  
 				<td>
-				
 				<p>Approved</p>
-				
-				
 				</td>
 				</tr>
-				
-				{% endfor %}
-                                
-</table>
-</div>
+				{% endif %}
+				{% endfor %}</table></div>
 			        </div>
     				
 <div class="col-md-1"></div>

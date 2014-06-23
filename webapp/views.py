@@ -273,7 +273,6 @@ def reviewer_profile_topic(request,class_num,sub):
 	subject = get_object_or_404(Subject, id=request.POST['id'])
 	subject.increment_review()
 	subject.reviewer.add(reviewer)
-	reviewer.subject.add(subject)
 	print "reviewer has reviewed"
 	print subject.review
 	print subject.id
@@ -336,7 +335,7 @@ def reviewer_past_approvals(request):
     """
     context = RequestContext(request)
     reviewer = Reviewer.objects.get(user = request.user)
-    approvals = reviewer.subject.all().order_by('-uploaded_on')
+    subject = Subject.objects.all().order_by('-uploaded_on')
     context_dict = { 'subject':subject ,'reviewer':reviewer }
     return render_to_response("reviewer_past_approvals.html",context_dict,context)
 
