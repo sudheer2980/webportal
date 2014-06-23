@@ -27,6 +27,7 @@ urlpatterns = patterns(
 
     # this takes us to reviewer profile
     url(r'^reviewer/profile/$','webapp.views.reviewer_profile'),
+    url(r'^reviewer/past/approvals/$','webapp.views.reviewer_past_approvals'),
     url(r'^reviewer/profile/(?P<class_num>\d+)/$','webapp.views.reviewer_profile_subject'), 
     url(r'^reviewer/profile/(?P<class_num>\d+)/(?P<sub>[\w ]+)/$','webapp.views.reviewer_profile_topic'),
     url(r'^reviewer/profile/(?P<class_num>\d+)/(?P<sub>[\w ]+)/(?P<topics>[\w ]+)/(?P<id>\d+)/$','webapp.views.reviewer_profile_comment'),
