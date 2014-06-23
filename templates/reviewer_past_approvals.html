@@ -18,7 +18,7 @@
 				    <td><strong>animation</strong></td>
 				    <td><strong>Approve</strong></td>
   				 </tr>
-  				{% for i in uploads %}
+  				{% for i in subject %}
 				{% if reviewer in i.reviewer.all %}
 				 <tr class="active">
    				 <td><strong>{{i.name}}</strong></a>
@@ -51,6 +51,7 @@
 				<p>Approved</p>
 				</td>
 				</tr>
+				{% endif %}
 				{% endfor %}</table></div>
 			        </div>
     				

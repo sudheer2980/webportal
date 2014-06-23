@@ -26,8 +26,14 @@
 				    
 				    <td><a href="/reviewer/profile/{{class_num}}/{{sub}}/{{i.topic}}/{{i.id}}/"><strong>{{ i.topic }}</strong></a>
 				    </td>
+				
 				    
-				    <td>{{i.summary|truncatewords:10}}<a href="/reviewer/profile/{{class_num}}/{{sub}}/{{i.topic}}/{{i.id}}/detail/">read more ...</a>
+				    <td>
+				    {% if i.summary|length >= 100 %}
+				      {{i.summary|truncatewords:10}}<a href="/reviewer/profile/{{class_num}}/{{sub}}/{{i.topic}}/{{i.id}}/detail">Read More ...</a>
+				    {% else %}
+					{{i.summary}}
+				    {% endif %}
 				    </td>
 				    
 				    <td>

@@ -335,7 +335,7 @@ def reviewer_past_approvals(request):
     """
     context = RequestContext(request)
     reviewer = Reviewer.objects.get(user = request.user)
-    #approvals = reviewer.subject.all().order_by('-uploaded_on')
+    subject = Subject.objects.all().order_by('-uploaded_on')
     context_dict = { 'subject':subject ,'reviewer':reviewer }
     return render_to_response("reviewer_past_approvals.html",context_dict,context)
 
