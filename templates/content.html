@@ -14,6 +14,7 @@
     </div>
     </form>
     <h1>{{Subject.name}}</h1>
+    {% if uploads %}
     </div>
 </div>
 
@@ -74,13 +75,17 @@
                   </tr>
                 {% endfor %}
 		</table>
+	<ul class="pagination" id="unordered-code-list"></ul> 
+				{% else %}
+  				<p>Nothing to display.</p>
+  				{% endif %}
 
 	</div>
 
 
 <script src="{% static 'js/paging.js' %}"></script>
 <script type="text/javascript">
- var pager = new Pager('uploads', 3, 'unordered-code-list');
+ var pager = new Pager('uploads', 6, 'unordered-code-list');
 </script>
 </div>
 
