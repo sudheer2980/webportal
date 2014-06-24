@@ -28,7 +28,7 @@ class Language(models.Model):
     language = models.CharField(max_length=100,blank = False)
 
     def __unicode__(self):
-        return self.language
+        return u"%s" % (self.language)
 
 class Reviewer(models.Model):
     """

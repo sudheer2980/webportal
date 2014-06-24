@@ -6,6 +6,7 @@ import reviewers_list
 import subject_list
 import class_list
 import comment_list
+import language_list
 
 def populate_users():
 
@@ -13,8 +14,6 @@ def populate_users():
 
     # Admin
     os.system("python manage.py syncdb --noinput")
-    # os.system("python manage.py schemamigration ac --initial")
-    # os.system("python manage.py migrate ac")
     os.system("python manage.py createsuperuser --username=admin --email=admin@example.com")
 
 
@@ -69,6 +68,9 @@ def populate_class():
 	add_Class( class_number=Class['class_number'] , remark=Class['remark'])
 
 
+def populate_language():
+    for Language in language_list.languages:
+	add_language(language=Language['language'])
 
 def populate_subject():
 
@@ -77,13 +79,16 @@ def populate_subject():
         usr_instance = User.objects.get(username=Subject['contributor'])
         contributor_instance = Contributor.objects.get(user=usr_instance)
 	class_num_instance = Class.objects.get(class_number=Subject['class'])
+	lang_instance = Language.objects.get(language=Subject['language'])
 
         add_sub(
             topic=Subject['topic'],
             name=Subject['name'],
             contributor=contributor_instance,
 	    class_number=class_num_instance,
-            summary=Subject['summary'])
+	    language=lang_instance,
+            summary=Subject['summary'],
+	    )
 
     
 
@@ -163,8 +168,12 @@ def add_Class(class_number, remark):
     class_no = Class(class_number=class_number, remark=remark)
     class_no.save()
 
-def add_sub(topic, name, contributor, class_number, summary):
-    sub = Subject(topic=topic, name=name, contributor=contributor, class_number=class_number, summary=summary)
+def add_language(language):
+    lang = Language(language=language)
+    lang.save() 
+
+def add_sub(topic, name, contributor, class_number, summary, language):
+    sub = Subject(topic=topic, name=name, contributor=contributor, class_number=class_number, summary=summary, language=language)
     sub.save()
 
 def add_faq(question, answer):
@@ -183,7 +192,7 @@ if __name__ == '__main__':
     print "Starting Webportal population script..."
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'webportal.settings')
     from webapp.models import Contributor, Reviewer
-    from webapp.models import Faq
+    from webapp.models import Faq, Language
     from webapp.models import Class, Subject, Comment
     from django.contrib.auth.models import User
 
@@ -192,6 +201,8 @@ if __name__ == '__main__':
 
     populate_users()
     populate_class()
+    populate_language()
     populate_subject()
     populate_comments()
     populate_faq()
+    
