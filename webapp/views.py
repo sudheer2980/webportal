@@ -13,8 +13,8 @@ from webapp.models import Contributor, Reviewer, Subject ,Comment, Language
 
 
 # import the forms here
-from webapp.forms import ContributorForm , ReviewerForm, UserForm, ContributorUploadForm, CommentForm
-
+from webapp.forms import ContributorForm, ReviewerForm, UserForm, 
+from webapp.forms import ContactForm, ContributorUploadForm, CommentForm
 
 def index(request):
     """
@@ -34,13 +34,49 @@ def index(request):
 
 
 def about(request):
-    """
+    """About page.
+
     Argument:
     
     `REQUEST`: This is the brief description about the site.
     """
     context = RequestContext(request)
     return render_to_response('about.html', context)
+
+
+def contact(request):
+    """Contact us page.
+
+    Arguments:
+    - `Request`:
+    """
+    context = RequestContext(request)
+
+    if request.POST:
+        contactform = ContactForm(data=request.POST)
+        if contactform.is_valid():
+            contactform = contactform.save(commit=True)
+            email_subject = "[aakashschooleducation.org] Contact Us"
+            email_message = "Sender Name: " + contactform.name + "\n\n" + contactform.message
+            #send_mail(email_subject, email_message,
+            #          contactform.email,
+            #          [
+            #              'iclcoolster@gmail.com',
+            #              'Aakashprojects.iitb@gmail.com',
+            #              'aakashmhrd@gmail.com',
+            #          ],
+            #          fail_silently=False)
+            messages.success(request, "Thank you for your reply. We\
+            will get back to you soon.")
+        else:
+            print contactform.errors
+            messages.error(request, "One or more fields are required or not valid.")
+    else:
+        contactform = ContactForm()
+
+    context_dict = {'contactform': contactform}
+    return render_to_response('contact.html', context_dict, context)
+
 
 
 def userlogin(request):
@@ -482,11 +518,12 @@ def contributor_upload(request):
         print "we have a request for upload by the contributor"
         contributor_upload_form = ContributorUploadForm(request.POST,
                                                         request.FILES)
+
         if contributor_upload_form.is_valid():
-            print "Forms is valid"
+            print "Forms is/are valid"
             subject=contributor_upload_form.save(commit=False)
             # contri=Contributor.objects.get(user_id=id)
-            if ( 'pdf' not in request.FILES and  'video' not in request.FILES and 'animantion' not in request.FILES):		 
+            if ( 'pdf' not in request.FILES and  'animation' not in request.FILES and 'video' not in request.FILES):		 
 	    	# Bad upload details were provided.
             	messages.error(request, "need to provide atleast one upload")
 		contributor_upload_form = ContributorUploadForm()
@@ -497,11 +534,14 @@ def contributor_upload(request):
 		return render_to_response("upload.html", context_dict, context)
 	    else:	
 	    	if 'pdf' in request.FILES:
+			#contributor_upload_form.clean_pdf_doc_file(request)
                 	subject.pdf=request.FILES['pdf']
          	if 'video' in request.FILES:
-               		 subject.video = request.FILES['video']
+			#contributor_upload_form.clean_video_doc_file()
+               		subject.video = request.FILES['video']
            	if 'animation' in request.FILES:
-               		 subject.animation = request.FILES['animation']
+			#contributor_upload_form.clean_animations_doc_file()
+               		subject.animation = request.FILES['animation']
 	    contributor = Contributor.objects.get(user=request.user)
             subject.contributor=contributor
 

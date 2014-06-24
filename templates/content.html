@@ -1,19 +1,15 @@
 {% extends 'base.html' %}
 {% load static %}
-<html>
-<body>
 {% block content %}
 <div class="container footer_padding" align="center" style="padding-top:8%">
 </div>
 <div class="container footer_padding" align="center" style="padding-top 2.5cm">
 <div class="col-md-12 well">
     <table class="table-responsive">
-    
     <h1>{{Subject.name}}</h1>
+    {% if uploads %}
     </div>
 </div>
-
-
 
 <style type="text/css">
 	#tfnewsearch{
@@ -42,9 +38,8 @@
 		</form>
 		<div class="tfclear"></div>
 	
-
 <div class="table-responsive">
-    <table class="table table-hover">
+    <table class="table table-hover" id="uploads">
         <tr class="success">
            <td><strong>Class</strong></td>
            <td><strong>Subject</strong></td>
@@ -99,9 +94,15 @@
                   </tr>
                 {% endfor %}
 		</table>
-	</div>
-</div>
+	<ul class="pagination" id="unordered-code-list"></ul> 
+				{% else %}
+  				<p>Nothing to display.</p>
+  				{% endif %}
 
+	</div>
+<script src="{% static 'js/paging.js' %}"></script>
+<script type="text/javascript">
+ var pager = new Pager('uploads', 6, 'unordered-code-list');
+</script>
+</div>
 {% endblock content %}
-</body>
-</html>

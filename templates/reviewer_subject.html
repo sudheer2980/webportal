@@ -4,15 +4,14 @@
 <div class="container" style= "padding-top: 5%; padding-bottom:5%">
     <div class="row">
   	<div class="col-md-12">
-            <div class="row">
-     		<div class="col-md-8" style= " background-color:#d5dce1; margin-top:8%"
+    		<div class="col-md-8" style= " background-color:#d5dce1; margin-top:8%"
                     <h4>Subjects corresponding to class {{class_num}}</h4>
 			{% for i in uploads %}
 	  		    <table class="table table-hover">
     				<td><h5><a href="/reviewer/profile/{{class_num}}/{{i}}">{{i}}</a></h5></td> 
 			    </table>
 			{% endfor %}
-				</table>
+  			   </table>
             	</div>
 		<div class="col-md-1">
 		</div>
@@ -32,11 +31,24 @@
 					<span>Change Password</span></button></a><br><br>
   		</div>
 				
-				
            </div>
     	</div>
    </div>
 </div>
+                            </div>
+				<ul class="pagination" id="unordered-code-list"></ul> 
+				{% else %}
+  				<p>Nothing to display.</p>
+  				{% endif %}
+    
+    			</div>
+  </div>
+   </div>
+
+                                <script src="{% static 'js/paging.js' %}"></script>
+				<script type="text/javascript">
+				var pager = new Pager('uploads', 5, 'unordered-code-list');
+</script>
 {% endblock content %}
                  
 

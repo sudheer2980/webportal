@@ -4,11 +4,12 @@
 <div class="container" style= "padding-top: 5%; padding-bottom:5%">
     <div class="row">
   	<div class="col-md-12">
-           <div class="row">
-     	       <div class="col-md-8" style= " background-color:#d5dce1; margin-top:8%">
-	           <h3>Review in class {{class_num}}</h3>
-			<div class="table-responsive">
-			     <table class="table table-hover">
+  		 <div class="row">
+      				<div class="col-md-8" style= " background-color:#d5dce1; margin-top:8%">
+				<h3>Review in class {{class_num}}</h3>
+                                 {% if uploads %} 
+				<div class="table-responsive">
+				<table class="table table-hover" id="uploads">
 				 <tr class="success">
     				    <td><strong>subject</strong></td>
     				    <td><strong>Topic</strong></td>
@@ -27,9 +28,14 @@
 				    <td><a href="/reviewer/profile/{{class_num}}/{{sub}}/{{i.topic}}/{{i.id}}/">
 					<strong>{{ i.topic }}</strong></a>
 				    </td>
+				
 				    
-				    <td>{{i.summary|truncatewords:10}}<a href="/reviewer/profile/{{class_num}}/
-					{{sub}}/{{i.topic}}/{{i.id}}/detail/">read more ...</a>
+				    <td>
+				    {% if i.summary|length >= 100 %}
+				      {{i.summary|truncatewords:10}}<a href="/reviewer/profile/{{class_num}}/{{sub}}/{{i.topic}}/{{i.id}}/detail">Read More ...</a>
+				    {% else %}
+					{{i.summary}}
+				    {% endif %}
 				    </td>
 				    
 				    <td>
@@ -48,24 +54,24 @@
 				    {% endif %}	
 				    </td>         
 				  
-				    <td>
-				    {% if reviewer in i.reviewer.all %}
-					<p>Approved</p>
-				    {% else %}
-					<form id = "{{i.id}}" method="post"
-			                enctype="multipart/form-data">
-
+				<td>
+				{% if reviewer in i.reviewer.all %}
+				<p>Approved</p>
+				{% else %}
+				<form method="post"
+		                enctype="multipart/form-data">
 		    	            {% csrf_token %}
 		
 		
-		       		    <input type="submit" name="Approve" value="Approve" id = {{i.id}} /></a>
+		       		    <input type="submit" name="Approve" value="Approve" /></a>
 				    <input type="hidden" name="id" value="{{ i.id }}">
 					</form>
 	  			    {% endif %}
 				    </td>
 				</tr>
-			     {% endfor %}</table></div>
-			 </div>
+				{% endfor %}</table>
+				</div>
+			        </div>
     				
 			<div class="col-md-1">
 			</div>
@@ -90,4 +96,18 @@
        </div>
     </div>
 </div>
+                            </div>
+<ul class="pagination" id="unordered-code-list"></ul> 
+				{% else %}
+  				<p>Nothing to display.</p>
+  				{% endif %}
+                                  </div>
+  </div>
+   </div>
+    			
+
+<script src="{% static 'js/paging.js' %}"></script>
+<script type="text/javascript">
+ var pager = new Pager('uploads', 6, 'unordered-code-list');
+</script>
 {% endblock content %}
