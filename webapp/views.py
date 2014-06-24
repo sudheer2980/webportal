@@ -34,7 +34,8 @@ def index(request):
 
 
 def about(request):
-    """
+    """About page.
+
     Argument:
     
     `REQUEST`: This is the brief description about the site.
@@ -517,11 +518,12 @@ def contributor_upload(request):
         print "we have a request for upload by the contributor"
         contributor_upload_form = ContributorUploadForm(request.POST,
                                                         request.FILES)
+
         if contributor_upload_form.is_valid():
-            print "Forms is valid"
+            print "Forms is/are valid"
             subject=contributor_upload_form.save(commit=False)
             # contri=Contributor.objects.get(user_id=id)
-            if ( 'pdf' not in request.FILES and  'video' not in request.FILES and 'animantion' not in request.FILES):		 
+            if ( 'pdf' not in request.FILES and  'animation' not in request.FILES and 'video' not in request.FILES):		 
 	    	# Bad upload details were provided.
             	messages.error(request, "need to provide atleast one upload")
 		contributor_upload_form = ContributorUploadForm()
@@ -532,11 +534,14 @@ def contributor_upload(request):
 		return render_to_response("upload.html", context_dict, context)
 	    else:	
 	    	if 'pdf' in request.FILES:
+			#contributor_upload_form.clean_pdf_doc_file(request)
                 	subject.pdf=request.FILES['pdf']
          	if 'video' in request.FILES:
-               		 subject.video = request.FILES['video']
+			#contributor_upload_form.clean_video_doc_file()
+               		subject.video = request.FILES['video']
            	if 'animation' in request.FILES:
-               		 subject.animation = request.FILES['animation']
+			#contributor_upload_form.clean_animations_doc_file()
+               		subject.animation = request.FILES['animation']
 	    contributor = Contributor.objects.get(user=request.user)
             subject.contributor=contributor
 
