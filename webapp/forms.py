@@ -1,5 +1,6 @@
 from django import forms
-from models import Contributor , Reviewer, Class, Subject ,Comment, Language, Contact
+from models import Contributor , Reviewer, Class
+from models import Subject ,Comment, Language, Contact
 from django.contrib.auth.models import User
 from webapp.models import Contributor
 from django.contrib import messages
@@ -157,6 +158,14 @@ class ContributorUploadForm(forms.ModelForm):
 
     SUMMARY: This is the summary given by the contributor about the specified topic of the specified subject including when to use and how to use.
     """
+    language = forms.ModelChoiceField(
+	label='Class',
+	cache_choices=True,
+	widget=None,
+	queryset=Language.objects.all(),
+	empty_label=None,
+	help_text="",required=True,
+        error_messages={'required':'Class is required'})
     class_number = forms.ModelChoiceField(
 	label='Class',
 	cache_choices=True,
@@ -194,7 +203,7 @@ class ContributorUploadForm(forms.ModelForm):
      	
     class Meta:
         model = Subject
-        fields = ['class_number', 'name','topic', 'pdf', 'video', 'animation', 'summary']
+        fields = ['language','class_number', 'name','topic', 'pdf', 'video', 'animation', 'summary']
     
     def clean_pdf(self):
         """Upload a valid ."""
