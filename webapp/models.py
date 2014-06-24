@@ -18,11 +18,17 @@ class Contributor(models.Model):
     # Addition info
     contact = models.CharField(max_length=12, blank=True)
     picture = models.ImageField(upload_to='profile_image', blank=True)
-    # specialised_subject = models.CharField(max_length=20, blank=False)
     validation_docs = models.FileField(upload_to='validation_docs',blank=False)
-  
+ 
     def __unicode__(self):
         return self.user.username
+
+
+class Language(models.Model):
+    language = models.CharField(max_length=100,blank = False)
+
+    def __unicode__(self):
+        return self.language
 
 class Reviewer(models.Model):
     """
@@ -38,11 +44,9 @@ class Reviewer(models.Model):
     # Addition info
     contact = models.CharField(max_length=12, blank=True)
     picture = models.ImageField(upload_to='profile_image', blank=True)
-    # specialised_subject = models.CharField(max_length=20, blank=False)
-    
+
     def __unicode__(self):
         return self.user.username
-
 
 
 class Class(models.Model):
@@ -90,6 +94,8 @@ class Subject(models.Model):
 
     RATING: The field indicates the rating given by the reviewer for his uploaded files. This must be an integer and default value is 0.
 
+    RATING: The field indicates the rating given by the reviewer for his uploaded files. This must be an integer and default value is 0.
+
     REVIEW: This field indicate the number of reviews made by the reviewers. This This must be an integer and default value is 0.
     """
     contributor = models.ForeignKey(Contributor)
@@ -107,6 +113,7 @@ class Subject(models.Model):
     rating = models.IntegerField(default=0)
     review = models.IntegerField(default=0) 
     reviewer = models.ManyToManyField(Reviewer)
+    language = models.ForeignKey(Language)
 
     def __unicode__(self):
         return u"%s : %s" % (self.name, self.topic)
@@ -114,7 +121,6 @@ class Subject(models.Model):
     def increment_review(self):
         self.review += 1
         self.save()
-
 
 
 class Contact(models.Model):
@@ -172,5 +178,4 @@ class Comment(models.Model):
     submit_date = models.DateTimeField(auto_now=True)
 
     def __unicode__(self):
-       	return self.comment
-
+        return self.comment

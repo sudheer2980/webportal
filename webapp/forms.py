@@ -1,5 +1,5 @@
 from django import forms
-from models import Contributor , Reviewer, Class, Subject ,Comment
+from models import Contributor , Reviewer, Class, Subject ,Comment, Language
 from django.contrib.auth.models import User
 from webapp.models import Contributor
 
@@ -211,4 +211,5 @@ class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ['comment']	
-	
+
+

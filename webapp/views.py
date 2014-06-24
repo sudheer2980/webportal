@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 
 # import the models here
 from django.contrib.auth.models import User
-from webapp.models import Contributor, Reviewer, Subject ,Comment
+from webapp.models import Contributor, Reviewer, Subject ,Comment, Language
 
 
 # import the forms here
@@ -325,6 +325,21 @@ def reviewer_profile_comment(request,class_num,sub,topics,id):
 	return render_to_response("reviewer_comment.html",context_dict,context)
 
 
+def reviewer_past_approvals(request):
+    """
+    Argument:
+
+    `REQUEST`: Request from contributor to sign up
+    
+    This function takes the request of user and directs it to the profile page which consists of the reviewer's past approvals.
+    """
+    context = RequestContext(request)
+    reviewer = Reviewer.objects.get(user = request.user)
+    subject = Subject.objects.all().order_by('-uploaded_on')
+    context_dict = { 'subject':subject ,'reviewer':reviewer }
+    return render_to_response("reviewer_past_approvals.html",context_dict,context)
+
+
 def contributor_signup(request):
     """
     Argument:
@@ -609,7 +624,7 @@ def reviewer_profile_edit(request):
     return render_to_response('reviewer_profile_edit.html', context_dict, context)
 
 
-def content(request):
+def content(request,lang):
     """
     Argument:
 
@@ -617,27 +632,40 @@ def content(request):
     """
     context=RequestContext(request)
     contributor= Contributor.objects.all()
-    uploads = Subject.objects.all().filter(review__gte = 3).order_by('class_number')
+    uploads = Subject.objects.all().filter(review__gte = 3).filter(language__language=lang).order_by('class_number')
     context_dict = {
 	'uploads': uploads,
-        'contributor':contributor
+        'contributor':contributor,
+	'lang':lang
     }
     return render_to_response('content.html',context_dict,context)
 
+def language_select(request):
+    """
+    Argument:
 
-def search(request):
+    `REQUEST`: This requests the particular content. 
+    """
+    context=RequestContext(request)
+    languages = Language.objects.values_list('language',flat=True)
+    context_dict = {'languages' : languages }
+    return render_to_response('language_select.html',context_dict,context)
+
+
+def search(request,lang):
 	context = RequestContext(request)
 	try:
 		user = User.objects.get(username=request.user.username)
 	except:
 		user = None
 	query = request.GET['q']
-	results_topic = Subject.objects.filter(topic__icontains=query).filter(review__gte = 3).order_by('class_number')
-	results_name = Subject.objects.filter(name__icontains=query).filter(review__gte = 3).order_by('class_number')
+	results_topic = Subject.objects.filter(topic__icontains=query).filter(language__language=lang).filter(review__gte = 3).order_by('class_number')
+	results_name = Subject.objects.filter(name__icontains=query).filter(language__language=lang).filter(review__gte = 3).order_by('class_number')
 	template = loader.get_template('search.html')
 	context = Context({'query':query ,
 	 'results_topic':results_topic,
 	  'results_name':results_name,
+	  'lang':lang,
 	  'user':user})
 	response = template.render(context)
 	return HttpResponse(response)

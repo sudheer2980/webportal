@@ -2,13 +2,13 @@
 {% load static %}
 {% block content %}
 <div class="container" style= "padding-top: 5%; padding-bottom:5%">
-<div class="row">
+    <div class="row">
   	<div class="col-md-12">
-   		 <div class="row">
-      				<div class="col-md-8" style= " background-color:#d5dce1; margin-top:8%">
-				<h3>Review in class {{class_num}}</h3>
-				<div class="table-responsive">
-				<table class="table table-hover">
+           <div class="row">
+     	       <div class="col-md-8" style= " background-color:#d5dce1; margin-top:8%">
+	           <h3>Review in class {{class_num}}</h3>
+			<div class="table-responsive">
+			     <table class="table table-hover">
 				 <tr class="success">
     				    <td><strong>subject</strong></td>
     				    <td><strong>Topic</strong></td>
@@ -19,15 +19,17 @@
 				    <td><strong>Approve</strong></td>
   				 </tr>
   				{% for i in uploads %}
-				 <tr class="active">
-   				 <td><strong>{{i.name}}</strong></a>
+				    <tr class="active">
+   				    <td><strong>{{i.name}}</strong></a>
 				      </p>
 				    </td>
 				    
-				    <td><a href="/reviewer/profile/{{class_num}}/{{sub}}/{{i.topic}}/{{i.id}}/"><strong>{{ i.topic }}</strong></a>
+				    <td><a href="/reviewer/profile/{{class_num}}/{{sub}}/{{i.topic}}/{{i.id}}/">
+					<strong>{{ i.topic }}</strong></a>
 				    </td>
 				    
-				    <td>{{i.summary|truncatewords:10}}<a href="/reviewer/profile/{{class_num}}/{{sub}}/{{i.topic}}/{{i.id}}/detail/">read more ...</a>
+				    <td>{{i.summary|truncatewords:10}}<a href="/reviewer/profile/{{class_num}}/
+					{{sub}}/{{i.topic}}/{{i.id}}/detail/">read more ...</a>
 				    </td>
 				    
 				    <td>
@@ -38,7 +40,7 @@
 				    {% endif %}	</td><td>
 				    {% if i.video %}
 					<a href="/media/{{i.video}}"><i class="fa fa-file-video-o fa-2x"></i></a>
-					{% else %}
+				    {% else %}
 				    {% endif %}	</td><td>
 				    {% if i.animation %}
 					<a href="/media/animation/{{i.animation}}"><i class="fa fa-file-image-o fa-2x"></i></a>
@@ -46,44 +48,46 @@
 				    {% endif %}	
 				    </td>         
 				  
-				<td>
-				{% if reviewer in i.reviewer.all %}
-				<p>Approved</p>
-				{% else %}
-				<form id = "{{i.id}}" method="post"
-		                enctype="multipart/form-data">
+				    <td>
+				    {% if reviewer in i.reviewer.all %}
+					<p>Approved</p>
+				    {% else %}
+					<form id = "{{i.id}}" method="post"
+			                enctype="multipart/form-data">
 
 		    	            {% csrf_token %}
 		
 		
 		       		    <input type="submit" name="Approve" value="Approve" id = {{i.id}} /></a>
 				    <input type="hidden" name="id" value="{{ i.id }}">
-				</form>
-				{% endif %}
-				</td>
+					</form>
+	  			    {% endif %}
+				    </td>
 				</tr>
-				{% endfor %}</table></div>
-			        </div>
+			     {% endfor %}</table></div>
+			 </div>
     				
-<div class="col-md-1"></div>
-      				<div class="col-md-3" style= " background-color:#cad3d9; margin-top:8%"><br/>
-				<strong>Welcome {{reviewer.user.username}}</strong><br><br>
+			<div class="col-md-1">
+			</div>
+      			<div class="col-md-3" style= " background-color:#cad3d9; margin-top:8%"><br/>
+			    <strong>Welcome {{reviewer.user.username}}</strong><br><br>
                                 {% if reviewer.picture %}
-                                <img src="/media/{{reviewer.picture}}" width=100px height=100px align="center">
+                                    <img src="/media/{{reviewer.picture}}" width=100px height=100px align="center">
 				{% else %}
-				<img src = "{% static 'img/default.png' %}" width=100px height=100px align="center">
+				    <img src = "{% static 'img/default.png' %}" width=100px height=100px align="center">
 				{% endif %}
 				<br><br>
 				<a href="/reviewer/profile/edit/">
-    				<button id='Edit-Profile-button' class="btn btn-primary" type='submit' ><span>Edit Profile</span></button></a><br/><br/>
+    				    <button id='Edit-Profile-button' class="btn btn-primary" type='submit' >
+					<span>Edit Profile</span></button></a><br/><br/>
   				<a href="/user/password/change">
-   			        <button id='Password-reset-button'  type='submit' class="btn btn-primary"><span>Change Password</span></button></a><br><br>
-  
-                          	</div>
+   			            <button id='Password-reset-button'  type='submit' class="btn btn-primary">
+					<span>Change Password</span></button></a><br><br>
+  			</div>
 				
 				
-                            </div>
-    			</div>
-  </div>
-   </div>
+            </div>
+       </div>
+    </div>
+</div>
 {% endblock content %}
