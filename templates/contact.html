@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+- Contact us
+{% endblock title %}
+
+{% block content %}
+<div class="container  footer_padding" style="padding-top:1.5cm;">
+  <div class="page-header">
+      <h1><i class="fa fa-phone"></i> Contact us |<small> We’re here to help with any
+      questions or comments.</small>
+      </h1>
+  </div>
+  <div class="row">
+    <div class="col-lg-6 well">
+      <form role="form" id="contact-us" method="post"
+	    enctype="multipart/form-data">
+	{% csrf_token %}
+	<!-- {{contactform.as_p}} -->
+	<!-- Success/Error messages -->
+	{% if messages %}
+	{% for message in messages %}
+	{% if message.tags == "success" %}
+	<p class="text-info" align="center"><strong>{{ message }}</strong></p>
+	{% else %}
+	<p class="text-danger" align="center"><strong>{{ message }}</strong></p>
+	{% endif %}
+	{% endfor %}
+	{% endif %} 
+	<!-- Success/Error messages ends here -->
+        <div class="form-group">
+	  <!-- {{contactform.name.errors}} -->
+          <label for="id_name">Name</label>
+	  {{contactform.name}}
+        </div>
+
+        <div class="form-group">
+	  <!-- {{contactform.email.errors}} -->
+          <label for="id_email">Email</label>
+	  {{contactform.email}}
+        </div>
+        
+        <div class="form-group">
+	  <!-- {{contactform.message.errors}} -->
+          <label for="id_message">Message</label>
+	  {{contactform.message}}
+        </div>
+
+	<input type="submit" name="submit" class="btn btn-primary"
+	       value="Submit" />
+
+	<input type="reset" name="submit" class="btn btn-info"
+	       value="Reset" />
+      </form>
+    </div>
+    
+    
+    <div class="col-lg-6" align="center">
+      <br><br><br><br>
+      <span class="glyphicon glyphicon-home"></span>
+      <address>
+        <strong>Aakash School Education</strong><br>
+        Second Floor, Old CSE Building,<br>
+        Indian Institute of Technology Bombay<br>
+	Powai, Mumbai 400076,<br>
+	Maharashtra, India.<br>
+      </address>
+
+      <address>
+	<span class="glyphicon glyphicon-phone-alt"></span>
+        (+91) (022) 25764708
+      </address>    
+
+      <address>
+	<span class="glyphicon glyphicon-envelope"></span>
+        <a href="mailto:aakashtechsupport@cse.iitb.ac.in">aakashtechsupport@cse.iitb.ac.in</a>
+      </address>      
+    </div>
+    
+  </div> <!-- row -->
+</div><!-- /.container -->
+{% endblock content %}
+

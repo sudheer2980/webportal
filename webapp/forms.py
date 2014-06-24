@@ -1,8 +1,9 @@
 from django import forms
-from models import Contributor , Reviewer, Class, Subject ,Comment, Language
+from models import Contributor , Reviewer, Class, Subject ,Comment, Language, Contact
 from django.contrib.auth.models import User
 from webapp.models import Contributor
 from django.contrib import messages
+
 
 class ContactForm(forms.ModelForm):
     name = forms.CharField(
@@ -18,9 +19,10 @@ class ContactForm(forms.ModelForm):
                                      'placeholder': 'Please write your message*.',
                                      'rows': 4}),
         help_text="Please write your message.", required=True)
-   
+    
     class Meta:
-        fields = ['name', 'email', 'message']
+        model = Contact
+        fields = ['name', 'email', 'message']#, 'captcha']
 
 
 class UserForm(forms.ModelForm):
