@@ -5,11 +5,11 @@
 - Contact us
 {% endblock title %}
 
-{% block body_block %}
+{% block content %}
 <div class="container  footer_padding" style="padding-top:1.5cm;">
   <div class="page-header">
       <h1><i class="fa fa-phone"></i> Contact us |<small> We’re here to help with any
-      questions or comments. Also visit <a href="/faqs/">FAQs</a> section.</small>
+      questions or comments.</small>
       </h1>
   </div>
   <div class="row">
@@ -47,12 +47,7 @@
 	  {{contactform.message}}
         </div>
 
-	<div class="form-group">
-	  <label for="id_captcha">Captcha</label>
-	  {{contactform.captcha}}
-        </div>
-	
-        <input type="submit" name="submit" class="btn btn-primary"
+	<input type="submit" name="submit" class="btn btn-primary"
 	       value="Submit" />
 
 	<input type="reset" name="submit" class="btn btn-info"
@@ -85,5 +80,5 @@
     
   </div> <!-- row -->
 </div><!-- /.container -->
-{% endblock body_block %}
-a
+{% endblock content %}
+
