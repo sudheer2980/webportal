@@ -18,11 +18,9 @@ class ContactForm(forms.ModelForm):
                                      'placeholder': 'Please write your message*.',
                                      'rows': 4}),
         help_text="Please write your message.", required=True)
-    captcha = ReCaptchaField(attrs={'theme': 'clean'})
-    
+   
     class Meta:
-        model = Contact
-        fields = ['name', 'email', 'message', 'captcha']
+        fields = ['name', 'email', 'message']
 
 
 class UserForm(forms.ModelForm):
