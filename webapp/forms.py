@@ -20,7 +20,6 @@ class ContactForm(forms.ModelForm):
                                      'placeholder': 'Please write your message*.',
                                      'rows': 4}),
         help_text="Please write your message.", required=True)
-    #captcha = ReCaptchaField(attrs={'theme': 'clean'})
     
     class Meta:
         model = Contact
@@ -159,13 +158,13 @@ class ContributorUploadForm(forms.ModelForm):
     SUMMARY: This is the summary given by the contributor about the specified topic of the specified subject including when to use and how to use.
     """
     language = forms.ModelChoiceField(
-	label='Class',
+	label='Language',
 	cache_choices=True,
 	widget=None,
 	queryset=Language.objects.all(),
 	empty_label=None,
 	help_text="",required=True,
-        error_messages={'required':'Class is required'})
+        error_messages={'required':'Language is required'})
     class_number = forms.ModelChoiceField(
 	label='Class',
 	cache_choices=True,

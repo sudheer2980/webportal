@@ -66,7 +66,6 @@ urlpatterns = patterns(
     
     url(r'^search/(?P<lang>[\w ]+)/$','webapp.views.search'),
     url(r'^contact/$', 'webapp.views.contact'),
-
 )
 
 

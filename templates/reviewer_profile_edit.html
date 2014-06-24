@@ -2,40 +2,40 @@
 {% load static %}
 {% block content %}
 <div class="container" style="padding-top:1.5cm;padding-bottom:3.5cm;">
-  <div class="page-header" align="center">
- <br><br><br>
-    <h1><i class="fa fa-pagelines"></i> Update/Edit profile
-       </h1>
-  </div>
-  <div class="row">
-    <div class="col-xs-2">
+    <div class="page-header" align="center">
+ 	<br><br><br>
+ 	   <h1><i class="fa fa-pagelines"></i> Update/Edit profile
+          </h1>
     </div>
-    <div class="col-xs-8">
-       <!-- Success/Error messages -->
-{% if messages %}
-{% for message in messages %}
-{% if message.tags == "success" %}
-<p class="text-info" align="center"><strong>{{ message }}</strong></p>
-{% else %}
-<p class="text-danger" align="center"><strong>{{ message }}</strong></p>
-{% endif %}
-{% endfor %}
-{% endif %}
-<!-- Success/Error messages ends here -->
-      <form role="form" id="edit-profile" method="post" action=""
-enctype="multipart/form-data">
-{% csrf_token %}
-{{userform.as_p}}
-{{reviewerform.as_p}}
+    <div class="row">
+    	<div class="col-xs-2">
+    	</div>
+    	<div class="col-xs-8">
+    	   <!-- Success/Error messages -->
+   	    {% if messages %}
+		{% for message in messages %}
+		    {% if message.tags == "success" %}
+			<p class="text-info" align="center"><strong>{{ message }}</strong></p>
+		    {% else %}
+ 			<p class="text-danger" align="center"><strong>{{ message }}</strong></p>
+		    {% endif %}
+		{% endfor %}
+	    {% endif %}
+		<!-- Success/Error messages ends here -->
+	      <form role="form" id="edit-profile" method="post" action=""
+		enctype="multipart/form-data">
+		{% csrf_token %}
+		{{userform.as_p}}
+		{{reviewerform.as_p}}
 
-<div align="center">
-<a href="/reviewer/profile/" class="btn btn-primary">Go back</a>
-<input class="btn btn-success" type="submit" name="submit" value="Save changes" />
-</div>
-      </form>
-    </div> <!-- col-lg -->
-    <div class="col-xs-2">
-    </div>
-  </div> <!-- row -->
+		<div align="center">
+		    <a href="/reviewer/profile/" class="btn btn-primary">Go back</a>
+			<input class="btn btn-success" type="submit" name="submit" value="Save changes" />
+		</div>
+             </form>
+    	</div> <!-- col-lg -->
+     	  <div class="col-xs-2">
+    	  </div>
+    </div> <!-- row -->
 </div>
 {% endblock content %}
