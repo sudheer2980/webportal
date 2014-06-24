@@ -13,7 +13,7 @@ from webapp.models import Contributor, Reviewer, Subject ,Comment, Language
 
 
 # import the forms here
-from webapp.forms import ContributorForm, ReviewerForm, UserForm, 
+from webapp.forms import ContributorForm, ReviewerForm, UserForm 
 from webapp.forms import ContactForm, ContributorUploadForm, CommentForm
 
 def index(request):
