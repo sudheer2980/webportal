@@ -1,7 +1,28 @@
 from django import forms
-from models import Contributor , Reviewer, Class, Subject ,Comment
+from models import Contributor , Reviewer, Class, Subject ,Comment, Language
 from django.contrib.auth.models import User
 from webapp.models import Contributor
+
+class ContactForm(forms.ModelForm):
+    name = forms.CharField(
+        widget=forms.TextInput(attrs={'class': 'form-control',
+                                      'placeholder': 'Your name*.'}),
+        help_text="Enter your name.", required=True)
+    email = forms.EmailField(
+        widget=forms.TextInput(attrs={'class':'form-control',
+                                  'placeholder': 'Enter valid email*.'}),
+        help_text="Enter Email.", required=True)
+    message = forms.CharField(
+        widget=forms.Textarea(attrs={'class':'form-control',
+                                     'placeholder': 'Please write your message*.',
+                                     'rows': 4}),
+        help_text="Please write your message.", required=True)
+    captcha = ReCaptchaField(attrs={'theme': 'clean'})
+    
+    class Meta:
+        model = Contact
+        fields = ['name', 'email', 'message', 'captcha']
+
 
 class UserForm(forms.ModelForm):
     """
@@ -211,4 +232,5 @@ class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ['comment']	
-	
+
+

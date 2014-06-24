@@ -9,12 +9,12 @@ from django.contrib.auth.decorators import login_required
 
 # import the models here
 from django.contrib.auth.models import User
-from webapp.models import Contributor, Reviewer, Subject ,Comment
+from webapp.models import Contributor, Reviewer, Subject ,Comment, Language
 
 
 # import the forms here
-from webapp.forms import ContributorForm , ReviewerForm, UserForm, ContributorUploadForm, CommentForm
-
+from webapp.forms import ContributorForm, ReviewerForm, UserForm, 
+from webapp.forms import ContactForm, ContributorUploadForm, CommentForm
 
 def index(request):
     """
@@ -41,6 +41,41 @@ def about(request):
     """
     context = RequestContext(request)
     return render_to_response('about.html', context)
+
+
+def contact(request):
+    """Contact us page.
+
+    Arguments:
+    - `Request`:
+    """
+    context = RequestContext(request)
+
+    if request.POST:
+        contactform = ContactForm(data=request.POST)
+        if contactform.is_valid():
+            contactform = contactform.save(commit=True)
+            email_subject = "[aakashschooleducation.org] Contact Us"
+            email_message = "Sender Name: " + contactform.name + "\n\n" + contactform.message
+            #send_mail(email_subject, email_message,
+            #          contactform.email,
+            #          [
+            #              'iclcoolster@gmail.com',
+            #              'Aakashprojects.iitb@gmail.com',
+            #              'aakashmhrd@gmail.com',
+            #          ],
+            #          fail_silently=False)
+            messages.success(request, "Thank you for your reply. We\
+            will get back to you soon.")
+        else:
+            print contactform.errors
+            messages.error(request, "One or more fields are required or not valid.")
+    else:
+        contactform = ContactForm()
+
+    context_dict = {'contactform': contactform}
+    return render_to_response('contact.html', context_dict, context)
+
 
 
 def userlogin(request):
@@ -624,7 +659,7 @@ def reviewer_profile_edit(request):
     return render_to_response('reviewer_profile_edit.html', context_dict, context)
 
 
-def content(request):
+def content(request,lang):
     """
     Argument:
 
@@ -632,30 +667,40 @@ def content(request):
     """
     context=RequestContext(request)
     contributor= Contributor.objects.all()
-    uploads = Subject.objects.all().filter(review__gte = 3).order_by('class_number')
-    count = len(uploads)
-    print count
+    uploads = Subject.objects.all().filter(review__gte = 3).filter(language__language=lang).order_by('class_number')
     context_dict = {
 	'uploads': uploads,
-	'count':count,
-        'contributor':contributor
+        'contributor':contributor,
+	'lang':lang
     }
     return render_to_response('content.html',context_dict,context)
 
+def language_select(request):
+    """
+    Argument:
 
-def search(request):
+    `REQUEST`: This requests the particular content. 
+    """
+    context=RequestContext(request)
+    languages = Language.objects.values_list('language',flat=True)
+    context_dict = {'languages' : languages }
+    return render_to_response('language_select.html',context_dict,context)
+
+
+def search(request,lang):
 	context = RequestContext(request)
 	try:
 		user = User.objects.get(username=request.user.username)
 	except:
 		user = None
 	query = request.GET['q']
-	results_topic = Subject.objects.filter(topic__icontains=query).filter(review__gte = 3).order_by('class_number')
-	results_name = Subject.objects.filter(name__icontains=query).filter(review__gte = 3).order_by('class_number')
+	results_topic = Subject.objects.filter(topic__icontains=query).filter(language__language=lang).filter(review__gte = 3).order_by('class_number')
+	results_name = Subject.objects.filter(name__icontains=query).filter(language__language=lang).filter(review__gte = 3).order_by('class_number')
 	template = loader.get_template('search.html')
 	context = Context({'query':query ,
 	 'results_topic':results_topic,
 	  'results_name':results_name,
+	  'lang':lang,
 	  'user':user})
 	response = template.render(context)
 	return HttpResponse(response)

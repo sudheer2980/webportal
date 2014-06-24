@@ -56,13 +56,15 @@ urlpatterns = patterns(
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
     # this is used to display the content page of either the contributor or the reviewer
-    url(r'^content/$','webapp.views.content'),
+    url(r'^content/(?P<lang>[\w ]+)/$','webapp.views.content'),
+    url(r'^language/$','webapp.views.language_select'),
     
 
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
     
-    url(r'^search/','webapp.views.search'),
+    url(r'^search/(?P<lang>[\w ]+)/$','webapp.views.search'),
+    url(r'^contact/$', 'webapp.views.contact'),
 
 )
 
